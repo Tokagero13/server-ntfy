@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мониторинг Эндпоинтов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #2196F3, #21CBF3);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .status-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .status-card {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 5px;
+        }
+
+        .status-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .add-form {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2196F3;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .form-group input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            min-width: 300px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2196F3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
+
+        .endpoints-list {
+            background: white;
+        }
+
+        .endpoint-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .endpoint-item:hover {
+            background: #f8f9fa;
+            transform: translateX(5px);
+        }
+
+        .endpoint-info {
+            flex: 1;
+        }
+
+        .endpoint-url {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .endpoint-details {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .endpoint-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .status-badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-online {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .status-offline {
+            background: #f44336;
+            color: white;
+        }
+
+        .status-unknown {
+            background: #9E9E9E;
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #2196F3;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 5px solid #f44336;
+        }
+
+        .success {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 5px solid #4caf50;
+        }
+
+        @media (max-width: 768px) {
+            .form-group {
+                flex-direction: column;
+            }
+            
+            .form-group input {
+                min-width: 100%;
+            }
+            
+            .endpoint-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .endpoint-status {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Мониторинг Эндпоинтов</h1>
+            <div class="status-info">
+                <div class="status-card">
+                    <h3 id="total-endpoints">-</h3>
+                    <p>Всего эндпоинтов</p>
+                </div>
+                <div class="status-card">
+                    <h3 id="online-endpoints">-</h3>
+                    <p>Онлайн</p>
+                </div>
+                <div class="status-card">
+                    <h3 id="offline-endpoints">-</h3>
+                    <p>Офлайн</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="add-form">
+                <h3>➕ Добавить новый эндпоинт</h3>
+                <br>
+                <div class="form-group">
+                    <input type="url" id="url-input" placeholder="https://example.com/api/health" required>
+                    <button class="btn btn-primary" onclick="addEndpoint()">Добавить</button>
+                </div>
+                <div id="message"></div>
+            </div>
+
+            <div class="endpoints-list">
+                <h3 style="padding: 20px; margin: 0; border-bottom: 2px solid #eee;">📡 Список эндпоинтов</h3>
+                <div id="endpoints-container">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Загрузка эндпоинтов...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api/endpoints';
+        
+        // Загрузка эндпоинтов при запуске
+        document.addEventListener('DOMContentLoaded', function() {
+            loadEndpoints();
+            // Обновляем каждые 10 секунд
+            setInterval(loadEndpoints, 10000);
+        });
+
+        function showMessage(text, type = 'error') {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = `<div class="${type}">${text}</div>`;
+            setTimeout(() => {
+                messageDiv.innerHTML = '';
+            }, 5000);
+        }
+
+        async function loadEndpoints() {
+            try {
+                const response = await fetch(`${API_BASE}/`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const endpoints = await response.json();
+                displayEndpoints(endpoints);
+                updateStats(endpoints);
+            } catch (error) {
+                console.error('Ошибка при загрузке эндпоинтов:', error);
+                document.getElementById('endpoints-container').innerHTML = 
+                    '<div class="error">Ошибка при загрузке данных. Проверьте, что сервер запущен на localhost:3000</div>';
+            }
+        }
+
+        function displayEndpoints(endpoints) {
+            const container = document.getElementById('endpoints-container');
+            
+            if (endpoints.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 50px; color: #666;">Нет добавленных эндпоинтов</div>';
+                return;
+            }
+
+            container.innerHTML = endpoints.map(endpoint => `
+                <div class="endpoint-item">
+                    <div class="endpoint-info">
+                        <div class="endpoint-url">${endpoint.url}</div>
+                        <div class="endpoint-details">
+                            ID: ${endpoint.id} | 
+                            Статус: ${endpoint.last_status || 'Не проверен'} | 
+                            Последняя проверка: ${formatDate(endpoint.last_checked)}
+                        </div>
+                    </div>
+                    <div class="endpoint-status">
+                        <span class="status-badge ${getStatusClass(endpoint)}">
+                            ${getStatusText(endpoint)}
+                        </span>
+                        <button class="btn btn-danger" onclick="deleteEndpoint(${endpoint.id})">
+                            🗑️ Удалить
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getStatusClass(endpoint) {
+            if (endpoint.last_status === null) return 'status-unknown';
+            if (endpoint.is_down) return 'status-offline';
+            return 'status-online';
+        }
+
+        function getStatusText(endpoint) {
+            if (endpoint.last_status === null) return 'Не проверен';
+            if (endpoint.is_down) return 'Офлайн';
+            return 'Онлайн';
+        }
+
+        function updateStats(endpoints) {
+            const total = endpoints.length;
+            const online = endpoints.filter(e => !e.is_down && e.last_status !== null).length;
+            const offline = endpoints.filter(e => e.is_down).length;
+
+            document.getElementById('total-endpoints').textContent = total;
+            document.getElementById('online-endpoints').textContent = online;
+            document.getElementById('offline-endpoints').textContent = offline;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'Никогда';
+            const date = new Date(dateString);
+            return date.toLocaleString('ru-RU');
+        }
+
+        async function addEndpoint() {
+            const urlInput = document.getElementById('url-input');
+            const url = urlInput.value.trim();
+            
+            if (!url) {
+                showMessage('Введите URL эндпоинта');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ url })
+                });
+
+                if (response.ok) {
+                    urlInput.value = '';
+                    showMessage('Эндпоинт успешно добавлен!', 'success');
+                    loadEndpoints(); // Перезагружаем список
+                } else {
+                    const error = await response.json();
+                    showMessage(error.message || 'Ошибка при добавлении эндпоинта');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showMessage('Ошибка при добавлении эндпоинта');
+            }
+        }
+
+        async function deleteEndpoint(id) {
+            if (!confirm('Вы уверены, что хотите удалить этот эндпоинт?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    showMessage('Эндпоинт успешно удален!', 'success');
+                    loadEndpoints(); // Перезагружаем список
+                } else {
+                    showMessage('Ошибка при удалении эндпоинта');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showMessage('Ошибка при удалении эндпоинта');
+            }
+        }
+
+        // Добавляем обработчик Enter для поля ввода
+        document.getElementById('url-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                addEndpoint();
+            }
+        });
+    </script>
+</body>
+</html>
