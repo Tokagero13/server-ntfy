@@ -35,7 +35,7 @@ class CustomEndpointCard extends HTMLElement {
             };
         }
 
-        if (endpoint.is_down || endpoint.last_status < 200 || endpoint.last_status >= 300) {
+        if (endpoint.is_down || endpoint.last_status !== 200) {
             return {
                 status: 'Offline',
                 color: 'red',
@@ -172,7 +172,7 @@ class CustomEndpointCard extends HTMLElement {
             if (this.endpoint.last_status) {
                 httpStatusText.textContent = `HTTP ${this.endpoint.last_status}`;
                 httpStatusText.className = `http-status-text text-xs font-semibold ${
-                    this.endpoint.last_status >= 200 && this.endpoint.last_status < 300 ? 'text-green-600' : 'text-red-600'
+                    this.endpoint.last_status === 200 ? 'text-green-600' : 'text-red-600'
                 }`;
             } else {
                 httpStatusText.textContent = '';

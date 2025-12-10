@@ -38,11 +38,20 @@
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold text-gray-800">Notification Logs</h2>
                 <div class="flex items-center space-x-2">
+                    <input type="text" id="logSearchInput" placeholder="Search logs..." class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-64">
                     <select id="logEndpointFilter" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="">All Endpoints</option>
                     </select>
-                    <button id="logSortOrder" class="p-2 border border-gray-300 rounded-md" title="Toggle timestamp sort order">
+                    <select id="logStatusFilter" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">All Statuses</option>
+                        <option value="sent">Sent</option>
+                        <option value="failed">Failed</option>
+                    </select>
+                    <button id="logSortOrder" class="p-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors" title="Toggle timestamp sort order">
                         <i data-feather="arrow-down"></i>
+                    </button>
+                    <button id="logRefreshBtn" class="p-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors" title="Refresh logs">
+                        <i data-feather="refresh-cw"></i>
                     </button>
                 </div>
             </div>

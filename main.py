@@ -22,6 +22,8 @@ NOTIFY_EVERY_MINUTES = int(os.getenv('NOTIFY_EVERY_MINUTES', 2))
 INDEX_PAGE = os.getenv('INDEX_PAGE', 'index2.html')
 NTFY_TOPIC = os.getenv('NTFY_TOPIC', 'default_topic')
 NTFY_SERVER = os.getenv('NTFY_SERVER', 'https://ntfy.server')
+TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', '')
+TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID', '')
 URL = os.getenv('URL', 'localhost')
 PORT = int(os.getenv('PORT', 5000))
 
@@ -288,22 +290,53 @@ def init_db():
         raise
 
 
+def send_telegram_notification(message: str, endpoint_url: str) -> bool:
+    """Отправка уведомления через Telegram Bot API"""
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        return False
+
+    try:
+        telegram_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+        payload = {
+            "chat_id": TELEGRAM_CHAT_ID,
+            "text": message,
+            "parse_mode": "HTML"
+        }
+        resp = requests.post(telegram_url, json=payload, timeout=10)
+        if resp.status_code == 200:
+            logger.info(f"Telegram notification sent: {message}")
+            return True
+        else:
+            logger.warning(f"Telegram notification failed with status {resp.status_code}: {resp.text}")
+            return False
+    except Exception as e:
+        logger.error(f"Failed to send Telegram notification: {e}")
+        return False
+
+
 def send_ntfy_notification(topic: str, message: str, endpoint_url: str) -> None:
-    """Отправка уведомления через ntfy и логирование в БД"""
+    """Отправка уведомления через ntfy и Telegram, логирование в БД"""
+    # Отправка через NTFY
     url = f"{NTFY_SERVER}/{NTFY_TOPIC}"
-    log_status = "failed"
+    ntfy_success = False
     try:
         resp = requests.post(url, data=message.encode("utf-8"), timeout=5)
         if resp.status_code == 200:
-            logger.info(f"Notification sent: {message}")
-            log_status = "sent"
+            logger.info(f"NTFY notification sent: {message}")
+            ntfy_success = True
         else:
             logger.warning(
-                f"Notification failed with status {resp.status_code}: {message}"
+                f"NTFY notification failed with status {resp.status_code}: {message}"
             )
     except Exception as e:
-        logger.error(f"Failed to send notification: {e}")
-    
+        logger.error(f"Failed to send NTFY notification: {e}")
+
+    # Отправка через Telegram
+    telegram_success = send_telegram_notification(message, endpoint_url)
+
+    # Определение общего статуса (успешно если хотя бы один канал сработал)
+    log_status = "sent" if (ntfy_success or telegram_success) else "failed"
+
     # Логирование в БД
     try:
         with get_db_connection() as conn:
@@ -343,8 +376,8 @@ def check_endpoints_loop():
                     now_utc = datetime.now(timezone.utc)
                     now_iso = now_utc.isoformat()
 
-                    # Обновляем статус в БД
-                    is_currently_down = current_status == 0
+                    # Обновляем статус в БД (only HTTP 200 is acceptable)
+                    is_currently_down = current_status != 200
                     cur.execute(
                         """
                         UPDATE endpoints
@@ -406,8 +439,8 @@ def check_endpoint_status_with_fallback(url: str) -> int:
 def check_notification_needed(
     current_status: int, last_status: int, was_down: bool, last_notified: str, now_utc: datetime, url: str
 ) -> bool:
-    """Определяет, нужно ли отправлять уведомление"""
-    is_down = current_status == 0
+    """Определяет, нужно ли отправлять уведомление (only HTTP 200 is acceptable)"""
+    is_down = current_status != 200
     is_recovered = was_down and not is_down
     just_went_down = not was_down and is_down
 
@@ -625,6 +658,7 @@ class NotificationList(Resource):
         order = request.args.get("order", "desc", type=str)
         search = request.args.get("search", "", type=str)
         endpoint_filter = request.args.get("endpoint_filter", "", type=str)
+        status_filter = request.args.get("status_filter", "", type=str)
 
         # Валидация полей сортировки - теперь только timestamp
         if sort_by != "timestamp":
@@ -645,17 +679,25 @@ class NotificationList(Resource):
                 data_query = "SELECT id, timestamp, endpoint_url, message, status "
                 
                 params = []
-                where_clause = ""
-                
+                where_conditions = []
+
                 # Точная фильтрация по endpoint_filter (для выбора из списка)
                 if endpoint_filter:
-                    where_clause = " WHERE endpoint_url = ?"
+                    where_conditions.append("endpoint_url = ?")
                     params.append(endpoint_filter)
-                # Fallback для старого search параметра (LIKE поиск)
-                elif search:
-                    where_clause = " WHERE endpoint_url LIKE ? OR message LIKE ?"
+
+                # Фильтрация по статусу
+                if status_filter:
+                    where_conditions.append("status = ?")
+                    params.append(status_filter)
+
+                # LIKE поиск по endpoint_url и message
+                if search:
+                    where_conditions.append("(endpoint_url LIKE ? OR message LIKE ?)")
                     search_param = f"%{search}%"
                     params.extend([search_param, search_param])
+
+                where_clause = " WHERE " + " AND ".join(where_conditions) if where_conditions else ""
 
                 # Запрос для подсчета общего количества
                 count_params = params.copy()

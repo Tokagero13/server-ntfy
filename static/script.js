@@ -23,14 +23,19 @@ let logEndpointFilter;
 let logSortOrder;
 let logPagination;
 let endpointsSearchInput;
+let logSearchInput;
+let logStatusFilter;
+let logRefreshBtn;
 
 // Log state
 let logState = {
     currentPage: 1,
-    perPage: 10,
+    perPage: 25,
     sortBy: 'timestamp',
     order: 'desc',
     endpointFilter: '',
+    statusFilter: '',
+    searchQuery: '',
     totalPages: 1
 };
 
@@ -59,9 +64,12 @@ function initializeElements() {
    ntfyModal = document.getElementById('ntfyModal');
    closeNtfyModalBtn = document.getElementById('closeNtfyModalBtn');
    logEndpointFilter = document.getElementById('logEndpointFilter');
+   logStatusFilter = document.getElementById('logStatusFilter');
    logSortOrder = document.getElementById('logSortOrder');
    logPagination = document.getElementById('logPagination');
    endpointsSearchInput = document.getElementById('endpointsSearchInput');
+   logSearchInput = document.getElementById('logSearchInput');
+   logRefreshBtn = document.getElementById('logRefreshBtn');
 }
 
 function initializeEventListeners() {
@@ -107,8 +115,17 @@ function initializeEventListeners() {
    if (logEndpointFilter) {
        logEndpointFilter.addEventListener('change', handleLogEndpointFilter);
    }
+   if (logStatusFilter) {
+       logStatusFilter.addEventListener('change', handleLogStatusFilter);
+   }
+   if (logSearchInput) {
+       logSearchInput.addEventListener('input', debounce(handleLogSearch, 500));
+   }
+   if (logRefreshBtn) {
+       logRefreshBtn.addEventListener('click', handleLogRefresh);
+   }
    logSortOrder.addEventListener('click', handleLogSortOrder);
-   
+
    // Endpoints search
    if (endpointsSearchInput) {
        endpointsSearchInput.addEventListener('input', debounce(handleEndpointsSearch, 300));
@@ -281,11 +298,11 @@ function handleEndpointsSearch(event) {
 function updateStats() {
     const stats = {
         total: endpoints.length,
-        online: endpoints.filter(e => e.last_status >= 200 && e.last_status < 300).length,
+        online: endpoints.filter(e => e.last_status === 200).length,
         offline: endpoints.filter(e => e.is_down).length,
         pending: endpoints.filter(e => e.last_status === null).length
     };
-    
+
     // Dispatch event for status cards to update
     const event = new CustomEvent('statsUpdated', { detail: stats });
     document.dispatchEvent(event);
@@ -439,7 +456,7 @@ function debounce(func, wait) {
 // Export for global use
 async function loadNotificationLogs() {
     try {
-        const { currentPage, perPage, sortBy, order, endpointFilter } = logState;
+        const { currentPage, perPage, sortBy, order, endpointFilter, statusFilter, searchQuery } = logState;
         const url = new URL('/api/endpoints/notifications', window.location.origin);
         url.searchParams.append('page', currentPage);
         url.searchParams.append('per_page', perPage);
@@ -448,6 +465,12 @@ async function loadNotificationLogs() {
         if (endpointFilter) {
             url.searchParams.append('endpoint_filter', endpointFilter);
         }
+        if (statusFilter) {
+            url.searchParams.append('status_filter', statusFilter);
+        }
+        if (searchQuery) {
+            url.searchParams.append('search', searchQuery);
+        }
 
         const response = await fetch(url);
         if (!response.ok) {
@@ -455,7 +478,7 @@ async function loadNotificationLogs() {
         }
         const data = await response.json();
         logState.totalPages = data.total_pages;
-        renderNotificationLogs(data.logs);
+        renderNotificationLogs(data.logs, data.total_items);
         renderPagination(data);
     } catch (error) {
         console.error('Error loading notification logs:', error);
@@ -464,48 +487,144 @@ async function loadNotificationLogs() {
     }
 }
 
-function renderNotificationLogs(logs) {
+function renderNotificationLogs(logs, totalItems) {
     const container = document.getElementById('notificationLogsContainer');
     if (!container) return;
 
     if (logs.length === 0) {
         container.innerHTML = `
             <tr>
-                <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No notification logs found.</td>
+                <td colspan="4" class="px-6 py-8 text-center">
+                    <div class="text-gray-400 mb-2">
+                        <i data-feather="inbox" class="mx-auto" style="width: 48px; height: 48px;"></i>
+                    </div>
+                    <p class="text-sm text-gray-500">No notification logs found.</p>
+                    ${logState.searchQuery || logState.endpointFilter || logState.statusFilter ?
+                        '<p class="text-xs text-gray-400 mt-1">Try adjusting your filters.</p>' : ''}
+                </td>
             </tr>
         `;
+        feather.replace();
         return;
     }
 
-    container.innerHTML = logs.map(log => `
-        <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${log.endpoint_url}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${log.message}</td>
+    container.innerHTML = logs.map((log, index) => `
+        <tr class="hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-4 text-sm text-gray-900">
+                <div class="font-medium truncate max-w-xs" title="${escapeHtml(log.endpoint_url)}">${escapeHtml(log.endpoint_url)}</div>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-600">
+                <div class="max-w-md truncate" title="${escapeHtml(log.message)}">${escapeHtml(log.message)}</div>
+            </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                <span class="px-2.5 py-1 inline-flex items-center text-xs leading-5 font-semibold rounded-full ${
                     log.status === 'sent' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                 }">
+                    <i data-feather="${log.status === 'sent' ? 'check' : 'x'}" class="w-3 h-3 mr-1"></i>
                     ${log.status}
                 </span>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(log.timestamp).toLocaleString()}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                ${formatTimestamp(log.timestamp)}
+            </td>
         </tr>
     `).join('');
+
+    feather.replace();
 }
 
-function renderPagination({ total_pages, current_page }) {
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return 'Just now';
+    if (diffMins < 60) return `${diffMins}m ago`;
+    if (diffHours < 24) return `${diffHours}h ago`;
+    if (diffDays < 7) return `${diffDays}d ago`;
+
+    return date.toLocaleString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+function renderPagination({ total_pages, current_page, total_items }) {
     if (!logPagination) return;
+
     if (total_pages <= 1) {
-        logPagination.innerHTML = '';
+        logPagination.innerHTML = total_items > 0 ?
+            `<div class="text-center text-sm text-gray-500">Showing ${total_items} log${total_items !== 1 ? 's' : ''}</div>` : '';
         return;
     }
 
-    let buttons = '';
-    for (let i = 1; i <= total_pages; i++) {
-        const isActive = i === current_page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50';
-        buttons += `<button onclick="changeLogPage(${i})" class="px-3 py-1 border border-gray-300 rounded-md ${isActive}">${i}</button>`;
+    const maxButtons = 7;
+    let startPage = Math.max(1, current_page - Math.floor(maxButtons / 2));
+    let endPage = Math.min(total_pages, startPage + maxButtons - 1);
+
+    if (endPage - startPage < maxButtons - 1) {
+        startPage = Math.max(1, endPage - maxButtons + 1);
     }
-    logPagination.innerHTML = `<div class="flex justify-center space-x-1">${buttons}</div>`;
+
+    let buttons = '<div class="flex items-center justify-between">';
+    buttons += '<div class="text-sm text-gray-500">';
+    buttons += `Showing page ${current_page} of ${total_pages} (${total_items} total)`;
+    buttons += '</div>';
+    buttons += '<div class="flex items-center space-x-1">';
+
+    // Previous button
+    if (current_page > 1) {
+        buttons += `<button onclick="changeLogPage(${current_page - 1})" class="px-3 py-1.5 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 transition-colors">
+            <i data-feather="chevron-left" class="w-4 h-4"></i>
+        </button>`;
+    }
+
+    // First page
+    if (startPage > 1) {
+        buttons += `<button onclick="changeLogPage(1)" class="px-3 py-1.5 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 transition-colors">1</button>`;
+        if (startPage > 2) {
+            buttons += '<span class="px-2 text-gray-400">...</span>';
+        }
+    }
+
+    // Page numbers
+    for (let i = startPage; i <= endPage; i++) {
+        const isActive = i === current_page;
+        const classes = isActive
+            ? 'px-3 py-1.5 border border-blue-600 rounded-md bg-blue-600 text-white font-medium'
+            : 'px-3 py-1.5 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 transition-colors';
+        buttons += `<button onclick="changeLogPage(${i})" class="${classes}">${i}</button>`;
+    }
+
+    // Last page
+    if (endPage < total_pages) {
+        if (endPage < total_pages - 1) {
+            buttons += '<span class="px-2 text-gray-400">...</span>';
+        }
+        buttons += `<button onclick="changeLogPage(${total_pages})" class="px-3 py-1.5 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 transition-colors">${total_pages}</button>`;
+    }
+
+    // Next button
+    if (current_page < total_pages) {
+        buttons += `<button onclick="changeLogPage(${current_page + 1})" class="px-3 py-1.5 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 transition-colors">
+            <i data-feather="chevron-right" class="w-4 h-4"></i>
+        </button>`;
+    }
+
+    buttons += '</div></div>';
+    logPagination.innerHTML = buttons;
+    feather.replace();
 }
 
 function changeLogPage(page) {
@@ -517,6 +636,23 @@ function handleLogEndpointFilter(event) {
     logState.endpointFilter = event.target.value;
     logState.currentPage = 1; // Reset to first page
     loadNotificationLogs();
+}
+
+function handleLogStatusFilter(event) {
+    logState.statusFilter = event.target.value;
+    logState.currentPage = 1; // Reset to first page
+    loadNotificationLogs();
+}
+
+function handleLogSearch(event) {
+    logState.searchQuery = event.target.value.trim();
+    logState.currentPage = 1; // Reset to first page
+    loadNotificationLogs();
+}
+
+function handleLogRefresh() {
+    loadNotificationLogs();
+    showNotification('Logs refreshed', 'success');
 }
 
 function handleLogSortOrder() {
