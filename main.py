@@ -22,8 +22,10 @@ NOTIFY_EVERY_MINUTES = int(os.getenv('NOTIFY_EVERY_MINUTES', 2))
 INDEX_PAGE = os.getenv('INDEX_PAGE', 'index2.html')
 NTFY_TOPIC = os.getenv('NTFY_TOPIC', 'default_topic')
 NTFY_SERVER = os.getenv('NTFY_SERVER', 'https://ntfy.server')
+NTFY_ENABLED = os.getenv('NTFY_ENABLED', 'False').lower() in ('true', '1', 't')
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', '')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID', '')
+TELEGRAM_ENABLED = os.getenv('TELEGRAM_ENABLED', 'False').lower() in ('true', '1', 't')
 URL = os.getenv('URL', 'localhost')
 PORT = int(os.getenv('PORT', 5000))
 
@@ -291,53 +293,69 @@ def init_db():
 
 
 def send_telegram_notification(message: str, endpoint_url: str) -> bool:
-    """Отправка уведомления через Telegram Bot API"""
+    """Отправка уведомления через Telegram Bot API в несколько чатов."""
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         return False
 
-    try:
-        telegram_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-        payload = {
-            "chat_id": TELEGRAM_CHAT_ID,
-            "text": message,
-            "parse_mode": "HTML"
-        }
-        resp = requests.post(telegram_url, json=payload, timeout=10)
-        if resp.status_code == 200:
-            logger.info(f"Telegram notification sent: {message}")
-            return True
-        else:
-            logger.warning(f"Telegram notification failed with status {resp.status_code}: {resp.text}")
-            return False
-    except Exception as e:
-        logger.error(f"Failed to send Telegram notification: {e}")
+    chat_ids = [chat_id.strip() for chat_id in TELEGRAM_CHAT_ID.split(',') if chat_id.strip()]
+    if not chat_ids:
+        logger.warning("TELEGRAM_CHAT_ID is empty or contains only whitespace.")
         return False
 
+    success_count = 0
+    telegram_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
 
-def send_ntfy_notification(topic: str, message: str, endpoint_url: str) -> None:
-    """Отправка уведомления через ntfy и Telegram, логирование в БД"""
-    # Отправка через NTFY
+    for chat_id in chat_ids:
+        try:
+            payload = {
+                "chat_id": chat_id,
+                "text": message,
+                "parse_mode": "HTML"
+            }
+            resp = requests.post(telegram_url, json=payload, timeout=10)
+            if resp.status_code == 200:
+                logger.info(f"Telegram notification sent to chat_id {chat_id}: {message}")
+                success_count += 1
+            else:
+                logger.warning(f"Telegram notification to {chat_id} failed with status {resp.status_code}: {resp.text}")
+        except Exception as e:
+            logger.error(f"Failed to send Telegram notification to {chat_id}: {e}")
+
+    return success_count > 0
+
+
+def send_ntfy_notification(message: str) -> bool:
+    """Отправка уведомления через ntfy"""
+    if not NTFY_ENABLED:
+        return False
+    
     url = f"{NTFY_SERVER}/{NTFY_TOPIC}"
-    ntfy_success = False
     try:
         resp = requests.post(url, data=message.encode("utf-8"), timeout=5)
         if resp.status_code == 200:
             logger.info(f"NTFY notification sent: {message}")
-            ntfy_success = True
+            return True
         else:
             logger.warning(
                 f"NTFY notification failed with status {resp.status_code}: {message}"
             )
+            return False
     except Exception as e:
         logger.error(f"Failed to send NTFY notification: {e}")
+        return False
 
-    # Отправка через Telegram
-    telegram_success = send_telegram_notification(message, endpoint_url)
+def send_notifications(message: str, endpoint_url: str):
+    """Диспетчер уведомлений, который отправляет сообщения по включенным каналам."""
+    ntfy_success = False
+    if NTFY_ENABLED:
+        ntfy_success = send_ntfy_notification(message)
 
-    # Определение общего статуса (успешно если хотя бы один канал сработал)
-    log_status = "sent" if (ntfy_success or telegram_success) else "failed"
+    telegram_success = False
+    if TELEGRAM_ENABLED:
+        telegram_success = send_telegram_notification(message, endpoint_url)
 
     # Логирование в БД
+    log_status = "sent" if (ntfy_success or telegram_success) else "failed"
     try:
         with get_db_connection() as conn:
             cur = conn.cursor()
@@ -447,17 +465,17 @@ def check_notification_needed(
     # Уведомление о восстановлении
     if is_recovered:
         message = f"[OK] RECOVERED: {url} is back online (status: {current_status})\n\nDashboard: {DASHBOARD_URL}"
-        send_ntfy_notification(NTFY_TOPIC, message, url)
+        send_notifications(message, url)
         return True
 
     # Уведомление о падении (с учетом интервала)
     if is_down and should_send_down_notification(last_notified, now_utc):
         if just_went_down:
             message = f"[ALERT] {url} is DOWN\n\nDashboard: {DASHBOARD_URL}"
-            send_ntfy_notification(NTFY_TOPIC, message, url)
+            send_notifications(message, url)
         else:
             message = f"[WARNING] STILL DOWN: {url} remains unavailable\n\nDashboard: {DASHBOARD_URL}"
-            send_ntfy_notification(NTFY_TOPIC, message, url)
+            send_notifications(message, url)
         return True
 
     return False
@@ -780,5 +798,13 @@ if __name__ == "__main__":
     # Стартуем фоновый поток проверки
     t = threading.Thread(target=check_endpoints_loop, daemon=True)
     t.start()
+    
+    # Отправка приветственного сообщения при старте
+    if NTFY_ENABLED or TELEGRAM_ENABLED:
+        logger.info("Sending startup notification...")
+        startup_message = f"✅ Monitoring service started successfully.\n\nDashboard: {DASHBOARD_URL}"
+        # URL эндпоинта здесь нерелевантен, поэтому передаем "system"
+        send_notifications(startup_message, "system")
+
     # Стартуем Flask для разработки
     app.run(host=URL, port=PORT, debug=True)
