@@ -149,3 +149,6 @@ Thumbs.db
 # Log files
 *.log
 logs/
+
+# Backup files
+main_old.py
