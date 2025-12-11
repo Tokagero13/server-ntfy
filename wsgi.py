@@ -1,12 +1,16 @@
-from main import app, init_db, check_endpoints_loop
+# -*- coding: utf-8 -*-
 import threading
+import asyncio
+from app import create_app, run_background_tasks
 
-# Initialize database
-init_db()
+# Создаем приложение
+application = create_app()
 
-# Start background thread
-t = threading.Thread(target=check_endpoints_loop, daemon=True)
-t.start()
+# Запускаем фоновые задачи в отдельных потоках
+# Этот код выполнится один раз при запуске Gunicorn
+def start_background_tasks_sync():
+    asyncio.run(run_background_tasks())
 
-if __name__ == "__main__":
-    app.run()
+if __name__ != "__main__":
+    background_task_thread = threading.Thread(target=start_background_tasks_sync, daemon=True)
+    background_task_thread.start()

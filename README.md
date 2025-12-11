@@ -1,95 +1,123 @@
-# Использование WSGI точки входа
+# Мониторинг эндпоинтов
 
-## Запуск через wsgi.py
+Это приложение для мониторинга HTTP(S) эндпоинтов с уведомлениями через [ntfy.sh](https://ntfy.sh/) и Telegram.
 
-Файл [`wsgi.py`](wsgi.py) является точкой входа для WSGI серверов (например, Gunicorn). Он автоматически:
+## Структура проекта
 
-1. Инициализирует базу данных
-2. Запускает фоновый поток мониторинга эндпоинтов  
-3. Экспортирует Flask приложение для WSGI сервера
+Проект организован в виде пакета Python `app` для лучшей модульности и поддержки.
 
-### Запуск с Gunicorn (Linux/macOS)
+```
+.
+├── app/
+│   ├── api/                  # Модули с Flask-RESTx эндпоинтами
+│   │   ├── __init__.py
+│   │   ├── endpoints.py
+│   │   ├── notifications.py
+│   │   ├── settings.py
+│   │   └── telegram.py
+│   ├── core/                 # Основная бизнес-логика
+│   │   ├── __init__.py
+│   │   ├── monitoring.py     # Логика проверки эндпоинтов
+│   │   ├── notifications.py  # Логика отправки уведомлений
+│   │   └── telegram_bot.py   # Логика Telegram бота
+│   ├── db.py                 # Функции для работы с базой данных (SQLite)
+│   ├── __init__.py           # Фабрика Flask приложения
+│   ├── config.py             # Централизованная конфигурация
+│   └── models.py             # Модели Flask-RESTx для API
+├── static/                   # Статические файлы (HTML, CSS, JS)
+├── templates/                # Шаблоны (если используются)
+├── .env                      # Переменные окружения
+├── example.env               # Пример файла .env
+├── gunicorn.conf.py          # Конфигурация Gunicorn
+├── run.py                    # Скрипт для локальной разработки
+├── wsgi.py                   # Точка входа для WSGI серверов
+├── requirements.txt          # Зависимости проекта
+└── README.md                 # Этот файл
+```
+
+## Установка и запуск
+
+### 1. Установка зависимостей
+
+Установите необходимые пакеты с помощью pip:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Настройка переменных окружения
+
+Создайте файл `.env` в корне проекта (можно скопировать из `example.env`) и укажите необходимые переменные:
+
+```dotenv
+# .env
+DB_PATH=endpoints.db
+CHECK_INTERVAL=10
+NOTIFY_EVERY_MINUTES=2
+INDEX_PAGE=index2.html
+
+# NTFY
+NTFY_SERVER=https://ntfy.sh
+NTFY_TOPIC=my_monitor_topic
+NTFY_ENABLED=True
+
+# Telegram
+TELEGRAM_BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
+TELEGRAM_CHAT_ID=YOUR_TELEGRAM_CHAT_ID # Может быть обнаружен через API
+TELEGRAM_ENABLED=True
+TELEGRAM_DISCOVERY_ENABLED=True
+TELEGRAM_DISCOVERY_TIMEOUT=600 # Секунды
+TELEGRAM_BOT_USERNAME=YourMonitorBot
+
+# App URL
+URL=0.0.0.0
+PORT=5000
+# API_BASE и DASHBOARD_URL будут сформированы автоматически, если не указаны
+```
+
+### 3. Запуск приложения
+
+#### Для локальной разработки (с hot-reload):
+
+Используйте `run.py`. Этот скрипт запускает Flask с отладочным режимом и фоновые задачи (мониторинг, Telegram бот).
+
+```bash
+python run.py
+```
+
+#### Для продакшена (с Gunicorn/Uvicorn):
+
+Используйте [`wsgi.py`](wsgi.py) как точку входа. Gunicorn (рекомендуется для Linux/macOS) или Uvicorn (рекомендуется для Windows) запустят приложение и фоновые задачи в отдельных потоках.
+
+**Запуск с Gunicorn (Linux/macOS):**
 
 ```bash
 # Запуск с конфигурацией из gunicorn.conf.py
-gunicorn -c gunicorn.conf.py wsgi:app
+gunicorn -c gunicorn.conf.py wsgi:application
 
 # Или напрямую
-gunicorn --bind 0.0.0.0:5000 --workers 4 wsgi:app
+gunicorn --bind 0.0.0.0:5000 --workers 4 wsgi:application
 ```
 
-### Запуск с Uvicorn (Windows/Cross-platform)
+**Запуск с Uvicorn (Windows/Cross-platform):**
 
 ```bash
 # Базовый запуск (рекомендуется для Windows)
-uvicorn wsgi:app --host 0.0.0.0 --port 5000
+uvicorn wsgi:application --host 0.0.0.0 --port 5000
 
-# Для разработки с hot reload
-uvicorn wsgi:app --host 0.0.0.0 --port 5000 --reload
-
-# ВНИМАНИЕ: На Windows НЕ используйте --workers > 1
-# Это вызывает ошибку WinError 10022
-# Для масштабирования на Windows используйте PM2 с несколькими процессами
+# Для масштабирования на Windows используйте PM2 (см. ниже)
+# НЕ используйте --workers > 1 с Uvicorn на Windows из-за проблем с сокетами.
 ```
 
-### Запуск через PM2
+### 4. Доступ к приложению
 
-**Для Gunicorn (Linux/macOS):**
-```bash
-pm2 start "gunicorn wsgi:app" --name monitor-app
-```
+После запуска приложение будет доступно по адресу `http://<YOUR_URL>:<YOUR_PORT>`.
+API документация доступна по адресу `http://<YOUR_URL>:<YOUR_PORT>/api/docs`.
 
-**Для Uvicorn (Windows/Cross-platform):**
-```bash
-# ecosystem.config.js для Windows (несколько процессов вместо workers)
-{
-  "name": "monitor-app",
-  "script": "uvicorn",
-  "args": "wsgi:app --host 0.0.0.0 --port 5000",
-  "instances": 4,  // PM2 создаст 4 процесса
-  "exec_mode": "cluster",
-  "cwd": "/путь/к/проекту"
-}
+### 5. Конфигурация серверов
 
-# Или прямой запуск (без workers на Windows)
-pm2 start "uvicorn wsgi:app --host 0.0.0.0 --port 5000" --name monitor-app -i 4
-```
+См. [`gunicorn.conf.py`](gunicorn.conf.py) для настроек Gunicorn.
 
-### Переменные окружения
+---
 
-Убедитесь, что в [`.env`](.env) настроены:
-
-- `API_BASE` - базовый URL для API
-- `DASHBOARD_URL` - URL дашборда для уведомлений  
-- `URL` - хост для привязки (по умолчанию localhost)
-
-### Разработка vs Продакшен
-
-- **Разработка**: `python main.py` (включает debug режим)
-- **Продакшен Linux/macOS**: `gunicorn wsgi:app` через wsgi.py
-- **Продакшен Windows**: `uvicorn wsgi:app` через wsgi.py
-
-## Конфигурация серверов
-
-### Gunicorn (Linux/macOS)
-Настройки в [`gunicorn.conf.py`](gunicorn.conf.py):
-- Привязка к `0.0.0.0:5000`
-- 4 worker процесса
-- Логирование в `log/gunicorn/`
-
-### Uvicorn (Windows/Cross-platform)
-Параметры командной строки:
-- `--host 0.0.0.0` - принимать соединения от всех адресов
-- `--port 5000` - порт для приложения
-- `--reload` - автоперезагрузка при изменениях (только для разработки)
-
-**ВАЖНО для Windows:**
-- НЕ используйте `--workers` > 1 на Windows (вызывает ошибку сокетов)
-- Для масштабирования используйте PM2 с параметром `instances`
-- Для разработки достаточно одного процесса
-
-## Рекомендации по платформам
-
-- **Windows**: Используйте uvicorn (лучшая совместимость)
-- **Linux/macOS**: Используйте gunicorn (более производительный для продакшена)
-- **Docker**: Любой из серверов, gunicorn предпочтительнее
+Это обновление включает новую структуру, унифицированные инструкции по запуску для разработки и продакшена, а также обновленные переменные окружения.

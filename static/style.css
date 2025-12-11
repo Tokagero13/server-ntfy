@@ -81,3 +81,46 @@ body {
     transition: all 0.5s ease-in-out;
     animation: fadeIn 0.5s ease-in-out;
 }
+
+/* Side Panel Styles */
+.side-panel-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.side-panel {
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.side-panel.open {
+    transform: translateX(0);
+}
+
+.side-panel-container.open .side-panel-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.side-panel-container:not(.open) .side-panel-backdrop {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Stacking Order for Nested Panels */
+/* Level 1 Panels */
+#addEndpointPanelContainer,
+#ntfyPanelContainer,
+#subscriptionPanelContainer {
+    z-index: 50;
+}
+
+/* Level 2 Panels (Secondary) */
+#telegramDiscoveryPanelContainer {
+    z-index: 60;
+}
+
+/* Ensure backdrop of secondary panel is slightly transparent to show context but block interaction */
+#telegramDiscoveryPanelContainer .side-panel-backdrop {
+    background-color: rgba(0, 0, 0, 0.2);
+}

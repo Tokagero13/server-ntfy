@@ -43,7 +43,7 @@ class CustomStatusCard extends HTMLElement {
         if (cardElement) {
             cardElement.innerHTML = `
                 <span class="stat-offline-detail text-red-600">${this.stats.offline} offline</span>
-                ${this.stats.pending > 0 ? `<div class="mt-2"><button onclick="showModal()" class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full hover:bg-yellow-200">+ ${this.stats.pending} Pending</button></div>` : ''}
+                ${this.stats.pending > 0 ? `<div class="mt-2"><button onclick="showAddEndpointPanel()" class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full hover:bg-yellow-200">+ ${this.stats.pending} Pending</button></div>` : ''}
             `;
         }
     }
@@ -77,7 +77,7 @@ class CustomStatusCard extends HTMLElement {
                 <div class="stat-issues text-3xl font-bold text-red-600 mb-2">${this.stats.offline}</div>
                 <div class="text-sm text-gray-500">
                     <span class="stat-offline-detail text-red-600">${this.stats.offline} offline</span>
-                    ${this.stats.pending > 0 ? `<div class="mt-2"><button onclick="showModal()" class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full hover:bg-yellow-200">+ ${this.stats.pending} Pending</button></div>` : ''}
+                    ${this.stats.pending > 0 ? `<div class="mt-2"><button onclick="showAddEndpointPanel()" class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full hover:bg-yellow-200">+ ${this.stats.pending} Pending</button></div>` : ''}
                 </div>
             </div>
         </div>

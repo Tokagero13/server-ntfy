@@ -9,16 +9,20 @@ let endpointsSearchQuery = '';
 
 // DOM elements
 let addEndpointBtn;
-let addEndpointModal;
-let closeModalBtn;
-let cancelBtn;
+let addEndpointPanelContainer;
+let addEndpointPanel;
+let addEndpointPanelBackdrop;
+let closeAddEndpointPanelBtn;
+let cancelAddEndpointBtn;
 let endpointForm;
 let endpointUrl;
 let endpointName;
 let endpointsContainer;
 let ntfyBtn;
-let ntfyModal;
-let closeNtfyModalBtn;
+let ntfyPanelContainer;
+let ntfyPanel;
+let ntfyPanelBackdrop;
+let closeNtfyPanelBtn;
 let logEndpointFilter;
 let logSortOrder;
 let logPagination;
@@ -26,6 +30,22 @@ let endpointsSearchInput;
 let logSearchInput;
 let logStatusFilter;
 let logRefreshBtn;
+
+// Subscription management elements
+let subscriptionPanelContainer;
+let subscriptionPanel;
+let subscriptionPanelBackdrop;
+let closeSubscriptionPanelBtn;
+let newChatId;
+let addSubscriptionBtn;
+let subscriptionsList;
+let telegramLinkBtn;
+let shareEndpointBtn;
+let subscriberCount;
+let subscriptionPanelSubtitle;
+
+// Current subscription management state
+let currentEndpointId = null;
 
 // Log state
 let logState = {
@@ -44,109 +64,127 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeElements();
     initializeEventListeners();
     loadEndpoints();
-   loadNotificationLogs();
+    loadNotificationLogs();
     
     // Auto-refresh every 10 seconds
     setInterval(loadEndpoints, 10000);
-   setInterval(loadNotificationLogs, 15000);
+    setInterval(loadNotificationLogs, 15000);
 });
 
 function initializeElements() {
     addEndpointBtn = document.getElementById('addEndpointBtn');
-    addEndpointModal = document.getElementById('addEndpointModal');
-    closeModalBtn = document.getElementById('closeModalBtn');
-    cancelBtn = document.getElementById('cancelBtn');
+    addEndpointPanelContainer = document.getElementById('addEndpointPanelContainer');
+    addEndpointPanel = document.getElementById('addEndpointPanel');
+    addEndpointPanelBackdrop = document.getElementById('addEndpointPanelBackdrop');
+    closeAddEndpointPanelBtn = document.getElementById('closeAddEndpointPanelBtn');
+    cancelAddEndpointBtn = document.getElementById('cancelAddEndpointBtn');
     endpointForm = document.getElementById('endpointForm');
     endpointUrl = document.getElementById('endpointUrl');
     endpointName = document.getElementById('endpointName');
     endpointsContainer = document.getElementById('endpointsContainer');
-   ntfyBtn = document.getElementById('ntfyBtn');
-   ntfyModal = document.getElementById('ntfyModal');
-   closeNtfyModalBtn = document.getElementById('closeNtfyModalBtn');
-   logEndpointFilter = document.getElementById('logEndpointFilter');
-   logStatusFilter = document.getElementById('logStatusFilter');
-   logSortOrder = document.getElementById('logSortOrder');
-   logPagination = document.getElementById('logPagination');
-   endpointsSearchInput = document.getElementById('endpointsSearchInput');
-   logSearchInput = document.getElementById('logSearchInput');
-   logRefreshBtn = document.getElementById('logRefreshBtn');
+    ntfyBtn = document.getElementById('ntfyBtn');
+    ntfyPanelContainer = document.getElementById('ntfyPanelContainer');
+    ntfyPanel = document.getElementById('ntfyPanel');
+    ntfyPanelBackdrop = document.getElementById('ntfyPanelBackdrop');
+    closeNtfyPanelBtn = document.getElementById('closeNtfyPanelBtn');
+    logEndpointFilter = document.getElementById('logEndpointFilter');
+    logStatusFilter = document.getElementById('logStatusFilter');
+    logSortOrder = document.getElementById('logSortOrder');
+    logPagination = document.getElementById('logPagination');
+    endpointsSearchInput = document.getElementById('endpointsSearchInput');
+    logSearchInput = document.getElementById('logSearchInput');
+    logRefreshBtn = document.getElementById('logRefreshBtn');
+    
+    // Subscription management elements
+    subscriptionPanelContainer = document.getElementById('subscriptionPanelContainer');
+    subscriptionPanel = document.getElementById('subscriptionPanel');
+    subscriptionPanelBackdrop = document.getElementById('subscriptionPanelBackdrop');
+    closeSubscriptionPanelBtn = document.getElementById('closeSubscriptionPanelBtn');
+    newChatId = document.getElementById('newChatId');
+    addSubscriptionBtn = document.getElementById('addSubscriptionBtn');
+    subscriptionsList = document.getElementById('subscriptionsList');
+    telegramLinkBtn = document.getElementById('telegramLinkBtn');
+    shareEndpointBtn = document.getElementById('shareEndpointBtn');
+    subscriberCount = document.getElementById('subscriberCount');
+    subscriptionPanelSubtitle = document.getElementById('subscriptionPanelSubtitle');
 }
 
 function initializeEventListeners() {
-   // Modal controls
-   addEndpointBtn.addEventListener('click', showModal);
-    closeModalBtn.addEventListener('click', hideModal);
-    cancelBtn.addEventListener('click', hideModal);
-   ntfyBtn.addEventListener('click', showNtfyModal);
-   closeNtfyModalBtn.addEventListener('click', hideNtfyModal);
+    // Add Endpoint Panel controls
+    addEndpointBtn.addEventListener('click', showAddEndpointPanel);
+    closeAddEndpointPanelBtn.addEventListener('click', hideAddEndpointPanel);
+    cancelAddEndpointBtn.addEventListener('click', hideAddEndpointPanel);
+    addEndpointPanelBackdrop.addEventListener('click', hideAddEndpointPanel);
+    
+    // NTFY Panel controls
+    ntfyBtn.addEventListener('click', showNtfyPanel);
+    closeNtfyPanelBtn.addEventListener('click', hideNtfyPanel);
+    ntfyPanelBackdrop.addEventListener('click', hideNtfyPanel);
+    
+    // Subscription management panel controls
+    closeSubscriptionPanelBtn.addEventListener('click', hideSubscriptionPanel);
+    subscriptionPanelBackdrop.addEventListener('click', hideSubscriptionPanel);
+    addSubscriptionBtn.addEventListener('click', addSubscription);
+    telegramLinkBtn.addEventListener('click', openTelegramBotLink);
+    shareEndpointBtn.addEventListener('click', shareEndpointLink);
     
     // Form submission
     endpointForm.addEventListener('submit', handleSubmit);
-    
-    // Close modal on outside click
-    addEndpointModal.addEventListener('click', function(e) {
-        if (e.target === addEndpointModal) {
-            hideModal();
-        }
-    });
-
-   ntfyModal.addEventListener('click', function(e) {
-       if (e.target === ntfyModal) {
-           hideNtfyModal();
-       }
-   });
     
     // Listen for delete endpoint events
     document.addEventListener('deleteEndpoint', function(e) {
         deleteEndpoint(e.detail.id);
     });
     
-    // ESC key to close modal
+    // ESC key to close panels
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && !addEndpointModal.classList.contains('hidden')) {
-            hideModal();
+        if (e.key === 'Escape') {
+            if (addEndpointPanelContainer.classList.contains('open')) hideAddEndpointPanel();
+            if (ntfyPanelContainer.classList.contains('open')) hideNtfyPanel();
+            if (subscriptionPanelContainer.classList.contains('open')) hideSubscriptionPanel();
         }
-       if (e.key === 'Escape' && !ntfyModal.classList.contains('hidden')) {
-           hideNtfyModal();
-       }
-   });
+    });
 
-   // Log controls
-   if (logEndpointFilter) {
-       logEndpointFilter.addEventListener('change', handleLogEndpointFilter);
-   }
-   if (logStatusFilter) {
-       logStatusFilter.addEventListener('change', handleLogStatusFilter);
-   }
-   if (logSearchInput) {
-       logSearchInput.addEventListener('input', debounce(handleLogSearch, 500));
-   }
-   if (logRefreshBtn) {
-       logRefreshBtn.addEventListener('click', handleLogRefresh);
-   }
-   logSortOrder.addEventListener('click', handleLogSortOrder);
+    // Log controls
+    if (logEndpointFilter) {
+        logEndpointFilter.addEventListener('change', handleLogEndpointFilter);
+    }
+    if (logStatusFilter) {
+        logStatusFilter.addEventListener('change', handleLogStatusFilter);
+    }
+    if (logSearchInput) {
+        logSearchInput.addEventListener('input', debounce(handleLogSearch, 500));
+    }
+    if (logRefreshBtn) {
+        logRefreshBtn.addEventListener('click', handleLogRefresh);
+    }
+    logSortOrder.addEventListener('click', handleLogSortOrder);
 
-   // Endpoints search
-   if (endpointsSearchInput) {
-       endpointsSearchInput.addEventListener('input', debounce(handleEndpointsSearch, 300));
-   }
+    // Endpoints search
+    if (endpointsSearchInput) {
+        endpointsSearchInput.addEventListener('input', debounce(handleEndpointsSearch, 300));
+    }
 }
 
-function showNtfyModal() {
-   ntfyModal.classList.remove('hidden');
+function showNtfyPanel() {
+    ntfyPanelContainer.classList.add('open');
+    ntfyPanel.classList.add('open');
 }
 
-function hideNtfyModal() {
-   ntfyModal.classList.add('hidden');
+function hideNtfyPanel() {
+    ntfyPanelContainer.classList.remove('open');
+    ntfyPanel.classList.remove('open');
 }
 
-function showModal() {
-    addEndpointModal.classList.remove('hidden');
+function showAddEndpointPanel() {
+    addEndpointPanelContainer.classList.add('open');
+    addEndpointPanel.classList.add('open');
     endpointUrl.focus();
 }
 
-function hideModal() {
-    addEndpointModal.classList.add('hidden');
+function hideAddEndpointPanel() {
+    addEndpointPanelContainer.classList.remove('open');
+    addEndpointPanel.classList.remove('open');
     endpointForm.reset();
 }
 
@@ -221,7 +259,7 @@ function renderEndpoints() {
                     <i data-feather="server" class="mx-auto mb-4 text-gray-400" style="width: 48px; height: 48px;"></i>
                     <h3 class="text-lg font-medium text-gray-900 mb-2">No endpoints monitored</h3>
                     <p class="text-gray-500 mb-4">Get started by adding your first endpoint to monitor.</p>
-                    <button onclick="showModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                    <button onclick="showAddEndpointPanel()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
                         Add Endpoint
                     </button>
                 </div>
@@ -333,7 +371,7 @@ async function handleSubmit(e) {
         });
         
         if (response.ok) {
-            hideModal();
+            hideAddEndpointPanel();
             showNotification('Endpoint added successfully!', 'success');
             loadEndpoints();
         } else {
@@ -691,7 +729,267 @@ function updateLogEndpointFilter() {
     }
 }
 
+function showSubscriptionPanel(endpointId) {
+    currentEndpointId = endpointId;
+    subscriptionPanelContainer.classList.add('open');
+    subscriptionPanel.classList.add('open');
+    
+    // Update subtitle with endpoint info
+    const endpoint = endpoints.find(e => e.id === endpointId);
+    if (endpoint) {
+        subscriptionPanelSubtitle.textContent = `Manage notifications for ${endpoint.name || endpoint.url}`;
+    }
+    
+    loadSubscriptions(endpointId);
+}
 
-window.showModal = showModal;
+function hideSubscriptionPanel() {
+    subscriptionPanelContainer.classList.remove('open');
+    subscriptionPanel.classList.remove('open');
+    currentEndpointId = null;
+}
+
+async function loadSubscriptions(endpointId) {
+    try {
+        const response = await fetch(`${API_BASE}/${endpointId}/subscriptions`);
+        
+        if (response.ok) {
+            const subscriptions = await response.json();
+            renderSubscriptions(subscriptions);
+        } else {
+            showNotification('Failed to load subscriptions', 'error');
+        }
+    } catch (error) {
+        showNotification('Failed to load subscriptions: ' + error.message, 'error');
+    }
+}
+
+function renderSubscriptions(subscriptions) {
+    if (subscriberCount) subscriberCount.textContent = subscriptions.length;
+
+    if (subscriptions.length === 0) {
+        subscriptionsList.innerHTML = `
+            <div class="text-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-200">
+                <div class="text-gray-400 mb-2">
+                    <i data-feather="users" class="mx-auto w-8 h-8"></i>
+                </div>
+                <p class="text-sm text-gray-500 font-medium">No active subscribers</p>
+                <p class="text-xs text-gray-400 mt-1">Add a Chat ID or use Discovery to start</p>
+            </div>
+        `;
+        feather.replace();
+        return;
+    }
+    
+    subscriptionsList.innerHTML = subscriptions.map(sub => `
+        <div class="group flex items-center justify-between p-3 bg-white border border-gray-200 rounded-xl hover:shadow-sm hover:border-blue-200 transition-all">
+            <div class="flex items-center min-w-0">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center text-blue-600 mr-3 flex-shrink-0">
+                    <i data-feather="message-square" class="w-4 h-4"></i>
+                </div>
+                <div class="min-w-0">
+                    <div class="font-mono text-sm font-medium text-gray-700 truncate">${sub.chat_id}</div>
+                    <div class="flex items-center mt-0.5">
+                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium ${sub.enabled ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-600'}">
+                            ${sub.enabled ? 'Active' : 'Disabled'}
+                        </span>
+                        <span class="text-[10px] text-gray-400 ml-2">Added ${new Date(sub.created_at).toLocaleDateString()}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                <button onclick="toggleSubscription(${sub.id}, ${!sub.enabled})" 
+                        class="p-1.5 rounded-lg transition-colors ${sub.enabled ? 'text-gray-400 hover:text-yellow-600 hover:bg-yellow-50' : 'text-green-600 hover:bg-green-50'}"
+                        title="${sub.enabled ? 'Disable' : 'Enable'}">
+                    <i data-feather="${sub.enabled ? 'pause-circle' : 'play-circle'}" class="w-4 h-4"></i>
+                </button>
+                <button onclick="deleteSubscription(${sub.id})" 
+                        class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                        title="Remove">
+                    <i data-feather="trash-2" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    `).join('');
+    feather.replace();
+}
+
+async function addSubscription() {
+    if (!currentEndpointId) {
+        showNotification('No endpoint selected', 'error');
+        return;
+    }
+    
+    const chatId = newChatId.value.trim();
+    if (!chatId) {
+        showNotification('Please enter a Chat ID', 'error');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE}/${currentEndpointId}/subscriptions`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                chat_id: chatId,
+                enabled: true 
+            })
+        });
+        
+        if (response.ok) {
+            newChatId.value = '';
+            loadSubscriptions(currentEndpointId);
+            showNotification('Subscription added successfully', 'success');
+        } else {
+            const error = await response.json();
+            showNotification(error.message || 'Failed to add subscription', 'error');
+        }
+    } catch (error) {
+        showNotification('Failed to add subscription: ' + error.message, 'error');
+    }
+}
+
+async function toggleSubscription(subscriptionId, enabled) {
+    try {
+        const response = await fetch(`${API_BASE}/${currentEndpointId}/subscriptions/${subscriptionId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ enabled })
+        });
+        
+        if (response.ok) {
+            loadSubscriptions(currentEndpointId);
+            showNotification(`Subscription ${enabled ? 'enabled' : 'disabled'}`, 'success');
+        } else {
+            showNotification('Failed to toggle subscription', 'error');
+        }
+    } catch (error) {
+        showNotification('Failed to toggle subscription: ' + error.message, 'error');
+    }
+}
+
+async function deleteSubscription(subscriptionId) {
+    if (!confirm('Are you sure you want to delete this subscription?')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE}/${currentEndpointId}/subscriptions/${subscriptionId}`, {
+            method: 'DELETE'
+        });
+        
+        if (response.ok) {
+            loadSubscriptions(currentEndpointId);
+            showNotification('Subscription deleted successfully', 'success');
+        } else {
+            showNotification('Failed to delete subscription', 'error');
+        }
+    } catch (error) {
+        showNotification('Failed to delete subscription: ' + error.message, 'error');
+    }
+}
+
+// Telegram Deep Linking Functions
+async function openTelegramBotLink() {
+    if (!currentEndpointId) {
+        showNotification('No endpoint selected', 'error');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE}/telegram/link/${currentEndpointId}`);
+        
+        if (response.ok) {
+            const data = await response.json();
+            
+            // Show confirmation modal with instructions
+            const confirmModal = document.createElement('div');
+            confirmModal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            confirmModal.innerHTML = `
+                <div class="bg-white rounded-lg p-6 w-full max-w-md">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold">Subscribe via Telegram Bot</h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700">
+                            <i data-feather="x"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <p><strong>Endpoint:</strong> ${data.endpoint_name}</p>
+                        <p class="text-sm text-gray-600">${data.instructions}</p>
+                        <div class="flex space-x-2">
+                            <button onclick="window.open('${data.deep_link}', '_blank')" 
+                                    class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                <i data-feather="external-link" class="w-4 h-4 inline mr-1"></i>
+                                Open Telegram Bot
+                            </button>
+                            <button onclick="navigator.clipboard.writeText('${data.deep_link}').then(() => showNotification('Link copied!', 'success'))" 
+                                    class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
+                                <i data-feather="copy" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(confirmModal);
+            feather.replace();
+            
+        } else {
+            showNotification('Failed to generate Telegram link', 'error');
+        }
+    } catch (error) {
+        showNotification('Failed to generate Telegram link: ' + error.message, 'error');
+    }
+}
+
+async function shareEndpointLink() {
+    if (!currentEndpointId) {
+        showNotification('No endpoint selected', 'error');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE}/telegram/link/${currentEndpointId}`);
+        
+        if (response.ok) {
+            const data = await response.json();
+            
+            if (navigator.share) {
+                // Use native sharing if available
+                await navigator.share({
+                    title: `Subscribe to ${data.endpoint_name}`,
+                    text: `Get notifications about ${data.endpoint_name} status`,
+                    url: data.deep_link
+                });
+            } else {
+                // Fallback to clipboard
+                await navigator.clipboard.writeText(data.deep_link);
+                showNotification('Telegram link copied to clipboard!', 'success');
+            }
+        } else {
+            showNotification('Failed to generate share link', 'error');
+        }
+    } catch (error) {
+        if (error.name === 'AbortError') {
+            // User cancelled sharing
+            return;
+        }
+        showNotification('Failed to share: ' + error.message, 'error');
+    }
+}
+
+// Export functions to global scope
+window.showAddEndpointPanel = showAddEndpointPanel;
 window.loadEndpoints = loadEndpoints;
 window.changeLogPage = changeLogPage;
+window.showSubscriptionPanel = showSubscriptionPanel;
+window.addSubscription = addSubscription;
+window.toggleSubscription = toggleSubscription;
+window.deleteSubscription = deleteSubscription;
+window.openTelegramBotLink = openTelegramBotLink;
+window.shareEndpointLink = shareEndpointLink;

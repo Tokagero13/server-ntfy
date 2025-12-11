@@ -106,9 +106,14 @@ class CustomEndpointCard extends HTMLElement {
                             ${this.endpoint.name ? `${this.formatUrl(this.endpoint.url)} • ` : ''}ID: ${this.endpoint.id}
                         </p>
                     </div>
-                    <button class="text-gray-400 hover:text-red-500 ml-2" onclick="this.closest('custom-endpoint-card').deleteEndpoint()" title="Delete endpoint">
-                        <i data-feather="trash-2" class="w-4 h-4"></i>
-                    </button>
+                    <div class="flex items-center space-x-1 ml-2">
+                        <button class="text-gray-400 hover:text-blue-500" onclick="showSubscriptionPanel(${this.endpoint.id})" title="Manage Telegram subscriptions">
+                            <i data-feather="settings" class="w-4 h-4"></i>
+                        </button>
+                        <button class="text-gray-400 hover:text-red-500" onclick="this.closest('custom-endpoint-card').deleteEndpoint()" title="Delete endpoint">
+                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="flex items-center justify-between mb-3">
@@ -130,11 +135,17 @@ class CustomEndpointCard extends HTMLElement {
                     </div>
                 </div>
 
-                <div class="mt-4 pt-3 border-t border-gray-100">
-                    <a href="${this.endpoint.url}" target="_blank" class="text-xs text-blue-600 hover:text-blue-800 flex items-center">
+                <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
+                    <a href="${this.endpoint.url}" target="_blank" class="text-xs text-gray-500 hover:text-gray-700 flex items-center">
                         <i data-feather="external-link" class="w-3 h-3 mr-1"></i>
-                        Visit endpoint
+                        Visit
                     </a>
+                    
+                    <button onclick="window.openTelegramBotLink && (window.currentEndpointId = ${this.endpoint.id}) && window.openTelegramBotLink()"
+                            class="text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 py-1.5 rounded-md flex items-center transition-colors font-medium">
+                        <i data-feather="send" class="w-3 h-3 mr-1.5"></i>
+                        Subscribe via Bot
+                    </button>
                 </div>
             </div>
         `;

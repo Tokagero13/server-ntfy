@@ -78,47 +78,140 @@
         </div>
     </main>
 
-    <!-- Add Endpoint Modal -->
-    <div id="addEndpointModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white rounded-lg p-6 w-full max-w-md">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-semibold">Add New Endpoint</h3>
-                <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700">
-                    <i data-feather="x"></i>
+    <!-- Add Endpoint Side Panel -->
+    <div id="addEndpointPanelContainer" class="side-panel-container fixed inset-0 z-50 pointer-events-none">
+        <div id="addEndpointPanelBackdrop" class="side-panel-backdrop absolute inset-0"></div>
+        <div id="addEndpointPanel" class="side-panel absolute top-0 right-0 h-full w-96 bg-white shadow-2xl overflow-y-auto pointer-events-auto flex flex-col">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <h3 class="text-lg font-bold text-gray-800">Add New Endpoint</h3>
+                <button id="closeAddEndpointPanelBtn" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i data-feather="x" class="w-6 h-6"></i>
                 </button>
             </div>
-            <form id="endpointForm" class="space-y-4">
-                <div>
-                    <label for="endpointName" class="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
-                    <input type="text" id="endpointName" placeholder="FastAPI - Dev" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <p class="text-xs text-gray-500 mt-1">Enter a friendly name for this service (optional)</p>
-                </div>
-                <div>
-                    <label for="endpointUrl" class="block text-sm font-medium text-gray-700 mb-1">Domain or URL</label>
-                    <input type="text" id="endpointUrl" required placeholder="example.com, 89.214.14.89:8000 or https://example.com" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <p class="text-xs text-gray-500 mt-1">Enter a domain name, IP:port, or full URL</p>
-                </div>
-                <div class="flex justify-end space-x-3">
-                    <button type="button" id="cancelBtn" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save</button>
-                </div>
-            </form>
+            <div class="p-6 flex-1">
+                <form id="endpointForm" class="space-y-6">
+                    <div>
+                        <label for="endpointName" class="block text-sm font-medium text-gray-700 mb-2">Service Name</label>
+                        <input type="text" id="endpointName" placeholder="FastAPI - Dev" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
+                        <p class="text-xs text-gray-500 mt-2">Enter a friendly name for this service (optional)</p>
+                    </div>
+                    <div>
+                        <label for="endpointUrl" class="block text-sm font-medium text-gray-700 mb-2">Domain or URL</label>
+                        <input type="text" id="endpointUrl" required placeholder="example.com, 89.214.14.89:8000 or https://example.com" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
+                        <p class="text-xs text-gray-500 mt-2">Enter a domain name, IP:port, or full URL</p>
+                    </div>
+                    <div class="pt-4 flex space-x-3">
+                        <button type="button" id="cancelAddEndpointBtn" class="flex-1 px-4 py-3 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 font-medium transition-colors">Cancel</button>
+                        <button type="submit" class="flex-1 px-4 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 font-medium shadow-sm transition-colors">Save Endpoint</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
-    <div id="ntfyModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white rounded-lg p-6 w-full max-w-md">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-semibold">NTFY Subscription</h3>
-                <button id="closeNtfyModalBtn" class="text-gray-500 hover:text-gray-700">
-                    <i data-feather="x"></i>
+    <!-- NTFY Panel -->
+    <div id="ntfyPanelContainer" class="side-panel-container fixed inset-0 z-50 pointer-events-none">
+        <div id="ntfyPanelBackdrop" class="side-panel-backdrop absolute inset-0"></div>
+        <div id="ntfyPanel" class="side-panel absolute top-0 right-0 h-full w-96 bg-white shadow-2xl overflow-y-auto pointer-events-auto flex flex-col">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <h3 class="text-lg font-bold text-gray-800">NTFY Subscription</h3>
+                <button id="closeNtfyPanelBtn" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i data-feather="x" class="w-6 h-6"></i>
                 </button>
             </div>
-            <div class="space-y-4">
-                <p>To receive notifications on your mobile device, you need to install the NTFY app and subscribe to a topic.</p>
-                <p>1. Download the NTFY app from the <a href="https://ntfy.sh/docs/subscribe/phone/" target="_blank" class="text-blue-600 hover:underline">official website</a>.</p>
-                <p>2. Subscribe to the topic: <code class="bg-gray-100 p-1 rounded">{ntfy_server}/{topic}</code></p>
-                <p class="text-sm text-gray-500">Replace `{topic}` with the desired notification channel.</p>
+            <div class="p-6 flex-1 space-y-6">
+                <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                    <p class="text-sm text-blue-900 leading-relaxed">To receive notifications on your mobile device, you need to install the NTFY app and subscribe to a topic.</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="text-sm font-semibold text-gray-900 mb-2">Step 1: Install App</h4>
+                        <a href="https://ntfy.sh/docs/subscribe/phone/" target="_blank" class="flex items-center justify-between w-full px-4 py-3 bg-white border border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-sm transition-all group">
+                            <span class="text-sm text-gray-600 group-hover:text-blue-600">Download NTFY App</span>
+                            <i data-feather="external-link" class="w-4 h-4 text-gray-400 group-hover:text-blue-500"></i>
+                        </a>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-sm font-semibold text-gray-900 mb-2">Step 2: Subscribe to Topic</h4>
+                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                            <code class="text-sm font-mono text-blue-600 break-all">{ntfy_server}/{topic}</code>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Replace `{topic}` with the desired notification channel.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscription Management Side Panel -->
+    <div id="subscriptionPanelContainer" class="side-panel-container fixed inset-0 z-50 pointer-events-none">
+        <div id="subscriptionPanelBackdrop" class="side-panel-backdrop absolute inset-0"></div>
+        <div id="subscriptionPanel" class="side-panel absolute top-0 right-0 h-full w-96 bg-white shadow-2xl overflow-y-auto pointer-events-auto flex flex-col">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">Telegram Subscriptions</h3>
+                    <p id="subscriptionPanelSubtitle" class="text-xs text-gray-500 mt-1">Manage notifications for this endpoint</p>
+                </div>
+                <button id="closeSubscriptionPanelBtn" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i data-feather="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 flex-1 space-y-8">
+                <!-- Add New Section -->
+                <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                    <h4 class="text-sm font-semibold text-blue-900 mb-3 flex items-center">
+                        <i data-feather="plus-circle" class="w-4 h-4 mr-2"></i>
+                        Add Subscriber by ID
+                    </h4>
+                    
+                    <div class="space-y-3">
+                        <div class="relative">
+                            <input type="text" id="newChatId" placeholder="Chat ID (e.g. 123456789)" class="w-full pl-10 pr-4 py-2.5 bg-white border border-blue-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                            <i data-feather="hash" class="w-4 h-4 text-gray-400 absolute left-3 top-3"></i>
+                        </div>
+                        
+                        <button id="addSubscriptionBtn" class="w-full flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 shadow-sm transition-colors">
+                            <i data-feather="user-plus" class="w-3 h-3 mr-2"></i>
+                            Add Chat ID
+                        </button>
+                        <p class="text-[10px] text-blue-700 text-center">
+                            Note: For users, using the "Open in Telegram Bot" button below is recommended. Use this for Group IDs.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Active Subscriptions List -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-sm font-semibold text-gray-800 flex items-center">
+                            <i data-feather="users" class="w-4 h-4 mr-2 text-gray-400"></i>
+                            Active Subscribers
+                        </h4>
+                        <span id="subscriberCount" class="bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded-full">0</span>
+                    </div>
+                    
+                    <div id="subscriptionsList" class="space-y-3">
+                        <!-- Subscriptions will be loaded here -->
+                        <div class="text-center py-8">
+                            <div class="spinner mx-auto"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="p-6 border-t border-gray-100 bg-gray-50 space-y-3">
+                <button id="telegramLinkBtn" class="w-full flex items-center justify-center px-4 py-3 bg-white border border-gray-200 text-gray-700 rounded-xl text-sm font-medium hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm group">
+                    <i data-feather="send" class="w-4 h-4 mr-2 text-blue-500 group-hover:text-blue-600"></i>
+                    Open in Telegram Bot
+                </button>
+                <button id="shareEndpointBtn" class="w-full flex items-center justify-center px-4 py-3 bg-white border border-gray-200 text-gray-700 rounded-xl text-sm font-medium hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm group">
+                    <i data-feather="share-2" class="w-4 h-4 mr-2 text-gray-400 group-hover:text-gray-600"></i>
+                    Share Subscription Link
+                </button>
             </div>
         </div>
     </div>
