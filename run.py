@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import asyncio
+import threading
 
 from app import create_app, run_background_tasks
 
@@ -8,8 +9,9 @@ app = create_app()
 if __name__ == "__main__":
 
     async def main():
-        # Запускаем Flask в отдельном потоке, управляемом asyncio
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
+
+        # Запускаем Flask в отдельном потоке
         flask_task = loop.create_task(
             asyncio.to_thread(
                 app.run,
@@ -20,26 +22,63 @@ if __name__ == "__main__":
             )
         )
 
-        # Запускаем остальные асинхронные задачи
-        await run_background_tasks()
+        # Запускаем фоновые задачи
+        background_tasks = await run_background_tasks()
 
-        # Ждем завершения задачи Flask (бесконечно)
-        await flask_task
+        # Ожидаем завершения всех задач
+        try:
+            await asyncio.gather(flask_task, *background_tasks)
+        except asyncio.CancelledError:
+            app.logger.info("Main task cancelled.")
 
-    loop = asyncio.get_event_loop()
-    main_task = loop.create_task(main())
+    async def shutdown(loop: asyncio.AbstractEventLoop, tasks: list):
+        app.logger.info("Shutting down...")
+
+        # Диагностика: какие потоки и задачи активны во время shutdown
+        active_threads = [f"{t.name}(daemon={t.daemon})" for t in threading.enumerate()]
+        app.logger.info(
+            f"Shutdown: active threads before cancellation: {active_threads}"
+        )
+        app.logger.info(f"Shutdown: asyncio tasks to cancel: {len(tasks)}")
+
+        # Отменяем все задачи
+        for task in tasks:
+            if hasattr(
+                task, "stop"
+            ):  # Для Telegram App (не срабатывает для asyncio.Task)
+                app.logger.info(
+                    f"Shutdown: calling stop() on task-like object {task!r}"
+                )
+                await task.stop()
+            else:
+                app.logger.info(f"Shutdown: cancelling asyncio task {task!r}")
+                task.cancel()
+
+        # Собираем отмененные задачи
+        app.logger.info("Shutdown: awaiting cancelled tasks with asyncio.gather")
+        await asyncio.gather(*tasks, return_exceptions=True)
+
+        loop.stop()
+
+    def handle_exception(loop, context):
+        # context["message"] будет "unhandled exception"
+        msg = context.get("exception", context["message"])
+        app.logger.error(f"Caught exception: {msg}")
+        app.logger.info("Shutting down event loop...")
+        asyncio.create_task(shutdown(loop, asyncio.all_tasks(loop)))
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+    loop.set_exception_handler(handle_exception)
 
     try:
-        loop.run_until_complete(main_task)
+        loop.create_task(main())
+        loop.run_forever()
     except KeyboardInterrupt:
-        app.logger.info("Shutting down...")
+        app.logger.info("Keyboard interrupt received.")
     finally:
-        # Корректное завершение всех задач
-        tasks = [t for t in asyncio.all_tasks(loop) if t is not main_task]
-        for task in tasks:
-            task.cancel()
-
-        # Собираем все задачи для ожидания их отмены
-        loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
+        tasks = asyncio.all_tasks(loop)
+        loop.run_until_complete(shutdown(loop, tasks))
         loop.close()
         app.logger.info("Shutdown complete.")

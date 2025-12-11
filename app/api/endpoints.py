@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 from flask import request
 from flask_restx import Namespace, Resource
 
+from .. import config
 from ..db import get_db_connection
 from ..models import add_models_to_api
 
@@ -339,6 +340,62 @@ class NotificationList(Resource):
 
         except Exception as e:
             logger.error(f"Error listing notification logs: {e}")
+            ns.abort(500, "Internal server error")
+
+
+@ns.route("/telegram/link/<int:endpoint_id>")
+@ns.param("endpoint_id", "Идентификатор эндпоинта")
+class TelegramDeepLink(Resource):
+    @ns.doc("get_telegram_deep_link")
+    def get(self, endpoint_id):
+        """
+        Сгенерировать deep-link для Telegram бота для подписки на эндпоинт.
+
+        URL формата:
+        /api/endpoints/telegram/link/<endpoint_id>
+        """
+        # Проверяем, что Telegram интеграция включена
+        if not getattr(config, "TELEGRAM_ENABLED", False):
+            ns.abort(400, "Telegram integration is disabled")
+
+        bot_username = getattr(config, "TELEGRAM_BOT_USERNAME", "").lstrip("@")
+        if not bot_username:
+            ns.abort(400, "TELEGRAM_BOT_USERNAME is not configured")
+
+        try:
+            with get_db_connection() as conn:
+                cur = conn.cursor()
+                cur.execute(
+                    "SELECT name, url FROM endpoints WHERE id = ?",
+                    (endpoint_id,),
+                )
+                row = cur.fetchone()
+
+                if not row:
+                    ns.abort(404, "Endpoint not found")
+
+                endpoint_name = row["name"] or row["url"]
+
+                # Формируем deep link вида: https://t.me/<bot_username>?start=endpoint_<id>
+                payload = f"endpoint_{endpoint_id}"
+                deep_link = f"https://t.me/{bot_username}?start={payload}"
+
+                instructions = (
+                    "Нажмите «Open Telegram Bot», затем подтвердите запуск бота и следуйте инструкциям в чате, "
+                    "чтобы подписаться на уведомления для этого эндпоинта."
+                )
+
+                return {
+                    "endpoint_id": endpoint_id,
+                    "endpoint_name": endpoint_name,
+                    "deep_link": deep_link,
+                    "instructions": instructions,
+                }
+
+        except Exception as e:
+            logger.error(
+                f"Error generating Telegram deep link for endpoint {endpoint_id}: {e}"
+            )
             ns.abort(500, "Internal server error")
 
 

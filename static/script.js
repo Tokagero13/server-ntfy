@@ -896,6 +896,11 @@ async function deleteSubscription(subscriptionId) {
 
 // Telegram Deep Linking Functions
 async function openTelegramBotLink() {
+    // Поддержка сценария, когда currentEndpointId устанавливается через window.currentEndpointId
+    if (window.currentEndpointId && !currentEndpointId) {
+        currentEndpointId = window.currentEndpointId;
+    }
+
     if (!currentEndpointId) {
         showNotification('No endpoint selected', 'error');
         return;
@@ -922,12 +927,12 @@ async function openTelegramBotLink() {
                         <p><strong>Endpoint:</strong> ${data.endpoint_name}</p>
                         <p class="text-sm text-gray-600">${data.instructions}</p>
                         <div class="flex space-x-2">
-                            <button onclick="window.open('${data.deep_link}', '_blank')" 
+                            <button onclick="window.open('${data.deep_link}', '_blank')"
                                     class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                                 <i data-feather="external-link" class="w-4 h-4 inline mr-1"></i>
                                 Open Telegram Bot
                             </button>
-                            <button onclick="navigator.clipboard.writeText('${data.deep_link}').then(() => showNotification('Link copied!', 'success'))" 
+                            <button onclick="navigator.clipboard.writeText('${data.deep_link}').then(() => showNotification('Link copied!', 'success'))"
                                     class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
                                 <i data-feather="copy" class="w-4 h-4"></i>
                             </button>
@@ -948,6 +953,11 @@ async function openTelegramBotLink() {
 }
 
 async function shareEndpointLink() {
+    // Поддержка сценария, когда currentEndpointId устанавливается через window.currentEndpointId
+    if (window.currentEndpointId && !currentEndpointId) {
+        currentEndpointId = window.currentEndpointId;
+    }
+
     if (!currentEndpointId) {
         showNotification('No endpoint selected', 'error');
         return;
