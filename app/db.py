@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
+import logging
 import sqlite3
 import threading
-import logging
 from contextlib import contextmanager
+
 from . import config
 
 logger = logging.getLogger(__name__)
 
 # Создаем thread-local хранилище для соединений с БД
 local_storage = threading.local()
+
 
 @contextmanager
 def get_db_connection():
@@ -17,7 +19,9 @@ def get_db_connection():
     if not hasattr(local_storage, "connection"):
         try:
             # Создаем новое соединение, если его нет
-            local_storage.connection = sqlite3.connect(config.DB_PATH, timeout=20.0, check_same_thread=False)
+            local_storage.connection = sqlite3.connect(
+                config.DB_PATH, timeout=20.0, check_same_thread=False
+            )
             local_storage.connection.row_factory = sqlite3.Row
         except Exception as e:
             logger.error(f"Failed to connect to database: {e}")
@@ -31,6 +35,7 @@ def get_db_connection():
         logger.error(f"Database operation error: {e}")
         raise
     # Не закрываем соединение здесь, чтобы оно могло быть переиспользовано в том же потоке
+
 
 def init_db():
     """Инициализация базы данных"""
@@ -63,9 +68,7 @@ def init_db():
 
             if "name" not in columns:
                 logger.info("Adding name column to endpoints table")
-                cur.execute(
-                    "ALTER TABLE endpoints ADD COLUMN name TEXT"
-                )
+                cur.execute("ALTER TABLE endpoints ADD COLUMN name TEXT")
 
             # Добавляем UNIQUE ограничение если его нет
             try:
@@ -129,14 +132,14 @@ def init_db():
                 )
                 """
             )
-            
-            # Устанавливаем значения по умолчанию, если их нет
+
+            # Устанавливаем или обновляем значения из конфигурации
             cur.execute(
-                "INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)",
+                "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
                 ("check_interval", str(config.CHECK_INTERVAL)),
             )
             cur.execute(
-                "INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)",
+                "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
                 ("notify_every_minutes", str(config.NOTIFY_EVERY_MINUTES)),
             )
 
@@ -145,6 +148,7 @@ def init_db():
     except Exception as e:
         logger.error(f"Failed to initialize database: {e}")
         raise
+
 
 def get_settings() -> dict:
     """Получает все настройки из БД"""

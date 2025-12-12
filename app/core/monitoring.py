@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 import logging
 import time
-import requests
 from datetime import datetime, timedelta, timezone
+
+import requests
+
 from .. import config
 from ..db import get_db_connection, get_settings
 from .notifications import send_notifications
 
 logger = logging.getLogger(__name__)
+
 
 def check_endpoint_status_with_fallback(url: str) -> int:
     """Проверка статуса эндпоинта с автоматическим fallback с HTTPS на HTTP"""
@@ -17,10 +20,10 @@ def check_endpoint_status_with_fallback(url: str) -> int:
         return resp.status_code
     except Exception as e:
         logger.debug(f"Primary attempt failed for {url}: {e}")
-        
+
         # Если URL использует HTTPS, пробуем HTTP
-        if url.startswith('https://'):
-            http_url = url.replace('https://', 'http://', 1)
+        if url.startswith("https://"):
+            http_url = url.replace("https://", "http://", 1)
             try:
                 logger.info(f"Trying HTTP fallback for {url} -> {http_url}")
                 resp = requests.get(http_url, timeout=5)
@@ -28,10 +31,13 @@ def check_endpoint_status_with_fallback(url: str) -> int:
                 return resp.status_code
             except Exception as e2:
                 logger.debug(f"HTTP fallback also failed for {http_url}: {e2}")
-        
+
         return 0
 
-def should_send_down_notification(last_notified: str, now_utc: datetime, settings: dict) -> bool:
+
+def should_send_down_notification(
+    last_notified: str, now_utc: datetime, settings: dict
+) -> bool:
     """Проверяет, можно ли отправить уведомление о падении"""
     if not last_notified:
         return True
@@ -39,20 +45,33 @@ def should_send_down_notification(last_notified: str, now_utc: datetime, setting
     try:
         last_notif_dt = datetime.fromisoformat(last_notified)
         time_diff = now_utc - last_notif_dt
-        notify_interval = int(settings.get("notify_every_minutes", config.NOTIFY_EVERY_MINUTES))
+        notify_interval = int(
+            settings.get("notify_every_minutes", config.NOTIFY_EVERY_MINUTES)
+        )
         return time_diff > timedelta(minutes=notify_interval)
     except Exception:
         return True
 
-def update_notification_time(cur: requests.structures.CaseInsensitiveDict, endpoint_id: int, now_iso: str) -> None:
+
+def update_notification_time(
+    cur: requests.structures.CaseInsensitiveDict, endpoint_id: int, now_iso: str
+) -> None:
     """Обновляет время последнего уведомления"""
     cur.execute(
         "UPDATE endpoints SET last_notified = ? WHERE id = ?",
         (now_iso, endpoint_id),
     )
 
+
 def check_notification_needed(
-    current_status: int, last_status: int, was_down: bool, last_notified: str, now_utc: datetime, url: str, endpoint_id: int, settings: dict
+    current_status: int,
+    last_status: int,
+    was_down: bool,
+    last_notified: str,
+    now_utc: datetime,
+    url: str,
+    endpoint_id: int,
+    settings: dict,
 ) -> bool:
     """Определяет, нужно ли отправлять уведомление (only HTTP 200 is acceptable)"""
     is_down = current_status != 200
@@ -77,6 +96,7 @@ def check_notification_needed(
 
     return False
 
+
 def check_endpoints_loop():
     """Основной цикл проверки эндпоинтов"""
     logger.info("Starting endpoint monitoring loop")
@@ -85,8 +105,15 @@ def check_endpoints_loop():
         try:
             # Получаем актуальные настройки на каждой итерации
             current_settings = get_settings()
-            check_interval = int(current_settings.get("check_interval", config.CHECK_INTERVAL))
-            
+            check_interval = int(
+                current_settings.get("check_interval", config.CHECK_INTERVAL)
+            )
+
+            # Дебаг-логирование для диагностики
+            logger.info(
+                f"Monitoring settings: check_interval={check_interval}, notify_every_minutes={current_settings.get('notify_every_minutes', config.NOTIFY_EVERY_MINUTES)}"
+            )
+
             with get_db_connection() as conn:
                 cur = conn.cursor()
                 cur.execute(
@@ -127,7 +154,7 @@ def check_endpoints_loop():
                         now_utc,
                         url,
                         endpoint_id,
-                        current_settings, # Передаем настройки
+                        current_settings,  # Передаем настройки
                     )
 
                     if should_notify:
