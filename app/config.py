@@ -44,7 +44,7 @@ TELEGRAM_GROUP_THREAD_ID = os.getenv("TELEGRAM_GROUP_THREAD_ID", "")
 # Настройки URL и API
 URL = os.getenv("URL", "localhost")
 PORT = int(os.getenv("PORT", 5000))
-# Правильно формируем URL с интерполяцией переменных
+# Используем переменные из .env или формируем по умолчанию
 API_BASE = os.getenv("API_BASE", f"http://{URL}:{PORT}/api/endpoints")
 DASHBOARD_URL = os.getenv("DASHBOARD_URL", f"http://{URL}:{PORT}")
 
