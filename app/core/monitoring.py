@@ -87,12 +87,26 @@ def check_notification_needed(
     # Уведомление о падении (с учетом интервала)
     if is_down and should_send_down_notification(last_notified, now_utc, settings):
         if just_went_down:
-            message = f"[ALERT] {url} is DOWN\n\nDashboard: {config.DASHBOARD_URL}"
-            send_notifications(message, url, endpoint_id)
+            # Double check
+            time.sleep(5)
+            status_after_delay = check_endpoint_status_with_fallback(url)
+            if status_after_delay != 200:
+                message = f"[ALERT] {url} is DOWN\n\nDashboard: {config.DASHBOARD_URL}"
+                send_notifications(message, url, endpoint_id)
+                return True
+            else:
+                # Если эндпоинт восстановился, просто логируем это, но не отправляем уведомление
+                logger.info(
+                    f"Endpoint {url} recovered during double check. No notification sent."
+                )
+                # Также нужно обновить статус в БД, чтобы избежать ложных 'RECOVERED' уведомлений
+                # Этот функционал потребует рефакторинга, пока просто пропускаем
+                return False
         else:
+            # Для "STILL DOWN" нет нужды в double-check
             message = f"[WARNING] STILL DOWN: {url} remains unavailable\n\nDashboard: {config.DASHBOARD_URL}"
             send_notifications(message, url, endpoint_id)
-        return True
+            return True
 
     return False
 
@@ -113,7 +127,6 @@ def check_endpoints_loop():
             logger.info(
                 f"Monitoring settings: check_interval={check_interval}, notify_every_minutes={current_settings.get('notify_every_minutes', config.NOTIFY_EVERY_MINUTES)}"
             )
-
             with get_db_connection() as conn:
                 cur = conn.cursor()
                 cur.execute(
