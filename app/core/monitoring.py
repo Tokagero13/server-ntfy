@@ -63,121 +63,104 @@ def update_notification_time(
     )
 
 
-def check_notification_needed(
-    current_status: int,
-    last_status: int,
-    was_down: bool,
-    last_notified: str,
-    now_utc: datetime,
-    url: str,
-    endpoint_id: int,
-    settings: dict,
-) -> bool:
-    """Определяет, нужно ли отправлять уведомление (only HTTP 200 is acceptable)"""
-    is_down = current_status != 200
-    is_recovered = was_down and not is_down
-    just_went_down = not was_down and is_down
-
-    # Уведомление о восстановлении
-    if is_recovered:
-        message = f"[OK] RECOVERED: {url} is back online (status: {current_status})\n\nDashboard: {config.DASHBOARD_URL}"
-        send_notifications(message, url, endpoint_id)
-        return True
-
-    # Уведомление о падении (с учетом интервала)
-    if is_down and should_send_down_notification(last_notified, now_utc, settings):
-        if just_went_down:
-            # Double check
-            time.sleep(config.DOUBLE_CHECK_DELAY)
-            status_after_delay = check_endpoint_status_with_fallback(url)
-            if status_after_delay != 200:
-                message = f"[ALERT] {url} is DOWN\n\nDashboard: {config.DASHBOARD_URL}"
-                send_notifications(message, url, endpoint_id)
-                return True
-            else:
-                # Если эндпоинт восстановился, просто логируем это, но не отправляем уведомление
-                logger.info(
-                    f"Endpoint {url} recovered during double check. No notification sent."
-                )
-                # Также нужно обновить статус в БД, чтобы избежать ложных 'RECOVERED' уведомлений
-                # Этот функционал потребует рефакторинга, пока просто пропускаем
-                return False
-        else:
-            # Для "STILL DOWN" нет нужды в double-check
-            message = f"[WARNING] STILL DOWN: {url} remains unavailable\n\nDashboard: {config.DASHBOARD_URL}"
-            send_notifications(message, url, endpoint_id)
-            return True
-
-    return False
-
-
 def check_endpoints_loop():
     """Основной цикл проверки эндпоинтов"""
     logger.info("Starting endpoint monitoring loop")
 
     while True:
         try:
-            # Получаем актуальные настройки на каждой итерации
             current_settings = get_settings()
             check_interval = int(
                 current_settings.get("check_interval", config.CHECK_INTERVAL)
             )
-
-            # Дебаг-логирование для диагностики
             logger.info(
-                f"Monitoring settings: check_interval={check_interval}, notify_every_minutes={current_settings.get('notify_every_minutes', config.NOTIFY_EVERY_MINUTES)}"
+                f"Monitoring settings: check_interval={check_interval}, notify_every_minutes={current_settings.get('notify_every_minutes', config.NOTIFY_EVERY_MINUTES)}, request_timeout={config.REQUEST_TIMEOUT}, double_check_delay={config.DOUBLE_CHECK_DELAY}"
             )
+
             with get_db_connection() as conn:
                 cur = conn.cursor()
                 cur.execute(
-                    "SELECT id, name, url, last_status, last_checked, last_notified, is_down FROM endpoints"
+                    "SELECT id, url, last_status, last_notified, is_down FROM endpoints"
                 )
-                rows = cur.fetchall()
+                endpoints = cur.fetchall()
 
-                for row in rows:
-                    endpoint_id = row["id"]
-                    name = row["name"]
-                    url = row["url"]
-                    last_status = row["last_status"]
-                    last_notified = row["last_notified"]
-                    was_down = row["is_down"] or False
-
-                    # Проверяем статус эндпоинта
-                    current_status = check_endpoint_status_with_fallback(url)
+                for endpoint in endpoints:
+                    endpoint_id = endpoint["id"]
+                    url = endpoint["url"]
+                    was_down = endpoint["is_down"]
+                    last_notified = endpoint["last_notified"]
                     now_utc = datetime.now(timezone.utc)
                     now_iso = now_utc.isoformat()
 
-                    # Обновляем статус в БД (only HTTP 200 is acceptable)
+                    current_status = check_endpoint_status_with_fallback(url)
                     is_currently_down = current_status != 200
+
+                    # Сначала обновляем только время последней проверки и статус ответа
                     cur.execute(
-                        """
-                        UPDATE endpoints
-                        SET last_status = ?, last_checked = ?, is_down = ?
-                        WHERE id = ?
-                        """,
-                        (current_status, now_iso, is_currently_down, endpoint_id),
+                        "UPDATE endpoints SET last_status = ?, last_checked = ? WHERE id = ?",
+                        (current_status, now_iso, endpoint_id),
                     )
 
-                    # Логика уведомлений
-                    should_notify = check_notification_needed(
-                        current_status,
-                        last_status,
-                        was_down,
-                        last_notified,
-                        now_utc,
-                        url,
-                        endpoint_id,
-                        current_settings,  # Передаем настройки
-                    )
+                    # Сценарий 1: Эндпоинт восстановился
+                    if not is_currently_down and was_down:
+                        logger.info(f"Endpoint {url} has recovered.")
+                        message = f"[OK] RECOVERED: {url} is back online (status: {current_status})\n\nDashboard: {config.DASHBOARD_URL}"
+                        send_notifications(message, url, endpoint_id)
+                        # Обновляем статус и время уведомления
+                        cur.execute(
+                            "UPDATE endpoints SET is_down = ?, last_notified = ? WHERE id = ?",
+                            (False, now_iso, endpoint_id),
+                        )
 
-                    if should_notify:
-                        update_notification_time(cur, endpoint_id, now_iso)
+                    # Сценарий 2: Эндпоинт упал (и это новое падение)
+                    elif is_currently_down and not was_down:
+                        logger.warning(
+                            f"Endpoint {url} appears to be down. Performing double check..."
+                        )
+                        time.sleep(config.DOUBLE_CHECK_DELAY)
+                        status_after_delay = check_endpoint_status_with_fallback(url)
+
+                        # Обновляем last_status после второй проверки
+                        cur.execute(
+                            "UPDATE endpoints SET last_status = ? WHERE id = ?",
+                            (status_after_delay, endpoint_id),
+                        )
+
+                        if status_after_delay != 200:
+                            logger.error(
+                                f"Endpoint {url} is confirmed DOWN after double check."
+                            )
+                            # Только теперь обновляем статус is_down в БД
+                            cur.execute(
+                                "UPDATE endpoints SET is_down = ? WHERE id = ?",
+                                (True, endpoint_id),
+                            )
+                            if should_send_down_notification(
+                                last_notified, now_utc, current_settings
+                            ):
+                                message = f"[ALERT] {url} is DOWN (status: {status_after_delay})\n\nDashboard: {config.DASHBOARD_URL}"
+                                send_notifications(message, url, endpoint_id)
+                                update_notification_time(cur, endpoint_id, now_iso)
+                        else:
+                            logger.info(
+                                f"Endpoint {url} recovered during double check. No notification sent."
+                            )
+                            # Статус is_down не меняем, он остается False
+
+                    # Сценарий 3: Эндпоинт все еще лежит
+                    elif is_currently_down and was_down:
+                        if should_send_down_notification(
+                            last_notified, now_utc, current_settings
+                        ):
+                            logger.warning(f"Endpoint {url} is STILL DOWN.")
+                            message = f"[WARNING] STILL DOWN: {url} remains unavailable (status: {current_status})\n\nDashboard: {config.DASHBOARD_URL}"
+                            send_notifications(message, url, endpoint_id)
+                            update_notification_time(cur, endpoint_id, now_iso)
 
                 conn.commit()
-                logger.debug(f"Checked {len(rows)} endpoints")
+                logger.debug(f"Checked {len(endpoints)} endpoints")
 
         except Exception as e:
-            logger.error(f"Error in monitoring loop: {e}")
+            logger.error(f"Error in monitoring loop: {e}", exc_info=True)
 
-        # Используем интервал из настроек
         time.sleep(check_interval)
