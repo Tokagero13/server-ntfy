@@ -16,7 +16,7 @@ def check_endpoint_status_with_fallback(url: str) -> int:
     """Проверка статуса эндпоинта с автоматическим fallback с HTTPS на HTTP"""
     # Сначала пробуем оригинальный URL
     try:
-        resp = requests.get(url, timeout=5)
+        resp = requests.get(url, timeout=config.REQUEST_TIMEOUT)
         return resp.status_code
     except Exception as e:
         logger.debug(f"Primary attempt failed for {url}: {e}")
@@ -26,7 +26,7 @@ def check_endpoint_status_with_fallback(url: str) -> int:
             http_url = url.replace("https://", "http://", 1)
             try:
                 logger.info(f"Trying HTTP fallback for {url} -> {http_url}")
-                resp = requests.get(http_url, timeout=5)
+                resp = requests.get(http_url, timeout=config.REQUEST_TIMEOUT)
                 logger.info(f"HTTP fallback successful for {http_url}")
                 return resp.status_code
             except Exception as e2:
@@ -88,7 +88,7 @@ def check_notification_needed(
     if is_down and should_send_down_notification(last_notified, now_utc, settings):
         if just_went_down:
             # Double check
-            time.sleep(5)
+            time.sleep(config.DOUBLE_CHECK_DELAY)
             status_after_delay = check_endpoint_status_with_fallback(url)
             if status_after_delay != 200:
                 message = f"[ALERT] {url} is DOWN\n\nDashboard: {config.DASHBOARD_URL}"

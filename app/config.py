@@ -12,6 +12,8 @@ DB_PATH = os.getenv("DB_PATH", "endpoints.db")
 # Настройки мониторинга
 CHECK_INTERVAL = int(os.getenv("CHECK_INTERVAL", 10))
 NOTIFY_EVERY_MINUTES = int(os.getenv("NOTIFY_EVERY_MINUTES", 2))
+REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", 5))
+DOUBLE_CHECK_DELAY = int(os.getenv("DOUBLE_CHECK_DELAY", 5))
 
 # Настройки веб-интерфейса
 INDEX_PAGE = os.getenv("INDEX_PAGE", "index2.html")
