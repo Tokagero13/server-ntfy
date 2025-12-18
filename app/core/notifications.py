@@ -141,8 +141,13 @@ def send_group_telegram_notification(message: str, endpoint_url: str) -> bool:
         return False
 
 
-def send_notifications(message: str, endpoint_url: str, endpoint_id: int = None):
-    """Диспетчер уведомлений, который отправляет сообщения по включенным каналам."""
+def send_notifications(
+    message: str, endpoint_url: str, endpoint_id: int = None
+) -> bool:
+    """
+    Диспетчер уведомлений, который отправляет сообщения по включенным каналам.
+    Возвращает True, если хотя бы одно уведомление было успешно отправлено.
+    """
     # NTFY уведомления
     ntfy_success = False
     if config.NTFY_ENABLED:
@@ -193,3 +198,5 @@ def send_notifications(message: str, endpoint_url: str, endpoint_id: int = None)
             conn.commit()
     except Exception as e:
         logger.error(f"Failed to log notification: {e}")
+
+    return any_success
