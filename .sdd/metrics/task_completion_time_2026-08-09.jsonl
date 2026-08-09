@@ -10,3 +10,4 @@
 {"timestamp": 1786296185.8484986, "metric_type": "task_completion_time", "value": 509.52560234069824, "labels": {"task_id": "e4c8f38c4f5d", "role": "qa", "model": "sonnet", "success": "False", "tenant_id": "default"}}
 {"timestamp": 1786297444.72827, "metric_type": "task_completion_time", "value": 1491.8761608600616, "labels": {"task_id": "36c094ca5b33", "role": "backend", "model": "sonnet", "success": "False", "tenant_id": "default"}}
 {"timestamp": 1786297454.6079102, "metric_type": "task_completion_time", "value": 1501.755785703659, "labels": {"task_id": "494a42ae6a55", "role": "backend", "model": "sonnet", "success": "False", "tenant_id": "default"}}
+{"timestamp": 1786297583.6136808, "metric_type": "task_completion_time", "value": 338.0764789581299, "labels": {"task_id": "c3849e1033a8", "role": "architect", "model": "opus", "success": "False", "tenant_id": "default"}}
