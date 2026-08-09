@@ -1,0 +1,680 @@
+diff --git a/.sdd/archive/tasks.jsonl b/.sdd/archive/tasks.jsonl
+index 656eb9a..ae3e925 100644
+--- a/.sdd/archive/tasks.jsonl
++++ b/.sdd/archive/tasks.jsonl
+@@ -39,3 +39,5 @@
+ {"task_id": "c3849e1033a8", "title": "Consolidate flask-restx model registration and extract URL validators", "role": "architect", "status": "done", "created_at": 1786295772.869439, "completed_at": 1786298870.0667212, "duration_seconds": 3097.197, "result_summary": "Completed: Consolidate flask-restx model registration and extract URL validators \u2014 build_models + cached get_models in app/models.py; normalize_url/validate_url moved to app/core/validators.py; endpoints.py imports from validators; settings.py unchanged. All acceptance checks pass. Code already committed at 56f499b.", "cost_usd": null, "assigned_agent": null, "owned_files": ["app/models.py", "app/api/endpoints.py", "app/api/settings.py", "app/core/validators.py"], "tenant_id": "default", "claimed_by_session": "4163e54405e04cd9"}
+ {"task_id": "c3849e1033a8", "title": "Consolidate flask-restx model registration and extract URL validators", "role": "architect", "status": "failed", "created_at": 1786295772.869439, "completed_at": 1786298875.3439398, "duration_seconds": 3102.475, "result_summary": "reopen_budget_exhausted: janitor verification failed after 2 reopen cycle(s) (max 2)", "cost_usd": null, "assigned_agent": null, "owned_files": ["app/models.py", "app/api/endpoints.py", "app/api/settings.py", "app/core/validators.py"], "tenant_id": "default", "claimed_by_session": "4163e54405e04cd9"}
+ {"task_id": "e4c8f38c4f5d", "title": "Set up pytest infrastructure with initial unit tests", "role": "qa", "status": "done", "created_at": 1786295661.4791536, "completed_at": 1786299030.0333195, "duration_seconds": 3368.554, "result_summary": "Completed: Set up pytest infrastructure with initial unit tests \u2014 7 files created, 21 tests pass", "cost_usd": null, "assigned_agent": null, "owned_files": ["tests/__init__.py", "tests/conftest.py", "tests/unit/__init__.py", "tests/unit/test_url_validation.py", "tests/unit/test_monitoring_helpers.py", "requirements-dev.txt", "pytest.ini"], "tenant_id": "default", "claimed_by_session": "4163e54405e04cd9"}
++{"task_id": "e4c8f38c4f5d", "title": "Set up pytest infrastructure with initial unit tests", "role": "qa", "status": "failed", "created_at": 1786295661.4791536, "completed_at": 1786299042.2229924, "duration_seconds": 3380.744, "result_summary": "reopen_budget_exhausted: janitor verification failed after 2 reopen cycle(s) (max 2)", "cost_usd": null, "assigned_agent": null, "owned_files": ["tests/__init__.py", "tests/conftest.py", "tests/unit/__init__.py", "tests/unit/test_url_validation.py", "tests/unit/test_monitoring_helpers.py", "requirements-dev.txt", "pytest.ini"], "tenant_id": "default", "claimed_by_session": "4163e54405e04cd9"}
++{"task_id": "d852092a7068", "title": "Upgrade: Improve task success rate", "role": "backend", "status": "done", "created_at": 1786298836.027049, "completed_at": 1786299419.0397773, "duration_seconds": 583.013, "result_summary": "Fixed 4 bugs (missing created_at in subscription INSERT, invalid IPv4 passthrough in validate_url, send_notifications returning False with no channels configured, wrong type hint) and added pytest infrastructure with 39 passing tests covering URL validation, monitoring helpers, DB operations, and notifications.", "cost_usd": null, "assigned_agent": null, "owned_files": [], "tenant_id": "default", "claimed_by_session": "4163e54405e04cd9"}
+diff --git a/.sdd/attestations/attestations.jsonl b/.sdd/attestations/attestations.jsonl
+index 658ff55..b9315ab 100644
+--- a/.sdd/attestations/attestations.jsonl
++++ b/.sdd/attestations/attestations.jsonl
+@@ -18,3 +18,4 @@
+ {"bundle_path": ".sdd\\attestations\\attestation-9c424e1782a9-15f409099078.json", "error": "", "fallback_used": true, "payload": {"agent_id": "backend", "diff_sha256": "b4f1b9e406715b43f3ccae9f078e2b2044357f4b914bc452075e46c84137884f", "event_hmac": "", "task_id": "9c424e1782a9", "timestamp": "2026-08-09T18:06:50Z"}, "rekor_log_id": "", "rekor_log_index": -1, "signed_at": "2026-08-09T18:06:50Z"}
+ {"bundle_path": ".sdd\\attestations\\attestation-c3849e1033a8-eff4833720f6.json", "error": "", "fallback_used": true, "payload": {"agent_id": "architect", "diff_sha256": "123b83ee99ce0cf5617524175c14fa4cc5a3959b6a3d004da7f119f9be5cbbef", "event_hmac": "", "task_id": "c3849e1033a8", "timestamp": "2026-08-09T18:07:50Z"}, "rekor_log_id": "", "rekor_log_index": -1, "signed_at": "2026-08-09T18:07:50Z"}
+ {"bundle_path": ".sdd\\attestations\\attestation-e4c8f38c4f5d-a9cd091dbf71.json", "error": "", "fallback_used": true, "payload": {"agent_id": "qa", "diff_sha256": "192c019b2b19a24d6959a32659cd6e76d1a6baee2933df64bcd0df81e1118f37", "event_hmac": "", "task_id": "e4c8f38c4f5d", "timestamp": "2026-08-09T18:10:30Z"}, "rekor_log_id": "", "rekor_log_index": -1, "signed_at": "2026-08-09T18:10:30Z"}
++{"bundle_path": ".sdd\\attestations\\attestation-d852092a7068-937ec58cd048.json", "error": "", "fallback_used": true, "payload": {"agent_id": "backend", "diff_sha256": "39c60cd808a69037aed9ce976aaaa4b6008056b2f41e270e5ec6bfb28b57a334", "event_hmac": "", "task_id": "d852092a7068", "timestamp": "2026-08-09T18:16:59Z"}, "rekor_log_id": "", "rekor_log_index": -1, "signed_at": "2026-08-09T18:16:59Z"}
+diff --git a/.sdd/audit/2026-08-09.jsonl b/.sdd/audit/2026-08-09.jsonl
+index 4008823..e03ceb6 100644
+--- a/.sdd/audit/2026-08-09.jsonl
++++ b/.sdd/audit/2026-08-09.jsonl
+@@ -122,3 +122,4 @@
+ {"actor": "spawner", "details": {"profile_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "response_profile": "balanced", "style_source": "builtin_default", "task_id": "d852092a7068"}, "event_type": "task_response_profile", "hmac": "761373113f9d95117eae745f574df52e5387f681515ba35dc11323664ed97acc", "prev_hmac": "6f025546003427972ab97deb1b47df34b0a34708508eb663ebeac1a1f52df47c", "resource_id": "d852092a7068", "resource_type": "task", "timestamp": "2026-08-09T18:07:19.607200Z"}
+ {"actor": "adapter_admission", "details": {"adapter": "Claude Code", "allowed_capabilities": [], "binary": "Claude Code", "conformance_run_id": "331f88775d0122314c31d8ed11df485e", "contract_hash": "", "forbidden_capabilities": ["agents_md", "computer_use", "local_models", "mcp_client", "mcp_server", "native_subagents", "spawn", "vision"], "installed_version": null, "kind": "adapter.admission_gate_receipt", "prev_chain_digest": "761373113f9d95117eae745f574df52e5387f681515ba35dc11323664ed97acc", "reason": "no_contract", "receipt_sha256": "ac52c10078be9f9becc783737e3c90789b3285b29ef531c184e84c6612329c9d", "replay_fingerprint": "sha256:fcfededc763df69c74e735347447d6a8a41abad5bb16488524af675dbd4152d6", "verdict": "refuse"}, "event_type": "adapter.admission_receipt", "hmac": "f1edc98901c0d12b061456fc045122a2d23df5a650e8885b3df82b4b209cd515", "prev_hmac": "761373113f9d95117eae745f574df52e5387f681515ba35dc11323664ed97acc", "resource_id": "Claude Code", "resource_type": "adapter_admission", "timestamp": "2026-08-09T18:07:20.108059Z"}
+ {"actor": "task_store", "details": {"from_status": "done", "prev_chain_digest": "f1edc98901c0d12b061456fc045122a2d23df5a650e8885b3df82b4b209cd515", "reason": "reopen_budget_exhausted: janitor verification failed after 2 reopen cycle(s) (max 2)", "release_path": "fail", "released_by": "4163e54405e04cd9", "role": "architect", "task_id": "c3849e1033a8", "task_version": 10, "to_status": "failed"}, "event_type": "task.release_receipt", "hmac": "8a2029ffa46f4cd667d6245e9109862b53566172093ef2921e0581df9b7ccc2a", "prev_hmac": "f1edc98901c0d12b061456fc045122a2d23df5a650e8885b3df82b4b209cd515", "resource_id": "c3849e1033a8", "resource_type": "task_claim", "timestamp": "2026-08-09T18:07:55.355245Z"}
++{"actor": "task_store", "details": {"from_status": "done", "prev_chain_digest": "8a2029ffa46f4cd667d6245e9109862b53566172093ef2921e0581df9b7ccc2a", "reason": "reopen_budget_exhausted: janitor verification failed after 2 reopen cycle(s) (max 2)", "release_path": "fail", "released_by": "4163e54405e04cd9", "role": "qa", "task_id": "e4c8f38c4f5d", "task_version": 11, "to_status": "failed"}, "event_type": "task.release_receipt", "hmac": "b8a213390691cb0c4d5c4b9844db0e2cd9f2c5a8a23784443c4f6aab2116a5b9", "prev_hmac": "8a2029ffa46f4cd667d6245e9109862b53566172093ef2921e0581df9b7ccc2a", "resource_id": "e4c8f38c4f5d", "resource_type": "task_claim", "timestamp": "2026-08-09T18:10:42.233992Z"}
+diff --git a/.sdd/auth/agent_identities/backend-db7bc87c.json b/.sdd/auth/agent_identities/backend-db7bc87c.json
+index b5fc874..974b33a 100644
+--- a/.sdd/auth/agent_identities/backend-db7bc87c.json
++++ b/.sdd/auth/agent_identities/backend-db7bc87c.json
+@@ -12,7 +12,7 @@
+   ],
+   "status": "active",
+   "created_at": 1786298839.6075943,
+-  "last_authenticated_at": 0.0,
++  "last_authenticated_at": 1786299419.0377717,
+   "revoked_at": 0.0,
+   "revocation_reason": "",
+   "credential": {
+diff --git a/.sdd/auth/agent_identity_audit.jsonl b/.sdd/auth/agent_identity_audit.jsonl
+index 70b01c9..b4e7d6e 100644
+--- a/.sdd/auth/agent_identity_audit.jsonl
++++ b/.sdd/auth/agent_identity_audit.jsonl
+@@ -41,3 +41,5 @@
+ {"timestamp": 1786299015.6469402, "identity_id": "qa-d19f7e59", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+ {"timestamp": 1786299025.1446364, "identity_id": "qa-d19f7e59", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+ {"timestamp": 1786299030.0315876, "identity_id": "qa-d19f7e59", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
++{"timestamp": 1786299414.4481611, "identity_id": "backend-db7bc87c", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
++{"timestamp": 1786299419.0381799, "identity_id": "backend-db7bc87c", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+diff --git a/.sdd/default/backlog/archive.jsonl b/.sdd/default/backlog/archive.jsonl
+index 656eb9a..ae3e925 100644
+--- a/.sdd/default/backlog/archive.jsonl
++++ b/.sdd/default/backlog/archive.jsonl
+@@ -39,3 +39,5 @@
+ {"task_id": "c3849e1033a8", "title": "Consolidate flask-restx model registration and extract URL validators", "role": "architect", "status": "done", "created_at": 1786295772.869439, "completed_at": 1786298870.0667212, "duration_seconds": 3097.197, "result_summary": "Completed: Consolidate flask-restx model registration and extract URL validators \u2014 build_models + cached get_models in app/models.py; normalize_url/validate_url moved to app/core/validators.py; endpoints.py imports from validators; settings.py unchanged. All acceptance checks pass. Code already committed at 56f499b.", "cost_usd": null, "assigned_agent": null, "owned_files": ["app/models.py", "app/api/endpoints.py", "app/api/settings.py", "app/core/validators.py"], "tenant_id": "default", "claimed_by_session": "4163e54405e04cd9"}
+ {"task_id": "c3849e1033a8", "title": "Consolidate flask-restx model registration and extract URL validators", "role": "architect", "status": "failed", "created_at": 1786295772.869439, "completed_at": 1786298875.3439398, "duration_seconds": 3102.475, "result_summary": "reopen_budget_exhausted: janitor verification failed after 2 reopen cycle(s) (max 2)", "cost_usd": null, "assigned_agent": null, "owned_files": ["app/models.py", "app/api/endpoints.py", "app/api/settings.py", "app/core/validators.py"], "tenant_id": "default", "claimed_by_session": "4163e54405e04cd9"}
+ {"task_id": "e4c8f38c4f5d", "title": "Set up pytest infrastructure with initial unit tests", "role": "qa", "status": "done", "created_at": 1786295661.4791536, "completed_at": 1786299030.0333195, "duration_seconds": 3368.554, "result_summary": "Completed: Set up pytest infrastructure with initial unit tests \u2014 7 files created, 21 tests pass", "cost_usd": null, "assigned_agent": null, "owned_files": ["tests/__init__.py", "tests/conftest.py", "tests/unit/__init__.py", "tests/unit/test_url_validation.py", "tests/unit/test_monitoring_helpers.py", "requirements-dev.txt", "pytest.ini"], "tenant_id": "default", "claimed_by_session": "4163e54405e04cd9"}
++{"task_id": "e4c8f38c4f5d", "title": "Set up pytest infrastructure with initial unit tests", "role": "qa", "status": "failed", "created_at": 1786295661.4791536, "completed_at": 1786299042.2229924, "duration_seconds": 3380.744, "result_summary": "reopen_budget_exhausted: janitor verification failed after 2 reopen cycle(s) (max 2)", "cost_usd": null, "assigned_agent": null, "owned_files": ["tests/__init__.py", "tests/conftest.py", "tests/unit/__init__.py", "tests/unit/test_url_validation.py", "tests/unit/test_monitoring_helpers.py", "requirements-dev.txt", "pytest.ini"], "tenant_id": "default", "claimed_by_session": "4163e54405e04cd9"}
++{"task_id": "d852092a7068", "title": "Upgrade: Improve task success rate", "role": "backend", "status": "done", "created_at": 1786298836.027049, "completed_at": 1786299419.0397773, "duration_seconds": 583.013, "result_summary": "Fixed 4 bugs (missing created_at in subscription INSERT, invalid IPv4 passthrough in validate_url, send_notifications returning False with no channels configured, wrong type hint) and added pytest infrastructure with 39 passing tests covering URL validation, monitoring helpers, DB operations, and notifications.", "cost_usd": null, "assigned_agent": null, "owned_files": [], "tenant_id": "default", "claimed_by_session": "4163e54405e04cd9"}
+diff --git a/.sdd/default/backlog/tasks.jsonl b/.sdd/default/backlog/tasks.jsonl
+index a4b6860..4a0d7d5 100644
+--- a/.sdd/default/backlog/tasks.jsonl
++++ b/.sdd/default/backlog/tasks.jsonl
+@@ -115,3 +115,5 @@
+ {"id": "c3849e1033a8", "title": "Consolidate flask-restx model registration and extract URL validators", "description": "Two related quality issues in the API layer:\n\n### 1. Triple-registered models\n`add_models_to_api` in `app/models.py` builds and returns a fresh dict of models every time it is called. It is currently called THREE times: once from `app/__init__.py` on the top-level `Api`, once from `app/api/endpoints.py` on its `Namespace`, once from `app/api/settings.py` on its `Namespace`. Each call registers a new model instance \u2014 the objects that `endpoints.py:models[\"endpoint\"]` and `__init__.py`s api models refer to are DIFFERENT objects. flask-restx tolerates this but it wastes work and makes the intent unclear.\n\n### 2. URL validation lives in the API layer\n`normalize_url` and `validate_url` are defined at the top of `app/api/endpoints.py`. They have no HTTP or Flask dependency and belong in a domain module so tests and future callers (e.g., a CLI) can reuse them.\n\n## What to change\n1. Refactor `app/models.py`:\n   - Split `add_models_to_api` into two functions:\n     - `build_models(api_or_ns)` \u2014 the existing body, unchanged (some flask-restx workflows need per-namespace registration for swagger discoverability, so preserve it as-is).\n     - Add a module-level cache: `_MODELS: dict | None = None` and `def get_models(api) -> dict:` that lazily calls `build_models(api)` ONCE and returns the cached dict on subsequent calls.\n   - Keep `add_models_to_api` as a thin alias for `build_models` for backwards compat with the two namespace files during migration.\n2. Update `app/api/endpoints.py`:\n   - Move `normalize_url` and `validate_url` (plus the inner `is_valid_ipv4`) to NEW file `app/core/validators.py`.\n   - Import them: `from ..core.validators import normalize_url, validate_url`.\n   - No behavior change; identical function bodies.\n3. Update `app/api/settings.py`: no logic change needed unless it breaks \u2014 leave as-is (keeps its `add_models_to_api(ns)` call for now).\n4. Create `app/core/validators.py` with the two functions (plus the inner helper made module-private as `_is_valid_ipv4`).\n\n## Files you own\n`app/models.py`, `app/api/endpoints.py`, `app/api/settings.py`, and NEW file `app/core/validators.py`. Nothing else. In particular, do NOT touch `app/__init__.py` (Task 5 owns it), `app/core/monitoring.py` (Task 3), `app/core/telegram_bot.py` (Task 4), `app/repositories/*` (Task 2), or `app/core/startup.py` (Task 5).\n\n## Acceptance\n- `app/core/validators.py` exists and exports `normalize_url`, `validate_url`.\n- `grep -n \"def normalize_url\" app/api/endpoints.py` returns nothing.\n- `grep -n \"def validate_url\" app/api/endpoints.py` returns nothing.\n- `grep -n \"def get_models\" app/models.py` returns 1 match.\n- `python -c \"from app.core.validators import normalize_url, validate_url; assert validate_url(\\\"example.com\\\"); assert not validate_url(\\\"not a url with spaces\\\"); print(normalize_url(\\\"example.com\\\"))\"` prints `https://example.com` and exits 0.", "role": "architect", "priority": 0, "scope": "medium", "complexity": "medium", "estimated_minutes": 120, "status": "failed", "task_type": "standard", "upgrade_details": null, "depends_on": [], "parent_task_id": null, "depends_on_repo": null, "owned_files": ["app/models.py", "app/api/endpoints.py", "app/api/settings.py", "app/core/validators.py"], "assigned_agent": null, "result_summary": "reopen_budget_exhausted: janitor verification failed after 2 reopen cycle(s) (max 2)", "tenant_id": "default", "cell_id": null, "repo": null, "batch_eligible": false, "eu_ai_act_risk": "limited", "approval_required": false, "risk_level": "medium", "slack_context": null, "version": 10, "claimed_at": 1786298792.3214815, "completed_at": 1786298875.3439398, "closed_at": null, "claimed_by_session": "4163e54405e04cd9", "parent_session_id": null, "subtask_wait_started_at": null, "parent_context": null, "retry_count": 0, "max_retries": 3, "retry_delay_s": 0.0, "terminal_reason": null, "max_output_tokens": null, "meta_messages": [], "metadata": {"janitor_reopen_count": 2}, "max_turns": null}
+ {"id": "e4c8f38c4f5d", "title": "Set up pytest infrastructure with initial unit tests", "description": "Stand up a real test harness so subsequent refactors can be verified. There is currently no pytest setup \u2014 only an ad-hoc script `test_group_notifications.py`.\n\n## What to build\n1. `requirements-dev.txt` with: `pytest`, `pytest-cov`, `requests-mock`.\n2. `pytest.ini` at repo root with `testpaths = tests`, `pythonpath = .`, and `filterwarnings = ignore::DeprecationWarning`.\n3. `tests/__init__.py` (empty) and `tests/unit/__init__.py` (empty).\n4. `tests/conftest.py` \u2014 provide a `tmp_db_path` fixture that sets `DB_PATH` env var to a tempfile before importing `app.db`, and yields the path. Also provide an `initialized_db` fixture that calls `app.db.init_db()`.\n5. `tests/unit/test_url_validation.py` \u2014 cover `app.api.endpoints.validate_url` and `normalize_url`: valid domain, valid domain with port, invalid port (out of range, non-numeric), IPv4, localhost, missing scheme (gets https:// prepended), unsupported scheme (ftp://).\n6. `tests/unit/test_monitoring_helpers.py` \u2014 cover `app.core.monitoring.should_send_down_notification` (fresh notification when last_notified is None, blocked when within interval, allowed when past interval, allowed when last_notified is malformed).\n\n## Files you own\nOnly create files under `tests/`, and the two top-level config files. Do NOT edit any files in `app/`.\n\n## Acceptance\n`pip install -r requirements.txt -r requirements-dev.txt && pytest -x -q` exits 0 and shows at least 10 passing tests.", "role": "qa", "priority": 0, "scope": "medium", "complexity": "medium", "estimated_minutes": 120, "status": "claimed", "task_type": "standard", "upgrade_details": null, "depends_on": [], "parent_task_id": null, "depends_on_repo": null, "owned_files": ["tests/__init__.py", "tests/conftest.py", "tests/unit/__init__.py", "tests/unit/test_url_validation.py", "tests/unit/test_monitoring_helpers.py", "requirements-dev.txt", "pytest.ini"], "assigned_agent": null, "result_summary": null, "tenant_id": "default", "cell_id": null, "repo": null, "batch_eligible": false, "eu_ai_act_risk": "limited", "approval_required": false, "risk_level": "medium", "slack_context": null, "version": 9, "claimed_at": 1786298779.8233864, "completed_at": null, "closed_at": null, "claimed_by_session": "4163e54405e04cd9", "parent_session_id": null, "subtask_wait_started_at": null, "parent_context": null, "retry_count": 0, "max_retries": 3, "retry_delay_s": 0.0, "terminal_reason": null, "max_output_tokens": null, "meta_messages": [], "metadata": {"janitor_reopen_count": 2}, "max_turns": null}
+ {"id": "e4c8f38c4f5d", "title": "Set up pytest infrastructure with initial unit tests", "description": "Stand up a real test harness so subsequent refactors can be verified. There is currently no pytest setup \u2014 only an ad-hoc script `test_group_notifications.py`.\n\n## What to build\n1. `requirements-dev.txt` with: `pytest`, `pytest-cov`, `requests-mock`.\n2. `pytest.ini` at repo root with `testpaths = tests`, `pythonpath = .`, and `filterwarnings = ignore::DeprecationWarning`.\n3. `tests/__init__.py` (empty) and `tests/unit/__init__.py` (empty).\n4. `tests/conftest.py` \u2014 provide a `tmp_db_path` fixture that sets `DB_PATH` env var to a tempfile before importing `app.db`, and yields the path. Also provide an `initialized_db` fixture that calls `app.db.init_db()`.\n5. `tests/unit/test_url_validation.py` \u2014 cover `app.api.endpoints.validate_url` and `normalize_url`: valid domain, valid domain with port, invalid port (out of range, non-numeric), IPv4, localhost, missing scheme (gets https:// prepended), unsupported scheme (ftp://).\n6. `tests/unit/test_monitoring_helpers.py` \u2014 cover `app.core.monitoring.should_send_down_notification` (fresh notification when last_notified is None, blocked when within interval, allowed when past interval, allowed when last_notified is malformed).\n\n## Files you own\nOnly create files under `tests/`, and the two top-level config files. Do NOT edit any files in `app/`.\n\n## Acceptance\n`pip install -r requirements.txt -r requirements-dev.txt && pytest -x -q` exits 0 and shows at least 10 passing tests.", "role": "qa", "priority": 0, "scope": "medium", "complexity": "medium", "estimated_minutes": 120, "status": "done", "task_type": "standard", "upgrade_details": null, "depends_on": [], "parent_task_id": null, "depends_on_repo": null, "owned_files": ["tests/__init__.py", "tests/conftest.py", "tests/unit/__init__.py", "tests/unit/test_url_validation.py", "tests/unit/test_monitoring_helpers.py", "requirements-dev.txt", "pytest.ini"], "assigned_agent": null, "result_summary": "Completed: Set up pytest infrastructure with initial unit tests \u2014 7 files created, 21 tests pass", "tenant_id": "default", "cell_id": null, "repo": null, "batch_eligible": false, "eu_ai_act_risk": "limited", "approval_required": false, "risk_level": "medium", "slack_context": null, "version": 10, "claimed_at": 1786298779.8233864, "completed_at": 1786299030.0333195, "closed_at": null, "claimed_by_session": "4163e54405e04cd9", "parent_session_id": null, "subtask_wait_started_at": null, "parent_context": null, "retry_count": 0, "max_retries": 3, "retry_delay_s": 0.0, "terminal_reason": null, "max_output_tokens": null, "meta_messages": [], "metadata": {"janitor_reopen_count": 2}, "max_turns": null}
++{"id": "e4c8f38c4f5d", "title": "Set up pytest infrastructure with initial unit tests", "description": "Stand up a real test harness so subsequent refactors can be verified. There is currently no pytest setup \u2014 only an ad-hoc script `test_group_notifications.py`.\n\n## What to build\n1. `requirements-dev.txt` with: `pytest`, `pytest-cov`, `requests-mock`.\n2. `pytest.ini` at repo root with `testpaths = tests`, `pythonpath = .`, and `filterwarnings = ignore::DeprecationWarning`.\n3. `tests/__init__.py` (empty) and `tests/unit/__init__.py` (empty).\n4. `tests/conftest.py` \u2014 provide a `tmp_db_path` fixture that sets `DB_PATH` env var to a tempfile before importing `app.db`, and yields the path. Also provide an `initialized_db` fixture that calls `app.db.init_db()`.\n5. `tests/unit/test_url_validation.py` \u2014 cover `app.api.endpoints.validate_url` and `normalize_url`: valid domain, valid domain with port, invalid port (out of range, non-numeric), IPv4, localhost, missing scheme (gets https:// prepended), unsupported scheme (ftp://).\n6. `tests/unit/test_monitoring_helpers.py` \u2014 cover `app.core.monitoring.should_send_down_notification` (fresh notification when last_notified is None, blocked when within interval, allowed when past interval, allowed when last_notified is malformed).\n\n## Files you own\nOnly create files under `tests/`, and the two top-level config files. Do NOT edit any files in `app/`.\n\n## Acceptance\n`pip install -r requirements.txt -r requirements-dev.txt && pytest -x -q` exits 0 and shows at least 10 passing tests.", "role": "qa", "priority": 0, "scope": "medium", "complexity": "medium", "estimated_minutes": 120, "status": "failed", "task_type": "standard", "upgrade_details": null, "depends_on": [], "parent_task_id": null, "depends_on_repo": null, "owned_files": ["tests/__init__.py", "tests/conftest.py", "tests/unit/__init__.py", "tests/unit/test_url_validation.py", "tests/unit/test_monitoring_helpers.py", "requirements-dev.txt", "pytest.ini"], "assigned_agent": null, "result_summary": "reopen_budget_exhausted: janitor verification failed after 2 reopen cycle(s) (max 2)", "tenant_id": "default", "cell_id": null, "repo": null, "batch_eligible": false, "eu_ai_act_risk": "limited", "approval_required": false, "risk_level": "medium", "slack_context": null, "version": 11, "claimed_at": 1786298779.8233864, "completed_at": 1786299042.2229924, "closed_at": null, "claimed_by_session": "4163e54405e04cd9", "parent_session_id": null, "subtask_wait_started_at": null, "parent_context": null, "retry_count": 0, "max_retries": 3, "retry_delay_s": 0.0, "terminal_reason": null, "max_output_tokens": null, "meta_messages": [], "metadata": {"janitor_reopen_count": 2}, "max_turns": null}
++{"id": "d852092a7068", "title": "Upgrade: Improve task success rate", "description": "Current success rate is 41.0%, target is 80%", "role": "backend", "priority": 2, "scope": "medium", "complexity": "medium", "estimated_minutes": 30, "status": "done", "task_type": "upgrade_proposal", "upgrade_details": null, "depends_on": [], "parent_task_id": null, "depends_on_repo": null, "owned_files": [], "assigned_agent": null, "result_summary": "Fixed 4 bugs (missing created_at in subscription INSERT, invalid IPv4 passthrough in validate_url, send_notifications returning False with no channels configured, wrong type hint) and added pytest infrastructure with 39 passing tests covering URL validation, monitoring helpers, DB operations, and notifications.", "tenant_id": "default", "cell_id": null, "repo": null, "batch_eligible": false, "eu_ai_act_risk": "limited", "approval_required": false, "risk_level": "medium", "slack_context": null, "version": 3, "claimed_at": 1786298839.1247966, "completed_at": 1786299419.0397773, "closed_at": null, "claimed_by_session": "4163e54405e04cd9", "parent_session_id": null, "subtask_wait_started_at": null, "parent_context": null, "retry_count": 0, "max_retries": 3, "retry_delay_s": 0.0, "terminal_reason": null, "max_output_tokens": null, "meta_messages": [], "metadata": {}, "max_turns": null}
+diff --git a/.sdd/knowledge/decisions.jsonl b/.sdd/knowledge/decisions.jsonl
+index 68b8c75..41ec8c7 100644
+--- a/.sdd/knowledge/decisions.jsonl
++++ b/.sdd/knowledge/decisions.jsonl
+@@ -29,3 +29,4 @@
+ {"timestamp": "2026-08-09T23:06:44.272488", "task_id": "9c424e1782a9", "title": "[fast-path] ruff format: 0 file(s) reformatted in 0.1s", "decision": "[fast-path] ruff format: 0 file(s) reformatted in 0.1s"}
+ {"timestamp": "2026-08-09T23:06:53.970360", "task_id": "9c424e1782a9", "title": "[fast-path] ruff format: 0 file(s) reformatted in 0.1s", "decision": "[fast-path] ruff format: 0 file(s) reformatted in 0.1s"}
+ {"timestamp": "2026-08-09T23:07:55.325288", "task_id": "c3849e1033a8", "title": "Completed: Consolidate flask-restx model registration and extract URL validators \u2014 build_models + cached get_models in app/models.py; normalize_url/validate_url moved to app/core/validators.py; endpoints.py imports from validators; settings.py unchanged. All acceptance checks pass. Code already committed at 56f499b.", "decision": "Completed: Consolidate flask-restx model registration and extract URL validators \u2014 build_models + cached get_models in app/models.py; normalize_url/validate_url moved to app/core/validators.py; endpoints.py imports from validators; settings.py unchanged. All acceptance checks pass. Code already committed at 56f499b."}
++{"timestamp": "2026-08-09T23:10:42.191437", "task_id": "e4c8f38c4f5d", "title": "Completed: Set up pytest infrastructure with initial unit tests \u2014 7 files created, 21 tests pass", "decision": "Completed: Set up pytest infrastructure with initial unit tests \u2014 7 files created, 21 tests pass"}
+diff --git a/.sdd/knowledge/recent_decisions.md b/.sdd/knowledge/recent_decisions.md
+index c0ffddb..b1e5f8c 100644
+--- a/.sdd/knowledge/recent_decisions.md
++++ b/.sdd/knowledge/recent_decisions.md
+@@ -1,7 +1,7 @@
+ # Recent Decisions
+ 
+-## [2026-08-09 23:04] Completed: Extract startup notification logic out of app/__init__.py into app/core/startup.py (34e1ef633c4f)
+-Completed: Extract startup notification logic out of app/__init__.py into app/core/startup.py
++## [2026-08-09 23:06] Added pytest infrastructure: requirements-dev.txt, pytest.ini, tests/{__init__.py,conftest.py,unit/__init__.py}, tests/unit/test_url_validation.py (22 tests covering normalize_url/validate_url), tests/unit/test_monitoring_helpers.py (8 tests covering should_send_down_notification). pytest -x -q reports 30 passed. Files committed on branch agent/qa-0f76e5b9 as f71c0b2 (created via git worktree at /c/temp/qa-work because .sdd/worktrees/qa-0f76e5b9 was empty). (12a39d6b2e84)
++Added pytest infrastructure: requirements-dev.txt, pytest.ini, tests/{__init__.py,conftest.py,unit/__init__.py}, tests/unit/test_url_validation.py (22 tests covering normalize_url/validate_url), tests/unit/test_monitoring_helpers.py (8 tests covering should_send_down_notification). pytest -x -q reports 30 passed. Files committed on branch agent/qa-0f76e5b9 as f71c0b2 (created via git worktree at /c/temp/qa-work because .sdd/worktrees/qa-0f76e5b9 was empty).
+ 
+ 
+ 
+@@ -30,8 +30,8 @@ Completed: Extract startup notification logic out of app/__init__.py into app/co
+ 
+ 
+ 
+-## [2026-08-09 23:06] Added pytest infrastructure: requirements-dev.txt, pytest.ini, tests/{__init__.py,conftest.py,unit/__init__.py}, tests/unit/test_url_validation.py (22 tests covering normalize_url/validate_url), tests/unit/test_monitoring_helpers.py (8 tests covering should_send_down_notification). pytest -x -q reports 30 passed. Files committed on branch agent/qa-0f76e5b9 as f71c0b2 (created via git worktree at /c/temp/qa-work because .sdd/worktrees/qa-0f76e5b9 was empty). (12a39d6b2e84)
+-Added pytest infrastructure: requirements-dev.txt, pytest.ini, tests/{__init__.py,conftest.py,unit/__init__.py}, tests/unit/test_url_validation.py (22 tests covering normalize_url/validate_url), tests/unit/test_monitoring_helpers.py (8 tests covering should_send_down_notification). pytest -x -q reports 30 passed. Files committed on branch agent/qa-0f76e5b9 as f71c0b2 (created via git worktree at /c/temp/qa-work because .sdd/worktrees/qa-0f76e5b9 was empty).
++## [2026-08-09 23:06] Retried: Agent qa-11697a94 reaped (heartbeat timeout) (e4c8f38c4f5d)
++Retried: Agent qa-11697a94 reaped (heartbeat timeout)
+ 
+ 
+ 
+@@ -58,8 +58,8 @@ Added pytest infrastructure: requirements-dev.txt, pytest.ini, tests/{__init__.p
+ 
+ 
+ 
+-## [2026-08-09 23:06] Retried: Agent qa-11697a94 reaped (heartbeat timeout) (e4c8f38c4f5d)
+-Retried: Agent qa-11697a94 reaped (heartbeat timeout)
++## [2026-08-09 23:06] Retried: Agent architect-7a4f1e2f died; janitor failed: ['path_exists: app/repositories/__init__.py (not found)', 'path_exists: app/repositories/endpoints.py (not found)', 'path_exists: app/repositories/subscriptions.py (not found)', 'path_exists: app/repositories/notification_logs.py (not found)', 'path_exists: app/repositories/settings.py (not found)', 'path_exists: app/repositories/discovery.py (not found)', 'test_passes: python -c "from app.repositories import endpoints, subscriptions, notification_logs, settings, discovery" (non-zero exit)'] (34196aa87c4d)
++Retried: Agent architect-7a4f1e2f died; janitor failed: ['path_exists: app/repositories/__init__.py (not found)', 'path_exists: app/repositories/endpoints.py (not found)', 'path_exists: app/repositories/subscriptions.py (not found)', 'path_exists: app/repositories/notification_logs.py (not found)', 'path_exists: app/repositories/settings.py (not found)', 'path_exists: app/repositories/discovery.py (not found)', 'test_passes: python -c "from app.repositories import endpoints, subscriptions, notification_logs, settings, discovery" (non-zero exit)']
+ 
+ 
+ 
+@@ -84,8 +84,8 @@ Retried: Agent qa-11697a94 reaped (heartbeat timeout)
+ 
+ 
+ 
+-## [2026-08-09 23:06] Retried: Agent architect-7a4f1e2f died; janitor failed: ['path_exists: app/repositories/__init__.py (not found)', 'path_exists: app/repositories/endpoints.py (not found)', 'path_exists: app/repositories/subscriptions.py (not found)', 'path_exists: app/repositories/notification_logs.py (not found)', 'path_exists: app/repositories/settings.py (not found)', 'path_exists: app/repositories/discovery.py (not found)', 'test_passes: python -c "from app.repositories import endpoints, subscriptions, notification_logs, settings, discovery" (non-zero exit)'] (34196aa87c4d)
+-Retried: Agent architect-7a4f1e2f died; janitor failed: ['path_exists: app/repositories/__init__.py (not found)', 'path_exists: app/repositories/endpoints.py (not found)', 'path_exists: app/repositories/subscriptions.py (not found)', 'path_exists: app/repositories/notification_logs.py (not found)', 'path_exists: app/repositories/settings.py (not found)', 'path_exists: app/repositories/discovery.py (not found)', 'test_passes: python -c "from app.repositories import endpoints, subscriptions, notification_logs, settings, discovery" (non-zero exit)']
++## [2026-08-09 23:06] [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found  (9c424e1782a9)
++[fast-path] error: Failed to spawn: `ruff`   Caused by: program not found
+ 
+ 
+ 
+@@ -108,7 +108,7 @@ Retried: Agent architect-7a4f1e2f died; janitor failed: ['path_exists: app/repos
+ 
+ 
+ 
+-## [2026-08-09 23:06] [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found  (9c424e1782a9)
++## [2026-08-09 23:06] [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found  (c9e785e58544)
+ [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found
+ 
+ 
+@@ -130,8 +130,8 @@ Retried: Agent architect-7a4f1e2f died; janitor failed: ['path_exists: app/repos
+ 
+ 
+ 
+-## [2026-08-09 23:06] [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found  (c9e785e58544)
+-[fast-path] error: Failed to spawn: `ruff`   Caused by: program not found
++## [2026-08-09 23:06] Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architect) is high-stakes but no default_model is configured. Refusing to guess a model. (c3849e1033a8)
++Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architect) is high-stakes but no default_model is configured. Refusing to guess a model.
+ 
+ 
+ 
+@@ -150,8 +150,8 @@ Retried: Agent architect-7a4f1e2f died; janitor failed: ['path_exists: app/repos
+ 
+ 
+ 
+-## [2026-08-09 23:06] Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architect) is high-stakes but no default_model is configured. Refusing to guess a model. (c3849e1033a8)
+-Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architect) is high-stakes but no default_model is configured. Refusing to guess a model.
++## [2026-08-09 23:06] [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found  (0df11926e25d)
++[fast-path] error: Failed to spawn: `ruff`   Caused by: program not found
+ 
+ 
+ 
+@@ -168,7 +168,7 @@ Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architec
+ 
+ 
+ 
+-## [2026-08-09 23:06] [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found  (0df11926e25d)
++## [2026-08-09 23:06] [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found  (e5b26deb39fa)
+ [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found
+ 
+ 
+@@ -184,8 +184,8 @@ Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architec
+ 
+ 
+ 
+-## [2026-08-09 23:06] [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found  (e5b26deb39fa)
+-[fast-path] error: Failed to spawn: `ruff`   Caused by: program not found
++## [2026-08-09 23:06] Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architect) is high-stakes but no default_model is configured. Refusing to guess a model. (0efca7a58b44)
++Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architect) is high-stakes but no default_model is configured. Refusing to guess a model.
+ 
+ 
+ 
+@@ -198,8 +198,8 @@ Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architec
+ 
+ 
+ 
+-## [2026-08-09 23:06] Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architect) is high-stakes but no default_model is configured. Refusing to guess a model. (0efca7a58b44)
+-Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architect) is high-stakes but no default_model is configured. Refusing to guess a model.
++## [2026-08-09 23:06] Spawn failed (transient, attempt 2): architect: All spawn attempts failed for session architect-140f2caa: Claude Code: (no error pattern found, showing last 10 lines): <log empty or unavailable> (6408bbb74419)
++Spawn failed (transient, attempt 2): architect: All spawn attempts failed for session architect-140f2caa: Claude Code: (no error pattern found, showing last 10 lines): <log empty or unavailable>
+ 
+ 
+ 
+@@ -210,7 +210,7 @@ Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architec
+ 
+ 
+ 
+-## [2026-08-09 23:06] Spawn failed (transient, attempt 2): architect: All spawn attempts failed for session architect-140f2caa: Claude Code: (no error pattern found, showing last 10 lines): <log empty or unavailable> (6408bbb74419)
++## [2026-08-09 23:06] Spawn failed (transient, attempt 2): architect: All spawn attempts failed for session architect-140f2caa: Claude Code: (no error pattern found, showing last 10 lines): <log empty or unavailable> (c5e3d06b26e9)
+ Spawn failed (transient, attempt 2): architect: All spawn attempts failed for session architect-140f2caa: Claude Code: (no error pattern found, showing last 10 lines): <log empty or unavailable>
+ 
+ 
+@@ -220,8 +220,8 @@ Spawn failed (transient, attempt 2): architect: All spawn attempts failed for se
+ 
+ 
+ 
+-## [2026-08-09 23:06] Spawn failed (transient, attempt 2): architect: All spawn attempts failed for session architect-140f2caa: Claude Code: (no error pattern found, showing last 10 lines): <log empty or unavailable> (c5e3d06b26e9)
+-Spawn failed (transient, attempt 2): architect: All spawn attempts failed for session architect-140f2caa: Claude Code: (no error pattern found, showing last 10 lines): <log empty or unavailable>
++## [2026-08-09 23:06] [fast-path] ruff format: 0 file(s) reformatted in 0.1s (9c424e1782a9)
++[fast-path] ruff format: 0 file(s) reformatted in 0.1s
+ 
+ 
+ 
+@@ -234,9 +234,9 @@ Spawn failed (transient, attempt 2): architect: All spawn attempts failed for se
+ 
+ 
+ 
+-## [2026-08-09 23:06] [fast-path] ruff format: 0 file(s) reformatted in 0.1s (9c424e1782a9)
+-[fast-path] ruff format: 0 file(s) reformatted in 0.1s
+-
+-
+ ## [2026-08-09 23:07] Completed: Consolidate flask-restx model registration and extract URL validators — build_models + cached get_models in app/models.py; normalize_url/validate_url moved to app/core/validators.py; endpoints.py imports from validators; settings.py unchanged. All acceptance checks pass. Code already committed at 56f499b. (c3849e1033a8)
+ Completed: Consolidate flask-restx model registration and extract URL validators — build_models + cached get_models in app/models.py; normalize_url/validate_url moved to app/core/validators.py; endpoints.py imports from validators; settings.py unchanged. All acceptance checks pass. Code already committed at 56f499b.
++
++
++## [2026-08-09 23:10] Completed: Set up pytest infrastructure with initial unit tests — 7 files created, 21 tests pass (e4c8f38c4f5d)
++Completed: Set up pytest infrastructure with initial unit tests — 7 files created, 21 tests pass
+diff --git a/.sdd/metrics/agent_success_2026-08-09.jsonl b/.sdd/metrics/agent_success_2026-08-09.jsonl
+index 8eec374..5b48653 100644
+--- a/.sdd/metrics/agent_success_2026-08-09.jsonl
++++ b/.sdd/metrics/agent_success_2026-08-09.jsonl
+@@ -13,3 +13,4 @@
+ {"timestamp": 1786298765.7282915, "metric_type": "agent_success", "value": 1.0, "labels": {"agent_id": "qa-0f76e5b9", "role": "qa", "model": "opus", "tenant_id": "default"}}
+ {"timestamp": 1786298771.6452901, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "architect-97e44802", "role": "architect", "model": "opus", "tenant_id": "default"}}
+ {"timestamp": 1786298875.324206, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "architect-42a4326e", "role": "architect", "model": "opus", "tenant_id": "default"}}
++{"timestamp": 1786299042.1904795, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "qa-d19f7e59", "role": "qa", "model": "sonnet", "tenant_id": "default"}}
+diff --git a/.sdd/metrics/agents.jsonl b/.sdd/metrics/agents.jsonl
+index 9c01083..65b44dd 100644
+--- a/.sdd/metrics/agents.jsonl
++++ b/.sdd/metrics/agents.jsonl
+@@ -9,3 +9,4 @@
+ {"timestamp": 1786298149.3782372, "task_id": null, "role": "qa", "agent_id": "qa-2e102c2d", "lifetime_seconds": 255.95, "tasks_completed": 0, "heartbeat_failures": 0, "sleep_incidents": 0, "context_tokens": 0}
+ {"timestamp": 1786298765.7288795, "task_id": null, "role": "qa", "agent_id": "qa-0f76e5b9", "lifetime_seconds": 468.75, "tasks_completed": 1, "heartbeat_failures": 0, "sleep_incidents": 0, "context_tokens": 0}
+ {"timestamp": 1786298875.3249815, "task_id": null, "role": "architect", "agent_id": "architect-42a4326e", "lifetime_seconds": 82.52, "tasks_completed": 0, "heartbeat_failures": 0, "sleep_incidents": 0, "context_tokens": 0}
++{"timestamp": 1786299042.191113, "task_id": null, "role": "qa", "agent_id": "qa-d19f7e59", "lifetime_seconds": 262.05, "tasks_completed": 0, "heartbeat_failures": 0, "sleep_incidents": 0, "context_tokens": 0}
+diff --git a/.sdd/metrics/effectiveness.jsonl b/.sdd/metrics/effectiveness.jsonl
+index f2d6f03..68bd155 100644
+--- a/.sdd/metrics/effectiveness.jsonl
++++ b/.sdd/metrics/effectiveness.jsonl
+@@ -13,3 +13,4 @@
+ {"completion_score": 100, "efficiency_score": 50, "effort": "high", "estimated_time_s": 43200.0, "fix_count": 0, "gate_pass_rate": 0.0, "grade": "D", "model": "opus", "quality_score": 50, "retry_count": 2, "retry_score": 50, "role": "qa", "session_id": "qa-0f76e5b9", "task_id": "12a39d6b2e84", "time_score": 100, "timestamp": "2026-08-09T18:06:05.728592+00:00", "tokens_used": 0, "total": 68, "wall_time_s": 434.02}
+ {"completion_score": 80, "efficiency_score": 50, "effort": "max", "estimated_time_s": 7200.0, "fix_count": 0, "gate_pass_rate": 0.0, "grade": "C", "model": "opus", "quality_score": 50, "retry_count": 0, "retry_score": 100, "role": "architect", "session_id": "architect-97e44802", "task_id": "c3849e1033a8", "time_score": 100, "timestamp": "2026-08-09T18:06:11.646170+00:00", "tokens_used": 0, "total": 72, "wall_time_s": 335.69}
+ {"completion_score": 100, "efficiency_score": 50, "effort": "max", "estimated_time_s": 7200.0, "fix_count": 0, "gate_pass_rate": 0.0, "grade": "C", "model": "opus", "quality_score": 50, "retry_count": 0, "retry_score": 100, "role": "architect", "session_id": "architect-42a4326e", "task_id": "c3849e1033a8", "time_score": 100, "timestamp": "2026-08-09T18:07:55.324528+00:00", "tokens_used": 0, "total": 75, "wall_time_s": 76.93}
++{"completion_score": 100, "efficiency_score": 50, "effort": "high", "estimated_time_s": 7200.0, "fix_count": 0, "gate_pass_rate": 0.0, "grade": "C", "model": "sonnet", "quality_score": 50, "retry_count": 0, "retry_score": 100, "role": "qa", "session_id": "qa-d19f7e59", "task_id": "e4c8f38c4f5d", "time_score": 100, "timestamp": "2026-08-09T18:10:42.190762+00:00", "tokens_used": 0, "total": 75, "wall_time_s": 248.87}
+diff --git a/.sdd/metrics/file_health.jsonl b/.sdd/metrics/file_health.jsonl
+index 275f38f..a9d46f1 100644
+--- a/.sdd/metrics/file_health.jsonl
++++ b/.sdd/metrics/file_health.jsonl
+@@ -72,3 +72,10 @@
+ {"path": "tests/unit/test_monitoring_helpers.py", "complexity_score": 50, "bug_density_score": 80, "coverage_score": 70, "churn_score": 100, "coupling_score": 70, "total": 72, "grade": "C", "failure_touches": 1, "success_touches": 4, "last_updated": 1786299030.2057624, "flagged": false}
+ {"path": "requirements-dev.txt", "complexity_score": 80, "bug_density_score": 80, "coverage_score": 70, "churn_score": 100, "coupling_score": 80, "total": 81, "grade": "B", "failure_touches": 1, "success_touches": 4, "last_updated": 1786299030.239268, "flagged": false}
+ {"path": "pytest.ini", "complexity_score": 80, "bug_density_score": 80, "coverage_score": 70, "churn_score": 100, "coupling_score": 80, "total": 81, "grade": "B", "failure_touches": 1, "success_touches": 4, "last_updated": 1786299030.2715557, "flagged": false}
++{"path": "tests/__init__.py", "complexity_score": 50, "bug_density_score": 66, "coverage_score": 70, "churn_score": 100, "coupling_score": 70, "total": 68, "grade": "D", "failure_touches": 2, "success_touches": 4, "last_updated": 1786299042.2632563, "flagged": false}
++{"path": "tests/conftest.py", "complexity_score": 50, "bug_density_score": 66, "coverage_score": 70, "churn_score": 100, "coupling_score": 70, "total": 68, "grade": "D", "failure_touches": 2, "success_touches": 4, "last_updated": 1786299042.2955067, "flagged": false}
++{"path": "tests/unit/__init__.py", "complexity_score": 50, "bug_density_score": 66, "coverage_score": 70, "churn_score": 100, "coupling_score": 70, "total": 68, "grade": "D", "failure_touches": 2, "success_touches": 4, "last_updated": 1786299042.3246586, "flagged": false}
++{"path": "tests/unit/test_url_validation.py", "complexity_score": 50, "bug_density_score": 66, "coverage_score": 70, "churn_score": 100, "coupling_score": 70, "total": 68, "grade": "D", "failure_touches": 2, "success_touches": 4, "last_updated": 1786299042.3551407, "flagged": false}
++{"path": "tests/unit/test_monitoring_helpers.py", "complexity_score": 50, "bug_density_score": 66, "coverage_score": 70, "churn_score": 100, "coupling_score": 70, "total": 68, "grade": "D", "failure_touches": 2, "success_touches": 4, "last_updated": 1786299042.38785, "flagged": false}
++{"path": "requirements-dev.txt", "complexity_score": 80, "bug_density_score": 66, "coverage_score": 70, "churn_score": 100, "coupling_score": 80, "total": 76, "grade": "C", "failure_touches": 2, "success_touches": 4, "last_updated": 1786299042.4169216, "flagged": false}
++{"path": "pytest.ini", "complexity_score": 80, "bug_density_score": 66, "coverage_score": 70, "churn_score": 100, "coupling_score": 80, "total": 76, "grade": "C", "failure_touches": 2, "success_touches": 4, "last_updated": 1786299042.4473805, "flagged": false}
+diff --git a/.sdd/metrics/file_health_touches.jsonl b/.sdd/metrics/file_health_touches.jsonl
+index 592c14a..5b97f8f 100644
+--- a/.sdd/metrics/file_health_touches.jsonl
++++ b/.sdd/metrics/file_health_touches.jsonl
+@@ -72,3 +72,10 @@
+ {"timestamp": 1786299030.2057624, "task_id": "e4c8f38c4f5d", "path": "tests/unit/test_monitoring_helpers.py", "outcome": "success", "previous_total": 71, "new_total": 72, "flagged": false}
+ {"timestamp": 1786299030.239268, "task_id": "e4c8f38c4f5d", "path": "requirements-dev.txt", "outcome": "success", "previous_total": 79, "new_total": 81, "flagged": false}
+ {"timestamp": 1786299030.2715557, "task_id": "e4c8f38c4f5d", "path": "pytest.ini", "outcome": "success", "previous_total": 79, "new_total": 81, "flagged": false}
++{"timestamp": 1786299042.2632563, "task_id": "e4c8f38c4f5d", "path": "tests/__init__.py", "outcome": "failure", "previous_total": 72, "new_total": 68, "flagged": false}
++{"timestamp": 1786299042.2955067, "task_id": "e4c8f38c4f5d", "path": "tests/conftest.py", "outcome": "failure", "previous_total": 72, "new_total": 68, "flagged": false}
++{"timestamp": 1786299042.3246586, "task_id": "e4c8f38c4f5d", "path": "tests/unit/__init__.py", "outcome": "failure", "previous_total": 72, "new_total": 68, "flagged": false}
++{"timestamp": 1786299042.3551407, "task_id": "e4c8f38c4f5d", "path": "tests/unit/test_url_validation.py", "outcome": "failure", "previous_total": 72, "new_total": 68, "flagged": false}
++{"timestamp": 1786299042.38785, "task_id": "e4c8f38c4f5d", "path": "tests/unit/test_monitoring_helpers.py", "outcome": "failure", "previous_total": 72, "new_total": 68, "flagged": false}
++{"timestamp": 1786299042.4169216, "task_id": "e4c8f38c4f5d", "path": "requirements-dev.txt", "outcome": "failure", "previous_total": 81, "new_total": 76, "flagged": false}
++{"timestamp": 1786299042.4473805, "task_id": "e4c8f38c4f5d", "path": "pytest.ini", "outcome": "failure", "previous_total": 81, "new_total": 76, "flagged": false}
+diff --git a/.sdd/metrics/parallelism_level_2026-08-09.jsonl b/.sdd/metrics/parallelism_level_2026-08-09.jsonl
+index 2bdc0e8..8ac1650 100644
+--- a/.sdd/metrics/parallelism_level_2026-08-09.jsonl
++++ b/.sdd/metrics/parallelism_level_2026-08-09.jsonl
+@@ -653,3 +653,128 @@
+ {"timestamp": 1786299022.9186723, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.970", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
+ {"timestamp": 1786299025.956204, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.970", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
+ {"timestamp": 1786299028.9914913, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.970", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299032.102438, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.970", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299045.8408117, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299048.8750157, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299051.8983536, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299054.9215763, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299057.9451904, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299061.008678, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299064.0570788, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299067.0781267, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299070.1020234, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299073.1251738, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299076.149101, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299079.2162502, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299082.2666037, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299085.2881148, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299088.3137486, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299091.3375568, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299094.3628142, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299097.4311962, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299100.491244, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299103.5195408, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299106.564339, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299109.5935383, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299112.6211236, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299115.6809587, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299118.7323136, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299121.753724, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299124.7788289, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299127.8020935, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299130.8255367, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299133.8844938, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299137.2988834, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299140.3596053, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299143.3820856, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299146.412139, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299149.445148, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299152.5264394, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299155.5875037, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299158.6087291, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299161.6351469, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299164.659092, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299167.684059, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.969", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299170.7496445, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.970", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299173.83611, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.970", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299176.856071, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.970", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299179.8786848, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.970", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299182.9222383, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.971", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299185.9504542, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.971", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299189.0155828, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.971", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299192.0717497, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.978", "cpu_percent": "0.0", "reason": "error_rate_high (97%)"}}
++{"timestamp": 1786299195.0955539, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.978", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299198.125598, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.978", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299201.1495073, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.978", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299204.1739786, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.978", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299207.2353973, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.978", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299210.285082, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.979", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299213.3091075, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.979", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299216.3364298, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.979", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299219.3670008, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.979", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299222.3939173, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.979", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299225.4553473, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.979", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299228.8655055, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.979", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299231.889337, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.979", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299234.9208157, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.979", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299237.9470599, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.980", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299240.97067, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.980", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299244.0344281, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.980", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299247.0879564, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.980", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299250.1117976, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.980", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299253.1354804, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.980", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299256.1601226, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.980", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299259.1854901, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.980", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299262.2429106, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.981", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299265.297853, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.981", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299268.325337, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.981", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299271.3531613, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.981", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299274.3748353, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.981", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299277.3980465, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.981", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299280.4706979, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.981", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299283.5292587, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.981", "cpu_percent": "0.0", "reason": "error_rate_high (98%)"}}
++{"timestamp": 1786299286.5527198, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299289.5827148, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299292.611677, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299295.6359, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299298.6988087, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299301.7635639, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299304.7902088, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299307.821771, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299310.8548946, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299313.8788214, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299316.9419997, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299320.306057, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299323.333539, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299326.3663292, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299329.3992302, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299332.4280276, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299335.4989169, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299338.5619433, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299341.5959618, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299344.6271253, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299347.769963, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299350.8308213, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299353.936266, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299356.9918115, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299360.0499585, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299363.1068876, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "0.994", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299366.1377816, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (99%)"}}
++{"timestamp": 1786299369.2030673, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299372.3022802, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299375.365861, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299378.423258, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299381.502483, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299384.5333714, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299387.592389, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299390.6939557, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299393.7532618, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299396.8163745, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299399.8816671, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299402.9123764, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299405.9680192, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299409.0647278, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299412.4431903, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299415.504681, "metric_type": "parallelism_level", "value": 2.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299418.5698385, "metric_type": "parallelism_level", "value": 1.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
++{"timestamp": 1786299421.5930672, "metric_type": "parallelism_level", "value": 3.0, "labels": {"configured_max": "6", "error_rate": "1.000", "cpu_percent": "0.0", "reason": "error_rate_high (100%)"}}
+diff --git a/.sdd/metrics/slos.json b/.sdd/metrics/slos.json
+index 3eb85b2..65bae8e 100644
+--- a/.sdd/metrics/slos.json
++++ b/.sdd/metrics/slos.json
+@@ -20,7 +20,7 @@
+       "name": "p95_duration",
+       "description": "P95 task duration < 30 minutes",
+       "target": 0.9,
+-      "current": 0.5876,
++      "current": 0.5894,
+       "status": "red",
+       "met": false
+     }
+diff --git a/.sdd/metrics/task_completion_time_2026-08-09.jsonl b/.sdd/metrics/task_completion_time_2026-08-09.jsonl
+index e7f8f30..e8a7c4a 100644
+--- a/.sdd/metrics/task_completion_time_2026-08-09.jsonl
++++ b/.sdd/metrics/task_completion_time_2026-08-09.jsonl
+@@ -36,3 +36,4 @@
+ {"timestamp": 1786298810.6332228, "metric_type": "task_completion_time", "value": 0.05755877494812012, "labels": {"task_id": "9c424e1782a9", "role": "backend", "model": "fast-path", "success": "True", "tenant_id": "default"}}
+ {"timestamp": 1786298813.9699187, "metric_type": "task_completion_time", "value": 3.3942527770996094, "labels": {"task_id": "9c424e1782a9", "role": "backend", "model": "fast-path", "success": "False", "tenant_id": "default"}}
+ {"timestamp": 1786298875.3231761, "metric_type": "task_completion_time", "value": 74.3898434638977, "labels": {"task_id": "c3849e1033a8", "role": "architect", "model": "opus", "success": "False", "tenant_id": "default"}}
++{"timestamp": 1786299042.190114, "metric_type": "task_completion_time", "value": 253.46921849250793, "labels": {"task_id": "e4c8f38c4f5d", "role": "qa", "model": "sonnet", "success": "False", "tenant_id": "default"}}
+diff --git a/.sdd/metrics/tasks.jsonl b/.sdd/metrics/tasks.jsonl
+index 48b9865..22d3764 100644
+--- a/.sdd/metrics/tasks.jsonl
++++ b/.sdd/metrics/tasks.jsonl
+@@ -35,3 +35,4 @@
+ {"timestamp": 1786298810.6334963, "task_id": "9c424e1782a9", "role": "backend", "model": "fast-path", "provider": "local", "duration_seconds": 0.056048399999781395, "tokens_prompt": 0, "tokens_completion": 0, "cost_usd": 0.0, "estimated_savings_usd": 0.15, "janitor_passed": true, "files_modified": 0, "lines_added": 0, "lines_deleted": 0, "fast_path_action": "ruff_format"}
+ {"timestamp": 1786298813.9821477, "task_id": "9c424e1782a9", "role": "backend", "model": "fast-path", "provider": null, "duration_seconds": 3.39, "tokens_prompt": 0, "tokens_completion": 0, "cost_usd": 0.0, "janitor_passed": false, "files_modified": 0, "lines_added": 0, "lines_deleted": 0}
+ {"timestamp": 1786298875.3409355, "task_id": "c3849e1033a8", "role": "architect", "model": "opus", "provider": null, "duration_seconds": 74.39, "tokens_prompt": 0, "tokens_completion": 0, "cost_usd": 0.0, "janitor_passed": false, "files_modified": 0, "lines_added": 0, "lines_deleted": 0}
++{"timestamp": 1786299042.2025812, "task_id": "e4c8f38c4f5d", "role": "qa", "model": "sonnet", "provider": null, "duration_seconds": 253.47, "tokens_prompt": 0, "tokens_completion": 0, "cost_usd": 0.0, "janitor_passed": false, "files_modified": 0, "lines_added": 0, "lines_deleted": 0}
+diff --git a/.sdd/runs/20260809-171148/journal.jsonl b/.sdd/runs/20260809-171148/journal.jsonl
+index ed0c2ca..0347f3f 100644
+--- a/.sdd/runs/20260809-171148/journal.jsonl
++++ b/.sdd/runs/20260809-171148/journal.jsonl
+@@ -734,3 +734,128 @@
+ {"ts": 1786299028.9737935, "elapsed_s": 3520.932, "index": 812, "event": "tick_start", "prev_hash": "354f123869e3938d8e7cc62c3e38aabcff213f6d6b17153cc9296968e7cad0cd", "payload_hash": "ca92737c5d582caad8577a2c327e1f1e2a789be0d97c1929eebe834fd68cc350", "event_hash": "dce1d196ac37e09f1e873855df5897b26a53eee2bb1c7de15a17759f2664f243", "tick": 719}
+ {"ts": 1786299032.0094314, "elapsed_s": 3523.967, "index": 813, "event": "tick_start", "prev_hash": "dce1d196ac37e09f1e873855df5897b26a53eee2bb1c7de15a17759f2664f243", "payload_hash": "ba80f40e9405c2e707e4064f1aecde7daa81beb0c362a7fbad195e98b8ab08b5", "event_hash": "bc66288d478e431d040600bcf0171b6a141c83a33488a14f8589e81755ce2219", "tick": 720}
+ {"ts": 1786299032.7308035, "elapsed_s": 3524.689, "index": 814, "event": "task_diff_captured", "prev_hash": "bc66288d478e431d040600bcf0171b6a141c83a33488a14f8589e81755ce2219", "payload_hash": "c999a1404caa1e07bdbe17e2f6333a3a4b3a0054604c19a462c3bb14360c5e4f", "event_hash": "a0ed7d6e548a1a2e7cf7b4567493a2b32448539364f7bbf26a6c10bbc15f85dd", "task_id": "e4c8f38c4f5d", "diff_sha256": "sha256:3ce760026a14f91bf86bb244d9467575894d80eb07d35afdae96aaf0a50e8604", "diff_added": 1152, "diff_removed": 311, "diff_files": 33}
++{"ts": 1786299042.8272333, "elapsed_s": 3534.785, "index": 815, "event": "task_verification_failed", "prev_hash": "a0ed7d6e548a1a2e7cf7b4567493a2b32448539364f7bbf26a6c10bbc15f85dd", "payload_hash": "d7980b9db81ea2465e77088002ede79a068cb65df70f26008f0db5eed3660ff2", "event_hash": "d80d474a8a25ddfb25ac1d1a61e42951592270e4d98d2114e9ed4e0652ad6668", "task_id": "e4c8f38c4f5d", "failed_signals": ["path_exists: pytest.ini (not found)", "path_exists: requirements-dev.txt (not found)", "path_exists: tests/conftest.py (not found)", "path_exists: tests/unit/test_url_validation.py (not found)", "path_exists: tests/unit/test_monitoring_helpers.py (not found)", "test_passes: python -m pytest -x -q tests/unit (non-zero exit)"]}
++{"ts": 1786299045.827865, "elapsed_s": 3537.786, "index": 816, "event": "tick_start", "prev_hash": "d80d474a8a25ddfb25ac1d1a61e42951592270e4d98d2114e9ed4e0652ad6668", "payload_hash": "709440c86d30950acd863f776dbc84ed66eda075b36140e39d0ac9420f3bfc5f", "event_hash": "ed9364f4745971f9cb3de7e361747a51a754f5a5c4509228b738e33fbf634c74", "tick": 721}
++{"ts": 1786299048.8612647, "elapsed_s": 3540.819, "index": 817, "event": "tick_start", "prev_hash": "ed9364f4745971f9cb3de7e361747a51a754f5a5c4509228b738e33fbf634c74", "payload_hash": "4492d2839e7a69d1422d68c5473e76ffc9c4425c5d6b6a68686106e79d6bb8b4", "event_hash": "226e029a85c0c00723867406437d0ad5d053c51210dc37a6cd4d260025056248", "tick": 722}
++{"ts": 1786299051.8836753, "elapsed_s": 3543.841, "index": 818, "event": "tick_start", "prev_hash": "226e029a85c0c00723867406437d0ad5d053c51210dc37a6cd4d260025056248", "payload_hash": "7cdc2f1af0e55c8d552beb0b05cb6f8dcb76c4a8918789baccb8a72149c856f4", "event_hash": "4e98d29fc12ea210ca0a0e74d34475d464eed4a305008f8581a77f21236c3808", "tick": 723}
++{"ts": 1786299054.9066155, "elapsed_s": 3546.864, "index": 819, "event": "tick_start", "prev_hash": "4e98d29fc12ea210ca0a0e74d34475d464eed4a305008f8581a77f21236c3808", "payload_hash": "ee3a3245ec9581cdc6870c052ea09494c5e40c7d6121fc3f536595979dc648c3", "event_hash": "83819d198c29aba7adff78e10c84787d859b28d27e4d4a56f84cb913cd7267ab", "tick": 724}
++{"ts": 1786299057.9302528, "elapsed_s": 3549.888, "index": 820, "event": "tick_start", "prev_hash": "83819d198c29aba7adff78e10c84787d859b28d27e4d4a56f84cb913cd7267ab", "payload_hash": "dfd559da3634ef748c4ad2c285b9d4c5ec4cef1463ea78dca562d6506a8a4992", "event_hash": "a0a375c113c88bc3357962154b60d723747265718e75f5bdd628933c7378f6ff", "tick": 725}
++{"ts": 1786299060.9571478, "elapsed_s": 3552.915, "index": 821, "event": "tick_start", "prev_hash": "a0a375c113c88bc3357962154b60d723747265718e75f5bdd628933c7378f6ff", "payload_hash": "46d002c2c302ed47646804fe90c0260042f1c6a238d8c406a40f0dcc90c4f3df", "event_hash": "a9b78cab96195ac84406391fb6a98b44dc09707e9e061eab0aa4438a95854fa0", "tick": 726}
++{"ts": 1786299064.0460136, "elapsed_s": 3556.004, "index": 822, "event": "tick_start", "prev_hash": "a9b78cab96195ac84406391fb6a98b44dc09707e9e061eab0aa4438a95854fa0", "payload_hash": "6a6fcc2b75c614a189a65cd95307c721e332b8dfad87d701f344e20db786375a", "event_hash": "4a6734529e9fead555c2f1aa8e07e64545dcc3adafa5b675d7f417b8ff4b6f57", "tick": 727}
++{"ts": 1786299067.0659246, "elapsed_s": 3559.024, "index": 823, "event": "tick_start", "prev_hash": "4a6734529e9fead555c2f1aa8e07e64545dcc3adafa5b675d7f417b8ff4b6f57", "payload_hash": "53d8420c315e0ec6162ce4d3558b1156f28d452cb28836a67dabdb0e15839f5f", "event_hash": "549e777dd658218707d4f42b152a88a37cbd65f25ef23c57259fdc7e55bf51dd", "tick": 728}
++{"ts": 1786299070.0872223, "elapsed_s": 3562.045, "index": 824, "event": "tick_start", "prev_hash": "549e777dd658218707d4f42b152a88a37cbd65f25ef23c57259fdc7e55bf51dd", "payload_hash": "201802f112f6e63eace7330acd63d0596ada149c772921da22716115f10eaefd", "event_hash": "86c9444d7bc701b413f9bfc1062712da437b7aa018acff1b8273597a95164bc3", "tick": 729}
++{"ts": 1786299073.1099737, "elapsed_s": 3565.068, "index": 825, "event": "tick_start", "prev_hash": "86c9444d7bc701b413f9bfc1062712da437b7aa018acff1b8273597a95164bc3", "payload_hash": "facdca61d99997aa2a38612ba4c81d283cca9574dd2613c453345874f4e20f76", "event_hash": "51e386fe121e70293e7d0bd84f8d53447c86c1c18b44c684a6f208cc9e3c97cb", "tick": 730}
++{"ts": 1786299076.1338754, "elapsed_s": 3568.092, "index": 826, "event": "tick_start", "prev_hash": "51e386fe121e70293e7d0bd84f8d53447c86c1c18b44c684a6f208cc9e3c97cb", "payload_hash": "15db9d01639111c5c10379cc1df25cc2c1bbb95bba3c1d77ea6c29d41e4a7043", "event_hash": "90964e8697bd130fd51b7057cb6430f44550c15bd17134cf2719aef2619c12de", "tick": 731}
++{"ts": 1786299079.1579533, "elapsed_s": 3571.116, "index": 827, "event": "tick_start", "prev_hash": "90964e8697bd130fd51b7057cb6430f44550c15bd17134cf2719aef2619c12de", "payload_hash": "b6fd0d61ae7574632b847ee8ada3ce0330c483e762e2f5b55b773b36c5882607", "event_hash": "07c6b226cbc2216dd17c5004bad4ae5c2b4772d239a89814b02fcedfbf1a7785", "tick": 732}
++{"ts": 1786299082.2522595, "elapsed_s": 3574.21, "index": 828, "event": "tick_start", "prev_hash": "07c6b226cbc2216dd17c5004bad4ae5c2b4772d239a89814b02fcedfbf1a7785", "payload_hash": "7331cfcb2a1a40eb45d1b0abc33fabcb97e171c27ecbe181d9ade5ab546854e2", "event_hash": "0dc4becd8c27d2d1393d978a75bbe47c904045e4cacfa8bed14b024a32ed9baa", "tick": 733}
++{"ts": 1786299085.274619, "elapsed_s": 3577.232, "index": 829, "event": "tick_start", "prev_hash": "0dc4becd8c27d2d1393d978a75bbe47c904045e4cacfa8bed14b024a32ed9baa", "payload_hash": "395db72e9d664af8d337b57bbadb29fcf3dbe23d6e2a3f074f15108899b79753", "event_hash": "9820d6799ddfb5c1cfbae5cf25f03517693421b558201f4c4a4139ec19c06945", "tick": 734}
++{"ts": 1786299088.2983294, "elapsed_s": 3580.256, "index": 830, "event": "tick_start", "prev_hash": "9820d6799ddfb5c1cfbae5cf25f03517693421b558201f4c4a4139ec19c06945", "payload_hash": "8deb2dc46b6d53596c897f9745c52e946985eedab4ac3fa1ae1125b44d8be70e", "event_hash": "8f7e89f29e746048b06a5b8dd3dacb3d827fd36bb2e6a943c7b41e251167ebd7", "tick": 735}
++{"ts": 1786299091.3229077, "elapsed_s": 3583.281, "index": 831, "event": "tick_start", "prev_hash": "8f7e89f29e746048b06a5b8dd3dacb3d827fd36bb2e6a943c7b41e251167ebd7", "payload_hash": "432ad0404fe386f48ae9fd8f8e5e9f337a6a6636ee86f848120d223029d4ee49", "event_hash": "e89657ef6c09e348e6fefa57132590512b47d2af84e88f15c1647caf4b2987ea", "tick": 736}
++{"ts": 1786299094.3472302, "elapsed_s": 3586.305, "index": 832, "event": "tick_start", "prev_hash": "e89657ef6c09e348e6fefa57132590512b47d2af84e88f15c1647caf4b2987ea", "payload_hash": "3838749c44b5337c9e1ad96951f384ceec6b9b11dd688f000866e222a889309b", "event_hash": "c94945e2aff793e6ed2e2c2066757817725574266a1f4d91953fe878546f8da1", "tick": 737}
++{"ts": 1786299097.3720338, "elapsed_s": 3589.33, "index": 833, "event": "tick_start", "prev_hash": "c94945e2aff793e6ed2e2c2066757817725574266a1f4d91953fe878546f8da1", "payload_hash": "a4c6d44ab5895541316d50d70d2a150f270bafbfc9a17e7e5a619f5103a4d41b", "event_hash": "a365871324cbe220f937e95a4ef91ead5e998120d39b91fc40c58d79f2fd1d08", "tick": 738}
++{"ts": 1786299100.4693892, "elapsed_s": 3592.427, "index": 834, "event": "tick_start", "prev_hash": "a365871324cbe220f937e95a4ef91ead5e998120d39b91fc40c58d79f2fd1d08", "payload_hash": "a738cda8f4830c35d65fec21eb84d2b50c5d9b737d70274c5084ae10d3bd65d9", "event_hash": "0e4f4f2b63b6d3f36234bc1cf11682eecf48c20d56cd7847e0fe594c7ae2dbec", "tick": 739}
++{"ts": 1786299103.5064118, "elapsed_s": 3595.464, "index": 835, "event": "tick_start", "prev_hash": "0e4f4f2b63b6d3f36234bc1cf11682eecf48c20d56cd7847e0fe594c7ae2dbec", "payload_hash": "988b4c6052a513236a87560a4aa37b144472f422806d07387734e427254f1e9a", "event_hash": "f9ba178d595ca7cf0caa4201172e6611260430517a5517c89d25dd27bec8131a", "tick": 740}
++{"ts": 1786299106.5308497, "elapsed_s": 3598.489, "index": 836, "event": "tick_start", "prev_hash": "f9ba178d595ca7cf0caa4201172e6611260430517a5517c89d25dd27bec8131a", "payload_hash": "2b254dc88774e9e39db81dd4f3f392696ce0bd21cb40e0609775892e179a4b43", "event_hash": "53eea8b5402200b8fc5f7b5229740fdcfcd02ed8e206085e16560ae87f22562a", "tick": 741}
++{"ts": 1786299109.5723934, "elapsed_s": 3601.53, "index": 837, "event": "tick_start", "prev_hash": "53eea8b5402200b8fc5f7b5229740fdcfcd02ed8e206085e16560ae87f22562a", "payload_hash": "ac1cdb625220bf63e516b6eebf275a4c84cb37730da5b50a990053964a759d8f", "event_hash": "49ca352c9e38f487be4206a2443810ea944fcafab520920d74dbd268045171d8", "tick": 742}
++{"ts": 1786299112.6061726, "elapsed_s": 3604.564, "index": 838, "event": "tick_start", "prev_hash": "49ca352c9e38f487be4206a2443810ea944fcafab520920d74dbd268045171d8", "payload_hash": "3e4c7bdfd87ed6e005130b9b0918e7e2e9e424febd3e370d04eb4213456f9efa", "event_hash": "6f84aa50d01d6184d3103d53ca16e38093e5fd34d8a6e42ef1d5debb796de867", "tick": 743}
++{"ts": 1786299115.630253, "elapsed_s": 3607.588, "index": 839, "event": "tick_start", "prev_hash": "6f84aa50d01d6184d3103d53ca16e38093e5fd34d8a6e42ef1d5debb796de867", "payload_hash": "f83594ca5d13164f5c74e56f36d8db196c7e3beabf2e16b3a4b7eba026014dcd", "event_hash": "9d6273ca61972e8988d5c15e2e51f8e885930e34ebe3877c698d6fc64866a184", "tick": 744}
++{"ts": 1786299118.719791, "elapsed_s": 3610.678, "index": 840, "event": "tick_start", "prev_hash": "9d6273ca61972e8988d5c15e2e51f8e885930e34ebe3877c698d6fc64866a184", "payload_hash": "3f96f7823f64e55a1ad1ade6455e648e8845e24d2881e45f325fa84a1f4b4d74", "event_hash": "01599da7675f4e81549fa39d5d833e888433a35ecc876592546e5f7977460b58", "tick": 745}
++{"ts": 1786299121.7411115, "elapsed_s": 3613.699, "index": 841, "event": "tick_start", "prev_hash": "01599da7675f4e81549fa39d5d833e888433a35ecc876592546e5f7977460b58", "payload_hash": "428df779d775416e8819033fd7cd0e31a6503f4a121608517fd900668bd2f546", "event_hash": "a4456453adc8e8e73c272a4e0de4cb184c99a7df898541f2818e6d53634d60d7", "tick": 746}
++{"ts": 1786299124.7642963, "elapsed_s": 3616.722, "index": 842, "event": "tick_start", "prev_hash": "a4456453adc8e8e73c272a4e0de4cb184c99a7df898541f2818e6d53634d60d7", "payload_hash": "94f6a732a6797b7ff8b8721bc79682d57b6bfc7d51a1c3c7804a2968a8ca7b45", "event_hash": "f0a33f449b2629b1a1c43ff806fe2f143da12aff35b6186299b07135a5857564", "tick": 747}
++{"ts": 1786299127.7872593, "elapsed_s": 3619.745, "index": 843, "event": "tick_start", "prev_hash": "f0a33f449b2629b1a1c43ff806fe2f143da12aff35b6186299b07135a5857564", "payload_hash": "1c2bfde88e5aa5444e241c2fe1350eda45291192ec155edd776b6a68f74c8c68", "event_hash": "6fe235ed57fd426817c8b64a1ffb3d47d65cc3e5288356d11d928e9c69afe1f4", "tick": 748}
++{"ts": 1786299130.810979, "elapsed_s": 3622.769, "index": 844, "event": "tick_start", "prev_hash": "6fe235ed57fd426817c8b64a1ffb3d47d65cc3e5288356d11d928e9c69afe1f4", "payload_hash": "6c44b1d8a942435821e42f8d4fffc0856b317bec08aa6a6f5b631b71668f37c9", "event_hash": "0e0e47b573d7090edf42c871c886e997cb310992d3b8a18d917f2873c578eec6", "tick": 749}
++{"ts": 1786299133.8339052, "elapsed_s": 3625.792, "index": 845, "event": "tick_start", "prev_hash": "0e0e47b573d7090edf42c871c886e997cb310992d3b8a18d917f2873c578eec6", "payload_hash": "35c15a56c19efb985da5144e24a5a8e34fc70435e4ed8472fcd6d1b013ea4e08", "event_hash": "3be51b0c02a35588f276536bcf24bfc64e4a79f4a99f8b50d9565b0ff2d018be", "tick": 750}
++{"ts": 1786299137.2845116, "elapsed_s": 3629.242, "index": 846, "event": "tick_start", "prev_hash": "3be51b0c02a35588f276536bcf24bfc64e4a79f4a99f8b50d9565b0ff2d018be", "payload_hash": "88813c33d77b2b82fe562a7e436417f9bb09a710be5fdab514a04e646072435b", "event_hash": "45825fbe4f4adb580c6d70ff5a10af339dac9359e37ed716d381fa39bd598750", "tick": 751}
++{"ts": 1786299140.3079355, "elapsed_s": 3632.266, "index": 847, "event": "tick_start", "prev_hash": "45825fbe4f4adb580c6d70ff5a10af339dac9359e37ed716d381fa39bd598750", "payload_hash": "88b73fcec45b408eb231ab8f31c32559fea5d99a5cf3e05f4b35abe030aa0c7d", "event_hash": "97ffd6156f685cb4e4685b27931f32c294b7dce3e8417c49397b62446de1eee6", "tick": 752}
++{"ts": 1786299143.369753, "elapsed_s": 3635.328, "index": 848, "event": "tick_start", "prev_hash": "97ffd6156f685cb4e4685b27931f32c294b7dce3e8417c49397b62446de1eee6", "payload_hash": "3aa7fc425849c399e76045c914efc328aa7ca3ee84595637aa31982bef034148", "event_hash": "56f76e359048c183a49d8d5eae898c3c2e7e3b2c0ba64f89060533bfaffe54cb", "tick": 753}
++{"ts": 1786299146.3929946, "elapsed_s": 3638.351, "index": 849, "event": "tick_start", "prev_hash": "56f76e359048c183a49d8d5eae898c3c2e7e3b2c0ba64f89060533bfaffe54cb", "payload_hash": "b8d5dfae0438e87bdb6371bd0c796feede3abb19b35dac9818ed6d3ddeb0d260", "event_hash": "8e40fd60b931ab64330d320e7f7cf04c449b81e5975f90e19317930fa25a01d7", "tick": 754}
++{"ts": 1786299149.4212277, "elapsed_s": 3641.379, "index": 850, "event": "tick_start", "prev_hash": "8e40fd60b931ab64330d320e7f7cf04c449b81e5975f90e19317930fa25a01d7", "payload_hash": "9996d63149c091c6a9126fec12452977da46dc8bc8c24f4d81dc47d8d4914867", "event_hash": "aba93ac6e80d5001e59af1d71edc31246c100faec2c9955bc37b96f7d98bde3e", "tick": 755}
++{"ts": 1786299152.4603262, "elapsed_s": 3644.418, "index": 851, "event": "tick_start", "prev_hash": "aba93ac6e80d5001e59af1d71edc31246c100faec2c9955bc37b96f7d98bde3e", "payload_hash": "f755665c62973931c3ffe08306a55fd2044c180c83036c9a25e435294891afc8", "event_hash": "d608fb0e72e865de9e205b27a7b2d3eccf7647a2f56c9d705ccc444117c25884", "tick": 756}
++{"ts": 1786299155.5720725, "elapsed_s": 3647.53, "index": 852, "event": "tick_start", "prev_hash": "d608fb0e72e865de9e205b27a7b2d3eccf7647a2f56c9d705ccc444117c25884", "payload_hash": "ee80cbab497d377151779f2f27a28800c97e30b58f5b53ba6a577aa6cf57a3e6", "event_hash": "669d8cd6d17b5c08870f70c411f9810ff65c411cdc15aafa7b264492395f2c67", "tick": 757}
++{"ts": 1786299158.5960016, "elapsed_s": 3650.554, "index": 853, "event": "tick_start", "prev_hash": "669d8cd6d17b5c08870f70c411f9810ff65c411cdc15aafa7b264492395f2c67", "payload_hash": "14fe74b2d2775094abb43a2871e4a9b9b42bcff5597826ea2348d3e23f842719", "event_hash": "214e9413c883e9f3018b6101c5409e00024130dab816742b0fe2aa1748f8ec3b", "tick": 758}
++{"ts": 1786299161.6189182, "elapsed_s": 3653.577, "index": 854, "event": "tick_start", "prev_hash": "214e9413c883e9f3018b6101c5409e00024130dab816742b0fe2aa1748f8ec3b", "payload_hash": "b2f3cf0d5f8a074168138aa028ba33c06a1181cdf5e3890723c1f88411962ff7", "event_hash": "e37f98ece2ad280fe80f13b164e20e88c68110c8715cb32b4842b2853b3ced3a", "tick": 759}
++{"ts": 1786299164.6434536, "elapsed_s": 3656.601, "index": 855, "event": "tick_start", "prev_hash": "e37f98ece2ad280fe80f13b164e20e88c68110c8715cb32b4842b2853b3ced3a", "payload_hash": "3b620b34ee8347fe9055386eccdcc5f6b1083d81386a609603ad9cf012d42e34", "event_hash": "982b86fdbce140c81d72d73497ab541776eeebca83fa33b9d79b35aefb3b0906", "tick": 760}
++{"ts": 1786299167.6685908, "elapsed_s": 3659.626, "index": 856, "event": "tick_start", "prev_hash": "982b86fdbce140c81d72d73497ab541776eeebca83fa33b9d79b35aefb3b0906", "payload_hash": "8c04bb95f1e395427b672a70e887062218b24d53961722c893f44b093e88356f", "event_hash": "213f5b7172eb2e964f5a9d7387ee72618427be4eb21c826a66cadf5fd3574d7c", "tick": 761}
++{"ts": 1786299170.6940527, "elapsed_s": 3662.652, "index": 857, "event": "tick_start", "prev_hash": "213f5b7172eb2e964f5a9d7387ee72618427be4eb21c826a66cadf5fd3574d7c", "payload_hash": "a2d91340646b50226dea0621ff103bf7073a37983ecf699c88eca5348b2ba37f", "event_hash": "55db441069516e9662c02f2fc00dade73f794690d83085a2bb445d6793fd142d", "tick": 762}
++{"ts": 1786299173.7854161, "elapsed_s": 3665.743, "index": 858, "event": "tick_start", "prev_hash": "55db441069516e9662c02f2fc00dade73f794690d83085a2bb445d6793fd142d", "payload_hash": "9a321f8a03c6917ab8019fc14cdf0d72383fb0227c89854b8fe67ec02d5039fb", "event_hash": "280072eecad15aea313dbf4cefc45ecf330619ee9f7ba6d2fe1c1fa4a8595322", "tick": 763}
++{"ts": 1786299176.8446198, "elapsed_s": 3668.802, "index": 859, "event": "tick_start", "prev_hash": "280072eecad15aea313dbf4cefc45ecf330619ee9f7ba6d2fe1c1fa4a8595322", "payload_hash": "408790dfe4bd6ad709905ddcdfb445ef3a43f30d7ba41a53aa200ee32238da74", "event_hash": "67beaa0b16c6b138f6b90699c57539bf9339fe388bfca327befc6be0f59cdf6d", "tick": 764}
++{"ts": 1786299179.8656683, "elapsed_s": 3671.823, "index": 860, "event": "tick_start", "prev_hash": "67beaa0b16c6b138f6b90699c57539bf9339fe388bfca327befc6be0f59cdf6d", "payload_hash": "ed76725d271124881907aabf55427fe50ebb6d00e4af5a3bf7921685ac76b7f7", "event_hash": "fb8ed5a662b4e439dc12fe12fd065a661c27ea72b9defa387326e0ea05aa5f1d", "tick": 765}
++{"ts": 1786299182.887954, "elapsed_s": 3674.846, "index": 861, "event": "tick_start", "prev_hash": "fb8ed5a662b4e439dc12fe12fd065a661c27ea72b9defa387326e0ea05aa5f1d", "payload_hash": "85f4fe43dd256a0f9ca27971d7e0b982b0f5eeaebb26df8cb9a5e8440bfc636c", "event_hash": "ba0db067a541cd99320c1627592fdba00d2acae287293514e73b45a4a748ef09", "tick": 766}
++{"ts": 1786299185.9320521, "elapsed_s": 3677.89, "index": 862, "event": "tick_start", "prev_hash": "ba0db067a541cd99320c1627592fdba00d2acae287293514e73b45a4a748ef09", "payload_hash": "1ba49489f8d639fae814ea820bf31517fe21ad33ced3f2562582005ba5737c11", "event_hash": "bea9fb2a7e04e90b74816d36fa2532598716e4ac5c60925f006db4a2c11ee0c1", "tick": 767}
++{"ts": 1786299188.962145, "elapsed_s": 3680.92, "index": 863, "event": "tick_start", "prev_hash": "bea9fb2a7e04e90b74816d36fa2532598716e4ac5c60925f006db4a2c11ee0c1", "payload_hash": "81666b3c532e2690809718dd513b7fb95e9b04568de3cd506498b9bb556e1ce3", "event_hash": "ec81fa674c1ad43b3ac2f506529bcbaec7fa7297aee401bfb9417e9c888dbccd", "tick": 768}
++{"ts": 1786299192.055485, "elapsed_s": 3684.013, "index": 864, "event": "tick_start", "prev_hash": "ec81fa674c1ad43b3ac2f506529bcbaec7fa7297aee401bfb9417e9c888dbccd", "payload_hash": "6fa3997275ff2a988b461338cec2eaf52e7e044a9bc69f3a83cfd68478122fd1", "event_hash": "55203f880eeebd73daed0abb8b5b5aee1e09034172f624ff7f26d44b2bccca06", "tick": 769}
++{"ts": 1786299195.0803196, "elapsed_s": 3687.038, "index": 865, "event": "tick_start", "prev_hash": "55203f880eeebd73daed0abb8b5b5aee1e09034172f624ff7f26d44b2bccca06", "payload_hash": "0abf866b996939631ccfa4ae2db2fd995e0e71b9b287e51ecacf0c6e99ac6600", "event_hash": "af96d0df26ad6a3873faf99db33e5597294560ac57eff21cc5276064135824c2", "tick": 770}
++{"ts": 1786299198.1080644, "elapsed_s": 3690.066, "index": 866, "event": "tick_start", "prev_hash": "af96d0df26ad6a3873faf99db33e5597294560ac57eff21cc5276064135824c2", "payload_hash": "d0c90ab4fa7e74654e6d77f49dc9c61d1c8bf20056c2b94128878b052d012064", "event_hash": "e080a0d72b631072350e0fba95aef44686642fa0c42dec6eb22eb77cc3138fd3", "tick": 771}
++{"ts": 1786299201.1350272, "elapsed_s": 3693.093, "index": 867, "event": "tick_start", "prev_hash": "e080a0d72b631072350e0fba95aef44686642fa0c42dec6eb22eb77cc3138fd3", "payload_hash": "4dc90e8a21068fe2d991edc9f1cde850d0ba3234812c652c1dc8a390a257c02a", "event_hash": "dec68c6c44ad732c627be4b70d794d7750e82aeac0b0b55945baeed2d706d1c5", "tick": 772}
++{"ts": 1786299204.158673, "elapsed_s": 3696.116, "index": 868, "event": "tick_start", "prev_hash": "dec68c6c44ad732c627be4b70d794d7750e82aeac0b0b55945baeed2d706d1c5", "payload_hash": "582ff6276f14f1d7afa6b11f2c2fb1a3a1a7fec2fcfd6e1f84cf4f2584bf4c8a", "event_hash": "c335d40a81a64f8287fa2f829b27732d4da549256a79b659d9b8ae13de00965b", "tick": 773}
++{"ts": 1786299207.1829135, "elapsed_s": 3699.141, "index": 869, "event": "tick_start", "prev_hash": "c335d40a81a64f8287fa2f829b27732d4da549256a79b659d9b8ae13de00965b", "payload_hash": "084c967b27720c8b33f0a5896734519e65c82db559e1fa193baacbfa22a36f5c", "event_hash": "396ce85298769ddf6db0afcc1ed861cb32544879eed3d9e97691c3071a50e336", "tick": 774}
++{"ts": 1786299210.2730598, "elapsed_s": 3702.231, "index": 870, "event": "tick_start", "prev_hash": "396ce85298769ddf6db0afcc1ed861cb32544879eed3d9e97691c3071a50e336", "payload_hash": "9a43d1a9e3fce3574dd07e13039ca7248862f6b5b1296beeaf6a9dd37e66e33e", "event_hash": "9d2f73c9a501c848f149d163a23da0867de87f4700328333ebce32f7f51147a0", "tick": 775}
++{"ts": 1786299213.2936728, "elapsed_s": 3705.251, "index": 871, "event": "tick_start", "prev_hash": "9d2f73c9a501c848f149d163a23da0867de87f4700328333ebce32f7f51147a0", "payload_hash": "0e9fec898843eb019a4cab1d683af8fc5c26cc3116526630cd3b27da90f3dfdc", "event_hash": "df985c9c56762b02787d04476009898e9b5f002b35e58cea30d49dcb7175143b", "tick": 776}
++{"ts": 1786299216.3207052, "elapsed_s": 3708.278, "index": 872, "event": "tick_start", "prev_hash": "df985c9c56762b02787d04476009898e9b5f002b35e58cea30d49dcb7175143b", "payload_hash": "16be7ae9622b13c6da3ea3b95abf4b49f3a273d4060614856be549e6977dbdb1", "event_hash": "f3b4c8ffe0c5e671a0eddf135f0bb783baef33a1b08f4f96ccba2eb66d54f1ad", "tick": 777}
++{"ts": 1786299219.347905, "elapsed_s": 3711.306, "index": 873, "event": "tick_start", "prev_hash": "f3b4c8ffe0c5e671a0eddf135f0bb783baef33a1b08f4f96ccba2eb66d54f1ad", "payload_hash": "4f4156900203022a2ef038b366b6fb88643487024823000a0122f22096f8f929", "event_hash": "ab7b235f928b545477fddfeef9cb6e4f7ab9d342df5aa7e536653162a1a31cfa", "tick": 778}
++{"ts": 1786299222.3792913, "elapsed_s": 3714.337, "index": 874, "event": "tick_start", "prev_hash": "ab7b235f928b545477fddfeef9cb6e4f7ab9d342df5aa7e536653162a1a31cfa", "payload_hash": "43cb6d3e742fa516414212841fb2b740f25f6145edbfc0b65ec213e07db888be", "event_hash": "e52da8ef2b67b335b018e0be8c33eae96c48e4761064e6e33b113b529a2d3c25", "tick": 779}
++{"ts": 1786299225.4032621, "elapsed_s": 3717.361, "index": 875, "event": "tick_start", "prev_hash": "e52da8ef2b67b335b018e0be8c33eae96c48e4761064e6e33b113b529a2d3c25", "payload_hash": "54b0a377751a789c0de894142f8a31e669a70a847e415ec6798d4cadb6939ea7", "event_hash": "393c8cd062562c174b65f6831cb3b20e42545f7dbf34c834bbcbd327e4eb9a57", "tick": 780}
++{"ts": 1786299228.847919, "elapsed_s": 3720.806, "index": 876, "event": "tick_start", "prev_hash": "393c8cd062562c174b65f6831cb3b20e42545f7dbf34c834bbcbd327e4eb9a57", "payload_hash": "f8a633eaafc12568246594d83a8588d236a0dc19d51875b59022a443307cfab1", "event_hash": "0c3f2864f8c17561ccb6f208f7b2f467fab8d1ce0e918935b51bebe4cc525f92", "tick": 781}
++{"ts": 1786299231.874484, "elapsed_s": 3723.832, "index": 877, "event": "tick_start", "prev_hash": "0c3f2864f8c17561ccb6f208f7b2f467fab8d1ce0e918935b51bebe4cc525f92", "payload_hash": "af934849b289de1f36b9a63d998c554c9516c6256d42c215bf8686c7b32546c4", "event_hash": "2e0375f76178afae1230c3bb55be9ffd9083ee4cbf3556468016dc30a87639de", "tick": 782}
++{"ts": 1786299234.8981633, "elapsed_s": 3726.856, "index": 878, "event": "tick_start", "prev_hash": "2e0375f76178afae1230c3bb55be9ffd9083ee4cbf3556468016dc30a87639de", "payload_hash": "dbe0512b6d7d68e058bd09c1f5a3e503b4379da7b5ee633c5ca122841dd22989", "event_hash": "68cba42c82f823d79ca22451f268c7b9fd6f0d4ca99be3e4020859667d265c08", "tick": 783}
++{"ts": 1786299237.932574, "elapsed_s": 3729.89, "index": 879, "event": "tick_start", "prev_hash": "68cba42c82f823d79ca22451f268c7b9fd6f0d4ca99be3e4020859667d265c08", "payload_hash": "3e7889e15f1290290ab7053380b06b09dcfa69b1f6e57975d76bd88d5929fae8", "event_hash": "63a27b6c625f0da70ca5079df043b651ac2de9fde65db7d1bdfe7cb2ab4ac021", "tick": 784}
++{"ts": 1786299240.95644, "elapsed_s": 3732.914, "index": 880, "event": "tick_start", "prev_hash": "63a27b6c625f0da70ca5079df043b651ac2de9fde65db7d1bdfe7cb2ab4ac021", "payload_hash": "a3688a202058a08a9512f72f572f9b23d961b13a37bcefb5a508debf3207ed12", "event_hash": "ef90ce69e5012a049f64f84bfc91406930e27fbb4d6fdecf33e79c91642b5786", "tick": 785}
++{"ts": 1786299243.9791903, "elapsed_s": 3735.937, "index": 881, "event": "tick_start", "prev_hash": "ef90ce69e5012a049f64f84bfc91406930e27fbb4d6fdecf33e79c91642b5786", "payload_hash": "55ddf42a75cf77617822d245c5b292ce52d9c3ad878a8e91c4ad3a5b91f7133f", "event_hash": "acafe7062e330195ff15fd9472273dd0994f8fe6bb0fcf80996fbcbeea34257f", "tick": 786}
++{"ts": 1786299247.073892, "elapsed_s": 3739.032, "index": 882, "event": "tick_start", "prev_hash": "acafe7062e330195ff15fd9472273dd0994f8fe6bb0fcf80996fbcbeea34257f", "payload_hash": "532ee0f2fe86d53996dabf4b4f008f79727e3f7e5c2155f151680a22068743c3", "event_hash": "09393eae6165d24d946f6f6b97399811fb87c1b857061aca440d25da4ca7896f", "tick": 787}
++{"ts": 1786299250.0975704, "elapsed_s": 3742.055, "index": 883, "event": "tick_start", "prev_hash": "09393eae6165d24d946f6f6b97399811fb87c1b857061aca440d25da4ca7896f", "payload_hash": "60f6064ca8ff46f632526512b7605c508a8f2cf80800a90ab9348485e6150a1c", "event_hash": "970f9a329837770f876f21579f7bfa1c0184be83fb4f61bac71045c8ff588f89", "tick": 788}
++{"ts": 1786299253.1209502, "elapsed_s": 3745.079, "index": 884, "event": "tick_start", "prev_hash": "970f9a329837770f876f21579f7bfa1c0184be83fb4f61bac71045c8ff588f89", "payload_hash": "7fb52d3933b0aa539decdca4121e07a9b51a5a122f07bedcfd50deb49d303ba9", "event_hash": "3c5d7c5afa6a7aa244e374ea4ca5769d80e6dded1fcb170b9288b95ed95fdf03", "tick": 789}
++{"ts": 1786299256.1448677, "elapsed_s": 3748.103, "index": 885, "event": "tick_start", "prev_hash": "3c5d7c5afa6a7aa244e374ea4ca5769d80e6dded1fcb170b9288b95ed95fdf03", "payload_hash": "2c6ba49bdf474ebb3736bd07c76d1e47ca380658659b2e021ef6a36e84074ecb", "event_hash": "b1603210c83d7fce6a0ff55000622945a9780da5ca4bee5553e8cc3e196199d6", "tick": 790}
++{"ts": 1786299259.170208, "elapsed_s": 3751.128, "index": 886, "event": "tick_start", "prev_hash": "b1603210c83d7fce6a0ff55000622945a9780da5ca4bee5553e8cc3e196199d6", "payload_hash": "0f3e407a75b69544103a95920cf7da73148900297607ede254c6d02fde662753", "event_hash": "bbe0b9fffb8162be273ffb0964a629d51ba33abe5e2b00b963d76c9bea588072", "tick": 791}
++{"ts": 1786299262.1941636, "elapsed_s": 3754.152, "index": 887, "event": "tick_start", "prev_hash": "bbe0b9fffb8162be273ffb0964a629d51ba33abe5e2b00b963d76c9bea588072", "payload_hash": "9c42b94a753edb2964cd38eade81066967713453dcc8ce8970c9dd46c134d318", "event_hash": "f4f03e5b23b79e2731726f44ed754a920a3e04de59a674944610c5b35bdfb863", "tick": 792}
++{"ts": 1786299265.2818906, "elapsed_s": 3757.24, "index": 888, "event": "tick_start", "prev_hash": "f4f03e5b23b79e2731726f44ed754a920a3e04de59a674944610c5b35bdfb863", "payload_hash": "1f602395449c6482f2658c289fd46787c6d9246e15cae4f330231ba5dad01b27", "event_hash": "d93723e19c1ae7376a59f383292cec155b0a4fca810aea903b35b05d66647750", "tick": 793}
++{"ts": 1786299268.3093853, "elapsed_s": 3760.267, "index": 889, "event": "tick_start", "prev_hash": "d93723e19c1ae7376a59f383292cec155b0a4fca810aea903b35b05d66647750", "payload_hash": "159fb317ee481b35607e25701902bd80f87658c1c4376d558b615456f337aa48", "event_hash": "35fdaa2d6c5f899cbb7b2b52f51dd3773f65725799dd14ff66e4bdf0dde76023", "tick": 794}
++{"ts": 1786299271.3375719, "elapsed_s": 3763.295, "index": 890, "event": "tick_start", "prev_hash": "35fdaa2d6c5f899cbb7b2b52f51dd3773f65725799dd14ff66e4bdf0dde76023", "payload_hash": "a8f75d9f91cc0f8e7fe9bf2b0ab153e82830735bf440ca4e8df8375404bb0e14", "event_hash": "e671348d07341583831320d852a9b42c8a57205b8f474b14328b24fbc4925045", "tick": 795}
++{"ts": 1786299274.3626857, "elapsed_s": 3766.32, "index": 891, "event": "tick_start", "prev_hash": "e671348d07341583831320d852a9b42c8a57205b8f474b14328b24fbc4925045", "payload_hash": "4aae17619cb279a3cb981900abb50e0ba2a1e0e3f02e9d673c0c07ddfe9121ae", "event_hash": "d77a92548f962cbb264152be0568d0a56ed8ce3426b5eba6c0f946c10042be95", "tick": 796}
++{"ts": 1786299277.3848958, "elapsed_s": 3769.343, "index": 892, "event": "tick_start", "prev_hash": "d77a92548f962cbb264152be0568d0a56ed8ce3426b5eba6c0f946c10042be95", "payload_hash": "b62e9e3af11eb69cc2f0e13811d7983e3b8eec2f9c8cb39ebf0d09230a003955", "event_hash": "f54da0942559a38fc7f1d2b4f10b9e7cda7b61c5665bf8ce8c822cbff159a31a", "tick": 797}
++{"ts": 1786299280.409291, "elapsed_s": 3772.367, "index": 893, "event": "tick_start", "prev_hash": "f54da0942559a38fc7f1d2b4f10b9e7cda7b61c5665bf8ce8c822cbff159a31a", "payload_hash": "057f1ef84bdc6a5816d9584e4c0dab55603e548fc8b1eaa38d6e26b713098e1f", "event_hash": "31278d22d2a813a7c4f6a36c1e9a966f04106e530c9ea077a64e04de97640393", "tick": 798}
++{"ts": 1786299283.5158265, "elapsed_s": 3775.474, "index": 894, "event": "tick_start", "prev_hash": "31278d22d2a813a7c4f6a36c1e9a966f04106e530c9ea077a64e04de97640393", "payload_hash": "01cf3f9c58778cc32025e1eb6f887215815385ae027b28fb8c2c6d5224e4b8a0", "event_hash": "bd907654f344a05b25d2024593f0981760c93697411eb5f3b1d91df27900beca", "tick": 799}
++{"ts": 1786299286.540203, "elapsed_s": 3778.498, "index": 895, "event": "tick_start", "prev_hash": "bd907654f344a05b25d2024593f0981760c93697411eb5f3b1d91df27900beca", "payload_hash": "f7738a18567b4eba3486bc4f22df33af93939ad5f99bf5ced326bcd40c53dd7d", "event_hash": "80d32dd50b55b85ca3e519b6d27c1f34234feb1a38d1f94fe3ff06ec78052c88", "tick": 800}
++{"ts": 1786299289.5631354, "elapsed_s": 3781.521, "index": 896, "event": "tick_start", "prev_hash": "80d32dd50b55b85ca3e519b6d27c1f34234feb1a38d1f94fe3ff06ec78052c88", "payload_hash": "1c3ea637e98e086dbbf8ec4e98e2b8174fa2ab0de06309fb560fd7d7e4cc983e", "event_hash": "5bdb260b4cf66478551417311f821f198f13361d766ed1c8d84beaca6efdbd28", "tick": 801}
++{"ts": 1786299292.5961115, "elapsed_s": 3784.554, "index": 897, "event": "tick_start", "prev_hash": "5bdb260b4cf66478551417311f821f198f13361d766ed1c8d84beaca6efdbd28", "payload_hash": "46c1541f8eccea1c935f37ed42a6dd65703a82883f54d79343c4d75bd7f393b5", "event_hash": "bca10b489b680b91fc53a9ee9a550161ffb084d1011ecd27630f6249e07ad9b7", "tick": 802}
++{"ts": 1786299295.6213555, "elapsed_s": 3787.579, "index": 898, "event": "tick_start", "prev_hash": "bca10b489b680b91fc53a9ee9a550161ffb084d1011ecd27630f6249e07ad9b7", "payload_hash": "fae4bb2ca012b847d910d00476b16c6a2a64dde0fecabd9df9feb00f2be9c4f8", "event_hash": "c317f4042ecc2f4ea0953928ed5ddc1c70fd5cc9977a5a0d6d203ee77ebb59e5", "tick": 803}
++{"ts": 1786299298.6452448, "elapsed_s": 3790.603, "index": 899, "event": "tick_start", "prev_hash": "c317f4042ecc2f4ea0953928ed5ddc1c70fd5cc9977a5a0d6d203ee77ebb59e5", "payload_hash": "0792386b61db3a354b9e5c86de10f73a3e86f891fa9a141a508e3d6ba4305545", "event_hash": "c77dcc1bc666ce89c116ea4c262d7fd7000211a4362bb0fe68fe3c17a48ac044", "tick": 804}
++{"ts": 1786299301.7500293, "elapsed_s": 3793.708, "index": 900, "event": "tick_start", "prev_hash": "c77dcc1bc666ce89c116ea4c262d7fd7000211a4362bb0fe68fe3c17a48ac044", "payload_hash": "9b5b97a89f8e4b2ca23931995b04b6a99ff8fa8f7894f5d8009061d0d1309ecf", "event_hash": "643e9b0c4c085e0d26daebca8bf3765a58dfe8c8f53295e127c14185f8df9fcf", "tick": 805}
++{"ts": 1786299304.7760549, "elapsed_s": 3796.734, "index": 901, "event": "tick_start", "prev_hash": "643e9b0c4c085e0d26daebca8bf3765a58dfe8c8f53295e127c14185f8df9fcf", "payload_hash": "a1aa87c62380f291c8382f74120c5a40c4397e3e09fe3397b8e46131682f67ba", "event_hash": "c289c5ce582df13e35302c3299670c4fedc00e71b28e2b8a7a365d3e473dad03", "tick": 806}
++{"ts": 1786299307.8001387, "elapsed_s": 3799.758, "index": 902, "event": "tick_start", "prev_hash": "c289c5ce582df13e35302c3299670c4fedc00e71b28e2b8a7a365d3e473dad03", "payload_hash": "30835affff5d516087fd0433c5dbcb6683503516864cedc575c0ccc1dc4aae35", "event_hash": "34d2a05f72df51a6ad34c3d60f209001540d167a6a1d510927e0ff786528836b", "tick": 807}
++{"ts": 1786299310.8356, "elapsed_s": 3802.793, "index": 903, "event": "tick_start", "prev_hash": "34d2a05f72df51a6ad34c3d60f209001540d167a6a1d510927e0ff786528836b", "payload_hash": "a94673939eb0caee86f9e92eba552e867cf169665d60ea4b6a04b1c748ab0666", "event_hash": "12902a9dfddcffefba203ef22d939e8b1ac17bf32396797e916bb12c2d7841dd", "tick": 808}
++{"ts": 1786299313.8666916, "elapsed_s": 3805.824, "index": 904, "event": "tick_start", "prev_hash": "12902a9dfddcffefba203ef22d939e8b1ac17bf32396797e916bb12c2d7841dd", "payload_hash": "09cb4cd23587ec40b4d864e15dab90b1175aee1bb2256c7a785a19eb20e599b1", "event_hash": "cb0eb3855900fc6ab622ca4a21a986964c7a9750526de39fdcdf031394c5e2a6", "tick": 809}
++{"ts": 1786299316.8886852, "elapsed_s": 3808.846, "index": 905, "event": "tick_start", "prev_hash": "cb0eb3855900fc6ab622ca4a21a986964c7a9750526de39fdcdf031394c5e2a6", "payload_hash": "1c86644ad3afdfc02f86d0512e04ee2bb9169651ee63cb3721bbd70c24a5c270", "event_hash": "9ffab69d1ae260de43bb3fa934d222ca42e4a36b042a6b6da6ced85a4b4e9d20", "tick": 810}
++{"ts": 1786299320.2934039, "elapsed_s": 3812.251, "index": 906, "event": "tick_start", "prev_hash": "9ffab69d1ae260de43bb3fa934d222ca42e4a36b042a6b6da6ced85a4b4e9d20", "payload_hash": "ad82538f72cd4c9e91639b5d5932476b8a1b02bf8e3b8c5d72d7be6be2ce7e00", "event_hash": "942240c45bc50e761ce291674eea6b235219e6440ea1813bc7b00e53d2cc8efa", "tick": 811}
++{"ts": 1786299323.3188782, "elapsed_s": 3815.277, "index": 907, "event": "tick_start", "prev_hash": "942240c45bc50e761ce291674eea6b235219e6440ea1813bc7b00e53d2cc8efa", "payload_hash": "5278ed892f41c568cdb9554f57aceceac43d4670399c14f6112d752428aa4002", "event_hash": "7d4a03d3019517aee86c6ae9224a3650a133dc5c8b744f2181d8b1270369aaf9", "tick": 812}
++{"ts": 1786299326.3453252, "elapsed_s": 3818.303, "index": 908, "event": "tick_start", "prev_hash": "7d4a03d3019517aee86c6ae9224a3650a133dc5c8b744f2181d8b1270369aaf9", "payload_hash": "eb8c02f3a66291f88a0c0bc72e6742c419e4e4e44bdd8601b4d2b42949155cac", "event_hash": "a26642a899409a074395eb05abd7e1bc023f58ff0dbdf3ecf4abc823825606b9", "tick": 813}
++{"ts": 1786299329.3802824, "elapsed_s": 3821.338, "index": 909, "event": "tick_start", "prev_hash": "a26642a899409a074395eb05abd7e1bc023f58ff0dbdf3ecf4abc823825606b9", "payload_hash": "1321bc0800225d2800da52dd477ae6c99b3ed7c44e3dadc5d6d4f8c65fdad989", "event_hash": "060fec99d96d6dc67d2ef6286a157c441403f1b3214f81bb9112ad039e72c1fb", "tick": 814}
++{"ts": 1786299332.4154708, "elapsed_s": 3824.373, "index": 910, "event": "tick_start", "prev_hash": "060fec99d96d6dc67d2ef6286a157c441403f1b3214f81bb9112ad039e72c1fb", "payload_hash": "106c82e9f7fb19ea71a5c3dfb261b0037630034421cf4fe14f13b3a6494307f6", "event_hash": "4ae9c93300f31073542750edfbac6e0dee08eb66ac8d0cd06b9482d824d3ea0f", "tick": 815}
++{"ts": 1786299335.4380965, "elapsed_s": 3827.396, "index": 911, "event": "tick_start", "prev_hash": "4ae9c93300f31073542750edfbac6e0dee08eb66ac8d0cd06b9482d824d3ea0f", "payload_hash": "6cdc794b38c14c117407ebadf662e1dc748f0d3d427b96e790409d776b1ddb38", "event_hash": "b777952df1579685e707d9c86b106e99e37e23c0bf70be3907fc7d3c64248983", "tick": 816}
++{"ts": 1786299338.5449038, "elapsed_s": 3830.503, "index": 912, "event": "tick_start", "prev_hash": "b777952df1579685e707d9c86b106e99e37e23c0bf70be3907fc7d3c64248983", "payload_hash": "b4c0d64ce82f3cdc49963b49ee3ba8e8448017732057b16f235d86734d9ca081", "event_hash": "9f7b13c67394211d6193c4b82e0b3de1248fb9f207ffc521f846aef868f02a66", "tick": 817}
++{"ts": 1786299341.5790098, "elapsed_s": 3833.537, "index": 913, "event": "tick_start", "prev_hash": "9f7b13c67394211d6193c4b82e0b3de1248fb9f207ffc521f846aef868f02a66", "payload_hash": "56fe161a9eb33f60ab7511350ceacf325b6507662804241eafc2a821e030a8c9", "event_hash": "8438b63f158c9ade44e17a2d1df1e1ace353c006487673cd6055ca1ce4f0e141", "tick": 818}
++{"ts": 1786299344.6111522, "elapsed_s": 3836.569, "index": 914, "event": "tick_start", "prev_hash": "8438b63f158c9ade44e17a2d1df1e1ace353c006487673cd6055ca1ce4f0e141", "payload_hash": "d5c46cf7c0fea8b7fda19ce83693c5a92f1dd7b9c8097a3dedcc00f98fbb5510", "event_hash": "eeed786696fe21f8c0e7de650ef944f4a8e9c6970283d872227ac41c6d3db7c3", "tick": 819}
++{"ts": 1786299347.6403291, "elapsed_s": 3839.598, "index": 915, "event": "tick_start", "prev_hash": "eeed786696fe21f8c0e7de650ef944f4a8e9c6970283d872227ac41c6d3db7c3", "payload_hash": "0f67f6bcb49ffd1687e641e9aa81b31c02899a183d78d5134e8fb9ce0c627937", "event_hash": "9d3e16846354aec72da60ef848bd315d82ade52043fa3731a0541387e6509d9b", "tick": 820}
++{"ts": 1786299350.8182018, "elapsed_s": 3842.776, "index": 916, "event": "tick_start", "prev_hash": "9d3e16846354aec72da60ef848bd315d82ade52043fa3731a0541387e6509d9b", "payload_hash": "55d902de954de6e1b7a97bd5eb2edc0959e4150a88d010199ce4902ec40dd409", "event_hash": "659cb248677fade72ef36f9608be589263ecc38bd6f3194f78bcd69403a895db", "tick": 821}
++{"ts": 1786299353.8743787, "elapsed_s": 3845.832, "index": 917, "event": "tick_start", "prev_hash": "659cb248677fade72ef36f9608be589263ecc38bd6f3194f78bcd69403a895db", "payload_hash": "bbfb530ca619845f6a5df4bbd43c5dd2924a32bd7e8edd4d0e00d802acd65bcd", "event_hash": "bfd9e86e25886e4a4cf58e8ccea4332652b87086336a0617f61e5f1d9be2b559", "tick": 822}
++{"ts": 1786299356.9769936, "elapsed_s": 3848.935, "index": 918, "event": "tick_start", "prev_hash": "bfd9e86e25886e4a4cf58e8ccea4332652b87086336a0617f61e5f1d9be2b559", "payload_hash": "4614e903c08986795f8ddd0bfc660c8c25f1a88b1d60b5790775c0a92f9a0592", "event_hash": "a3f16123fa897b970e074cad41df4672ec1b163d7ab0bd472fbc1513bffeaace", "tick": 823}
++{"ts": 1786299360.0349777, "elapsed_s": 3851.993, "index": 919, "event": "tick_start", "prev_hash": "a3f16123fa897b970e074cad41df4672ec1b163d7ab0bd472fbc1513bffeaace", "payload_hash": "dc03d65f1fe490f21ff24b6a4bd7f161f9885da90bf2216b3b123b33139e6c07", "event_hash": "5cce67dafb859e51a7802a6ded0a40e33c0c5d81e4b588802eb7a2406c330484", "tick": 824}
++{"ts": 1786299363.092307, "elapsed_s": 3855.05, "index": 920, "event": "tick_start", "prev_hash": "5cce67dafb859e51a7802a6ded0a40e33c0c5d81e4b588802eb7a2406c330484", "payload_hash": "bb998b825b7dc79b7f62a975812405f53c46c2ac00e2df3b5a2c6ba20d78c872", "event_hash": "2bdb4345b8289bc859dd5fddc3972eeb9dea9063a147da95600364a6310bd948", "tick": 825}
++{"ts": 1786299366.1166787, "elapsed_s": 3858.074, "index": 921, "event": "tick_start", "prev_hash": "2bdb4345b8289bc859dd5fddc3972eeb9dea9063a147da95600364a6310bd948", "payload_hash": "40fe9573a31677aeb1503554907796f546397481e559fa2659a272e8422a0b84", "event_hash": "15cf39857c4d9a1faa6e7edc8b3102af943fbc9e53844f104d56b01f72fb9df4", "tick": 826}
++{"ts": 1786299369.187078, "elapsed_s": 3861.145, "index": 922, "event": "tick_start", "prev_hash": "15cf39857c4d9a1faa6e7edc8b3102af943fbc9e53844f104d56b01f72fb9df4", "payload_hash": "648d95180cf0a68953188bc0c90fe1a0bc07da67bb48b24c4cfee4ad9e1f28b1", "event_hash": "781e67697cfb297ccef75b4d4b6d7818a63e365fec55682a768e0a5513464bcd", "tick": 827}
++{"ts": 1786299372.2450566, "elapsed_s": 3864.203, "index": 923, "event": "tick_start", "prev_hash": "781e67697cfb297ccef75b4d4b6d7818a63e365fec55682a768e0a5513464bcd", "payload_hash": "0e1cd7c6c2e4517373b32652229d27ce0dc4d0f403dda6260b0b3ff00b4c8523", "event_hash": "cb42c58bbb9398c64e4eea784f325b02d50eee2899e4c92021a24a8620fb3356", "tick": 828}
++{"ts": 1786299375.3506544, "elapsed_s": 3867.308, "index": 924, "event": "tick_start", "prev_hash": "cb42c58bbb9398c64e4eea784f325b02d50eee2899e4c92021a24a8620fb3356", "payload_hash": "5d4ded54c2734e572c493ee9629f67aef3e259b02cc20141a6d7dc42b7d53ed8", "event_hash": "cf7b0914e9f2c6aa2b0595f4be3f8f7e6b11dbd4bc462b72cfbf7723ae17b896", "tick": 829}
++{"ts": 1786299378.4098852, "elapsed_s": 3870.368, "index": 925, "event": "tick_start", "prev_hash": "cf7b0914e9f2c6aa2b0595f4be3f8f7e6b11dbd4bc462b72cfbf7723ae17b896", "payload_hash": "a2e332e053d96d1dc3b513e068639b1d1f8607dc3b058032f6346d95f215bb86", "event_hash": "19323e41f822954051e587c8184aa560dc224479320f645e482377bf3a76252e", "tick": 830}
++{"ts": 1786299381.4826639, "elapsed_s": 3873.44, "index": 926, "event": "tick_start", "prev_hash": "19323e41f822954051e587c8184aa560dc224479320f645e482377bf3a76252e", "payload_hash": "39226dc820b6cd7ce671ea0adc442fedabdc53dd07c2873e27c9b38604a0e336", "event_hash": "a831a39e73b4c8ec30915bcbdb74197370477301cf66cbd004c954a95cc0640a", "tick": 831}
++{"ts": 1786299384.5183446, "elapsed_s": 3876.476, "index": 927, "event": "tick_start", "prev_hash": "a831a39e73b4c8ec30915bcbdb74197370477301cf66cbd004c954a95cc0640a", "payload_hash": "5a698813a7473926950316e5eb00f7d0dd0b040a50eb01357cbfdf0bfcb6b0d7", "event_hash": "4c968cc9d12dfe2a28edcde3236b85b994d57f98b06c66d545d5ec4cc115f747", "tick": 832}
++{"ts": 1786299387.578511, "elapsed_s": 3879.536, "index": 928, "event": "tick_start", "prev_hash": "4c968cc9d12dfe2a28edcde3236b85b994d57f98b06c66d545d5ec4cc115f747", "payload_hash": "84c2b60943be7abf5e94267ad6ebebfd045275bf39b1c0fbe7d8a01c1617495e", "event_hash": "e2a87c31972082bc53aaf357ae81b4b77d290c524602e6daf0a8784e4006ff09", "tick": 833}
++{"ts": 1786299390.6367378, "elapsed_s": 3882.595, "index": 929, "event": "tick_start", "prev_hash": "e2a87c31972082bc53aaf357ae81b4b77d290c524602e6daf0a8784e4006ff09", "payload_hash": "c547143b6f469512ba589c5a0cc98a50b06f8f057afe7ed7eddd51a5a96459c5", "event_hash": "fae7f221501c5e321fdfd462cc3e8eea9804b226006924363ee2ae7ca4e3df5e", "tick": 834}
++{"ts": 1786299393.7393594, "elapsed_s": 3885.697, "index": 930, "event": "tick_start", "prev_hash": "fae7f221501c5e321fdfd462cc3e8eea9804b226006924363ee2ae7ca4e3df5e", "payload_hash": "ad49d32cca265ab87149bc1083bf680841c29f9cffb520c4943823efcbe10c49", "event_hash": "e00a70be8a7bd1d8d87115950ffbe11b941fdad107c972d8d2e595555983ceda", "tick": 835}
++{"ts": 1786299396.7991478, "elapsed_s": 3888.757, "index": 931, "event": "tick_start", "prev_hash": "e00a70be8a7bd1d8d87115950ffbe11b941fdad107c972d8d2e595555983ceda", "payload_hash": "edc8fb6929275b789f0e395b895f045a3583841002305cdce67cd512426b5aee", "event_hash": "f0e465c198645ff18b2936ec19665589a598f2a777e45fc94441d8b809e49356", "tick": 836}
++{"ts": 1786299399.8584974, "elapsed_s": 3891.816, "index": 932, "event": "tick_start", "prev_hash": "f0e465c198645ff18b2936ec19665589a598f2a777e45fc94441d8b809e49356", "payload_hash": "f90b2d4c89ef3eaa81898ebbb336fa1dfb8bdb6f2c89f85b44548ccb1bb1da6d", "event_hash": "0673c683de1aacfcd7b0184c69486589514f684adcb0e9506c2d21493629579d", "tick": 837}
++{"ts": 1786299402.8958743, "elapsed_s": 3894.854, "index": 933, "event": "tick_start", "prev_hash": "0673c683de1aacfcd7b0184c69486589514f684adcb0e9506c2d21493629579d", "payload_hash": "157dea31814e6f916529242dfe552822d5c2c73358975be91556787c36ce9ec6", "event_hash": "c5d523449fcf0115dfeac8fca80c07414adeac5012214f47b87ac9d1c5b54285", "tick": 838}
++{"ts": 1786299405.9557004, "elapsed_s": 3897.913, "index": 934, "event": "tick_start", "prev_hash": "c5d523449fcf0115dfeac8fca80c07414adeac5012214f47b87ac9d1c5b54285", "payload_hash": "e2bd6d29dbbd5e2d6204516a6cbbbc893afdf87d99e6f59a99971c8ebc5fa2de", "event_hash": "5c1238654a7094650bbad5374055f2450513bd7480cdfe0ba253922cba4d577d", "tick": 839}
++{"ts": 1786299409.0120819, "elapsed_s": 3900.97, "index": 935, "event": "tick_start", "prev_hash": "5c1238654a7094650bbad5374055f2450513bd7480cdfe0ba253922cba4d577d", "payload_hash": "da87a3f6d60122032a2957d20bc2a24c96007746c99189d6c2954fd8b8a53868", "event_hash": "9b37d5a51aaa67cd0eb0a3cd4414778fbb041365da04ece48f839912d3fcfc16", "tick": 840}
++{"ts": 1786299412.4310505, "elapsed_s": 3904.389, "index": 936, "event": "tick_start", "prev_hash": "9b37d5a51aaa67cd0eb0a3cd4414778fbb041365da04ece48f839912d3fcfc16", "payload_hash": "ad7a28289525834b2fdea3d6be4f8b94b71b461bfebc13391382da64f675cdaf", "event_hash": "e983b5b427401743bf5e9006f86c9dd9bc51a73ac9b853273451f91d65f1a0b3", "tick": 841}
++{"ts": 1786299415.485812, "elapsed_s": 3907.444, "index": 937, "event": "tick_start", "prev_hash": "e983b5b427401743bf5e9006f86c9dd9bc51a73ac9b853273451f91d65f1a0b3", "payload_hash": "586ce6cc03969b413bc674f37b58ac872b9a7e09c4615e89a058d35f9262dafb", "event_hash": "3011f1d5786197457ae96d7e03dd1f549236f192d55ee5a410ed215a70474455", "tick": 842}
++{"ts": 1786299418.5550492, "elapsed_s": 3910.513, "index": 938, "event": "tick_start", "prev_hash": "3011f1d5786197457ae96d7e03dd1f549236f192d55ee5a410ed215a70474455", "payload_hash": "46d96eab2e0543b96e9d89e05bc84d522804679b5ab09369bb5872a3e80f3363", "event_hash": "200b68472f648b96d477fd716ec5e2dff66fab1c543b7466bdb4491ba9749319", "tick": 843}
++{"ts": 1786299421.5793304, "elapsed_s": 3913.537, "index": 939, "event": "tick_start", "prev_hash": "200b68472f648b96d477fd716ec5e2dff66fab1c543b7466bdb4491ba9749319", "payload_hash": "b664bcb070aa7c6895054e216d6e42aff9e36c6b60071d04feb89a867e238375", "event_hash": "1a6800c293c2c4281535a8e81abf9951a5b4bc06f8c556a285ac374888671810", "tick": 844}
+diff --git a/.sdd/trust/backend.json b/.sdd/trust/backend.json
+index e76f002..f4668af 100644
+--- a/.sdd/trust/backend.json
++++ b/.sdd/trust/backend.json
+@@ -1,14 +1,14 @@
+ {
+   "agent_id": "backend",
+   "trust_level": "restricted",
+-  "tasks_completed": 10,
++  "tasks_completed": 11,
+   "tasks_failed": 7,
+   "security_violations": 0,
+-  "consecutive_successes": 0,
+-  "tasks_total": 17,
+-  "success_rate": 0.5882,
++  "consecutive_successes": 1,
++  "tasks_total": 18,
++  "success_rate": 0.6111,
+   "created_at": 1786295709.3476562,
+-  "last_updated": 1786298814.0274296,
++  "last_updated": 1786299419.0529947,
+   "promotion_log": [
+     {
+       "from_level": "untrusted",
+diff --git a/.sdd/trust/qa.json b/.sdd/trust/qa.json
+index ef57030..ec4f7fc 100644
+--- a/.sdd/trust/qa.json
++++ b/.sdd/trust/qa.json
+@@ -2,13 +2,13 @@
+   "agent_id": "qa",
+   "trust_level": "restricted",
+   "tasks_completed": 5,
+-  "tasks_failed": 1,
++  "tasks_failed": 2,
+   "security_violations": 0,
+-  "consecutive_successes": 2,
+-  "tasks_total": 6,
+-  "success_rate": 0.8333,
++  "consecutive_successes": 0,
++  "tasks_total": 7,
++  "success_rate": 0.7143,
+   "created_at": 1786296176.395048,
+-  "last_updated": 1786299030.280688,
++  "last_updated": 1786299042.455104,
+   "promotion_log": [
+     {
+       "from_level": "untrusted",
+diff --git a/.sdd/upgrades/pending.json b/.sdd/upgrades/pending.json
+index 3281fa0..293432d 100644
+--- a/.sdd/upgrades/pending.json
++++ b/.sdd/upgrades/pending.json
+@@ -187,5 +187,50 @@
+     "status": "pending",
+     "confidence": 0.8,
+     "created_at": 1786298940.3437133
++  },
++  {
++    "id": "UPG-0022",
++    "title": "Improve task success rate",
++    "category": "model_routing",
++    "description": "Current success rate is 39.0%, target is 80%",
++    "status": "pending",
++    "confidence": 0.8,
++    "created_at": 1786299042.8249276
++  },
++  {
++    "id": "UPG-0023",
++    "title": "Improve task success rate",
++    "category": "model_routing",
++    "description": "Current success rate is 39.0%, target is 80%",
++    "status": "pending",
++    "confidence": 0.8,
++    "created_at": 1786299134.2503142
++  },
++  {
++    "id": "UPG-0024",
++    "title": "Improve task success rate",
++    "category": "model_routing",
++    "description": "Current success rate is 39.0%, target is 80%",
++    "status": "pending",
++    "confidence": 0.8,
++    "created_at": 1786299225.845695
++  },
++  {
++    "id": "UPG-0025",
++    "title": "Improve task success rate",
++    "category": "model_routing",
++    "description": "Current success rate is 39.0%, target is 80%",
++    "status": "pending",
++    "confidence": 0.8,
++    "created_at": 1786299317.2890184
++  },
++  {
++    "id": "UPG-0026",
++    "title": "Improve task success rate",
++    "category": "model_routing",
++    "description": "Current success rate is 39.0%, target is 80%",
++    "status": "pending",
++    "confidence": 0.8,
++    "created_at": 1786299409.4291036
+   }
+ ]
+\ No newline at end of file

@@ -20,7 +20,7 @@
       "name": "p95_duration",
       "description": "P95 task duration < 30 minutes",
       "target": 0.9,
-      "current": 0.5876,
+      "current": 0.5894,
       "status": "red",
       "met": false
     }

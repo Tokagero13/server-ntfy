@@ -1,14 +1,14 @@
 {
   "agent_id": "backend",
   "trust_level": "restricted",
-  "tasks_completed": 10,
+  "tasks_completed": 11,
   "tasks_failed": 7,
   "security_violations": 0,
-  "consecutive_successes": 0,
-  "tasks_total": 17,
-  "success_rate": 0.5882,
+  "consecutive_successes": 1,
+  "tasks_total": 18,
+  "success_rate": 0.6111,
   "created_at": 1786295709.3476562,
-  "last_updated": 1786298814.0274296,
+  "last_updated": 1786299419.0529947,
   "promotion_log": [
     {
       "from_level": "untrusted",

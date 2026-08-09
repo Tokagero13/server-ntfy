@@ -187,5 +187,50 @@
     "status": "pending",
     "confidence": 0.8,
     "created_at": 1786298940.3437133
+  },
+  {
+    "id": "UPG-0022",
+    "title": "Improve task success rate",
+    "category": "model_routing",
+    "description": "Current success rate is 39.0%, target is 80%",
+    "status": "pending",
+    "confidence": 0.8,
+    "created_at": 1786299042.8249276
+  },
+  {
+    "id": "UPG-0023",
+    "title": "Improve task success rate",
+    "category": "model_routing",
+    "description": "Current success rate is 39.0%, target is 80%",
+    "status": "pending",
+    "confidence": 0.8,
+    "created_at": 1786299134.2503142
+  },
+  {
+    "id": "UPG-0024",
+    "title": "Improve task success rate",
+    "category": "model_routing",
+    "description": "Current success rate is 39.0%, target is 80%",
+    "status": "pending",
+    "confidence": 0.8,
+    "created_at": 1786299225.845695
+  },
+  {
+    "id": "UPG-0025",
+    "title": "Improve task success rate",
+    "category": "model_routing",
+    "description": "Current success rate is 39.0%, target is 80%",
+    "status": "pending",
+    "confidence": 0.8,
+    "created_at": 1786299317.2890184
+  },
+  {
+    "id": "UPG-0026",
+    "title": "Improve task success rate",
+    "category": "model_routing",
+    "description": "Current success rate is 39.0%, target is 80%",
+    "status": "pending",
+    "confidence": 0.8,
+    "created_at": 1786299409.4291036
   }
 ]

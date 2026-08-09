@@ -41,3 +41,5 @@
 {"timestamp": 1786299015.6469402, "identity_id": "qa-d19f7e59", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
 {"timestamp": 1786299025.1446364, "identity_id": "qa-d19f7e59", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
 {"timestamp": 1786299030.0315876, "identity_id": "qa-d19f7e59", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786299414.4481611, "identity_id": "backend-db7bc87c", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786299419.0381799, "identity_id": "backend-db7bc87c", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}

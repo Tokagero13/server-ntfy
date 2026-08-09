@@ -36,3 +36,4 @@
 {"timestamp": 1786298810.6332228, "metric_type": "task_completion_time", "value": 0.05755877494812012, "labels": {"task_id": "9c424e1782a9", "role": "backend", "model": "fast-path", "success": "True", "tenant_id": "default"}}
 {"timestamp": 1786298813.9699187, "metric_type": "task_completion_time", "value": 3.3942527770996094, "labels": {"task_id": "9c424e1782a9", "role": "backend", "model": "fast-path", "success": "False", "tenant_id": "default"}}
 {"timestamp": 1786298875.3231761, "metric_type": "task_completion_time", "value": 74.3898434638977, "labels": {"task_id": "c3849e1033a8", "role": "architect", "model": "opus", "success": "False", "tenant_id": "default"}}
+{"timestamp": 1786299042.190114, "metric_type": "task_completion_time", "value": 253.46921849250793, "labels": {"task_id": "e4c8f38c4f5d", "role": "qa", "model": "sonnet", "success": "False", "tenant_id": "default"}}

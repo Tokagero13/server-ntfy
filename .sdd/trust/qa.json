@@ -2,13 +2,13 @@
   "agent_id": "qa",
   "trust_level": "restricted",
   "tasks_completed": 5,
-  "tasks_failed": 1,
+  "tasks_failed": 2,
   "security_violations": 0,
-  "consecutive_successes": 2,
-  "tasks_total": 6,
-  "success_rate": 0.8333,
+  "consecutive_successes": 0,
+  "tasks_total": 7,
+  "success_rate": 0.7143,
   "created_at": 1786296176.395048,
-  "last_updated": 1786299030.280688,
+  "last_updated": 1786299042.455104,
   "promotion_log": [
     {
       "from_level": "untrusted",
