@@ -27,3 +27,9 @@
 {"timestamp": 1786298134.7065158, "identity_id": "qa-2e102c2d", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
 {"timestamp": 1786298139.6530778, "identity_id": "qa-2e102c2d", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
 {"timestamp": 1786298296.9740283, "identity_id": "qa-0f76e5b9", "action": "created", "actor": "spawner", "details": {"role": "qa", "permissions": ["files:read", "status:read", "tasks:claim", "tasks:read", "tests:run"], "parent_identity_id": null, "token_type": "jwt", "task_ids": ["12a39d6b2e84"], "has_file_scope": false}}
+{"timestamp": 1786298577.657451, "identity_id": "backend-502e6fab", "action": "created", "actor": "spawner", "details": {"role": "backend", "permissions": ["files:read", "files:write", "status:read", "tasks:claim", "tasks:read", "tests:run"], "parent_identity_id": null, "token_type": "jwt", "task_ids": ["5fcf54a9c33a", "34e1ef633c4f"], "has_file_scope": false}}
+{"timestamp": 1786298655.241223, "identity_id": "backend-502e6fab", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786298659.9127269, "identity_id": "backend-502e6fab", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786298662.0771217, "identity_id": "backend-502e6fab", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786298727.3862083, "identity_id": "qa-0f76e5b9", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786298739.1284318, "identity_id": "qa-0f76e5b9", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}

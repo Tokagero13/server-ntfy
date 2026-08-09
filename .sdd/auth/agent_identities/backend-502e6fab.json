@@ -1,30 +1,32 @@
 {
-  "id": "qa-0f76e5b9",
-  "role": "qa",
-  "session_id": "qa-0f76e5b9",
+  "id": "backend-502e6fab",
+  "role": "backend",
+  "session_id": "backend-502e6fab",
   "permissions": [
     "files:read",
+    "files:write",
     "status:read",
     "tasks:claim",
     "tasks:read",
     "tests:run"
   ],
   "status": "active",
-  "created_at": 1786298296.9740283,
-  "last_authenticated_at": 1786298739.1279411,
+  "created_at": 1786298577.657451,
+  "last_authenticated_at": 1786298662.076813,
   "revoked_at": 0.0,
   "revocation_reason": "",
   "credential": {
-    "token_hash": "095d48052da6d0f657e99563abceac00385cca69d1421a4cfcff769f5b9c1de6",
-    "created_at": 1786298296.9740283,
-    "expires_at": 1786312696.0,
+    "token_hash": "f84c6ccb6943d95e8bd2b9ec470c7dd6efb340dc6df023c218825842b3e32cb0",
+    "created_at": 1786298577.657451,
+    "expires_at": 1786312977.0,
     "revoked": false,
     "token_type": "jwt",
     "algorithm": "HS256",
-    "jti": "e505339fec89457d9935ac333ae3d777",
+    "jti": "93aa9014d5864377a9e9cbb64d49f27d",
     "tenant_id": "default",
     "task_ids": [
-      "12a39d6b2e84"
+      "5fcf54a9c33a",
+      "34e1ef633c4f"
     ],
     "allowed_files": []
   },
@@ -33,7 +35,8 @@
     "source": "spawner"
   },
   "task_ids": [
-    "12a39d6b2e84"
+    "5fcf54a9c33a",
+    "34e1ef633c4f"
   ],
   "allowed_files": []
 }

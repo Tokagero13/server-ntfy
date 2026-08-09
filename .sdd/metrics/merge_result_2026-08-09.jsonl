@@ -2,3 +2,5 @@
 {"timestamp": 1786295925.406302, "metric_type": "merge_result", "value": 1.0, "labels": {"task_id": "ef92d5f815ea", "success": "True", "tenant_id": "default"}}
 {"timestamp": 1786297778.3559508, "metric_type": "merge_result", "value": 1.0, "labels": {"task_id": "254f4cb4a292", "success": "True", "tenant_id": "default"}}
 {"timestamp": 1786298564.5465455, "metric_type": "merge_result", "value": 1.0, "labels": {"task_id": "ffdbcbd7086b", "success": "True", "tenant_id": "default"}}
+{"timestamp": 1786298683.1077747, "metric_type": "merge_result", "value": 0.0, "labels": {"task_id": "5fcf54a9c33a", "success": "False", "tenant_id": "default"}}
+{"timestamp": 1786298683.1082497, "metric_type": "merge_result", "value": 0.0, "labels": {"task_id": "34e1ef633c4f", "success": "False", "tenant_id": "default"}}
