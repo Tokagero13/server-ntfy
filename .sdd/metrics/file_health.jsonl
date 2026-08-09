@@ -1,0 +1,2 @@
+{"path": "app/core/monitoring.py", "complexity_score": 62, "bug_density_score": 0, "coverage_score": 70, "churn_score": 100, "coupling_score": 76, "total": 52, "grade": "F", "failure_touches": 1, "success_touches": 0, "last_updated": 1786295709.3468912, "flagged": true}
+{"path": "docs/refactoring.md", "complexity_score": 80, "bug_density_score": 0, "coverage_score": 70, "churn_score": 100, "coupling_score": 80, "total": 57, "grade": "F", "failure_touches": 1, "success_touches": 0, "last_updated": 1786295789.4368508, "flagged": true}

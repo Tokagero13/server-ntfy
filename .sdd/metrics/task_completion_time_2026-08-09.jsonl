@@ -1,0 +1,7 @@
+{"timestamp": 1786295709.3496745, "metric_type": "task_completion_time", "value": 0.03746771812438965, "labels": {"task_id": "9c424e1782a9", "role": "backend", "model": "fast-path", "success": "False", "tenant_id": "default"}}
+{"timestamp": 1786295715.6316836, "metric_type": "task_completion_time", "value": 0.00868368148803711, "labels": {"task_id": "c9e785e58544", "role": "backend", "model": "fast-path", "success": "False", "tenant_id": "default"}}
+{"timestamp": 1786295789.439111, "metric_type": "task_completion_time", "value": 0.10692882537841797, "labels": {"task_id": "0df11926e25d", "role": "docs", "model": "fast-path", "success": "False", "tenant_id": "default"}}
+{"timestamp": 1786295805.8208816, "metric_type": "task_completion_time", "value": 75.23032331466675, "labels": {"task_id": "1985f979581b", "role": "backend", "model": "opus", "success": "True", "tenant_id": "default"}}
+{"timestamp": 1786295809.1053143, "metric_type": "task_completion_time", "value": 0.00911259651184082, "labels": {"task_id": "e5b26deb39fa", "role": "docs", "model": "fast-path", "success": "False", "tenant_id": "default"}}
+{"timestamp": 1786295831.8539174, "metric_type": "task_completion_time", "value": 281.39716053009033, "labels": {"task_id": "db8a08129be6", "role": "manager", "model": "opus", "success": "True", "tenant_id": "default"}}
+{"timestamp": 1786295873.3603237, "metric_type": "task_completion_time", "value": 49.02987742424011, "labels": {"task_id": "75706745b15c", "role": "docs", "model": "opus", "success": "True", "tenant_id": "default"}}

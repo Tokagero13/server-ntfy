@@ -1,0 +1,2 @@
+{"timestamp": 1786295709.3468912, "task_id": "9c424e1782a9", "path": "app/core/monitoring.py", "outcome": "failure", "previous_total": 0, "new_total": 52, "flagged": true}
+{"timestamp": 1786295789.4368508, "task_id": "0df11926e25d", "path": "docs/refactoring.md", "outcome": "failure", "previous_total": 0, "new_total": 57, "flagged": true}

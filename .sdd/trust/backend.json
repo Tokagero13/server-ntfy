@@ -1,0 +1,13 @@
+{
+  "agent_id": "backend",
+  "trust_level": "untrusted",
+  "tasks_completed": 1,
+  "tasks_failed": 2,
+  "security_violations": 0,
+  "consecutive_successes": 1,
+  "tasks_total": 3,
+  "success_rate": 0.3333,
+  "created_at": 1786295709.3476562,
+  "last_updated": 1786295790.9049003,
+  "promotion_log": []
+}

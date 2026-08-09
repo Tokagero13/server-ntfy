@@ -1,0 +1,13 @@
+{
+  "agent_id": "manager",
+  "trust_level": "untrusted",
+  "tasks_completed": 1,
+  "tasks_failed": 1,
+  "security_violations": 0,
+  "consecutive_successes": 1,
+  "tasks_total": 2,
+  "success_rate": 0.5,
+  "created_at": 1786295509.1711679,
+  "last_updated": 1786295812.932434,
+  "promotion_log": []
+}

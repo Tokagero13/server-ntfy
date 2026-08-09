@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "bernstein": {
+      "command": "C:\\Users\\Tokagero\\AppData\\Local\\pipx\\pipx\\venvs\\bernstein\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "bernstein.mcp.server"
+      ]
+    }
+  }
+}

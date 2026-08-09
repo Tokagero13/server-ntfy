@@ -1,0 +1,39 @@
+{
+  "id": "docs-647e651c",
+  "role": "docs",
+  "session_id": "docs-647e651c",
+  "permissions": [
+    "files:read",
+    "files:write",
+    "status:read",
+    "tasks:claim",
+    "tasks:read"
+  ],
+  "status": "active",
+  "created_at": 1786295815.9363403,
+  "last_authenticated_at": 0.0,
+  "revoked_at": 0.0,
+  "revocation_reason": "",
+  "credential": {
+    "token_hash": "3a6d718a8aa84e0abf594e1d3a1bfd2399ffb5a30ad9fd864bc16fd591b9c325",
+    "created_at": 1786295815.9363403,
+    "expires_at": 1786310215.0,
+    "revoked": false,
+    "token_type": "jwt",
+    "algorithm": "HS256",
+    "jti": "a5d6d62eb66f4304806ed055ac5d614b",
+    "tenant_id": "default",
+    "task_ids": [
+      "75706745b15c"
+    ],
+    "allowed_files": []
+  },
+  "parent_identity_id": null,
+  "metadata": {
+    "source": "spawner"
+  },
+  "task_ids": [
+    "75706745b15c"
+  ],
+  "allowed_files": []
+}

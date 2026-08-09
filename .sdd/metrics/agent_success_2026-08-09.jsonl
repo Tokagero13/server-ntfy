@@ -1,0 +1,3 @@
+{"timestamp": 1786295805.8212764, "metric_type": "agent_success", "value": 1.0, "labels": {"agent_id": "backend-3ebb27d4", "role": "backend", "model": "opus", "tenant_id": "default"}}
+{"timestamp": 1786295831.854189, "metric_type": "agent_success", "value": 1.0, "labels": {"agent_id": "manager-e16110a3", "role": "manager", "model": "opus", "tenant_id": "default"}}
+{"timestamp": 1786295873.360833, "metric_type": "agent_success", "value": 1.0, "labels": {"agent_id": "docs-647e651c", "role": "docs", "model": "opus", "tenant_id": "default"}}
