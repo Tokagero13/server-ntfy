@@ -2,12 +2,12 @@
   "agent_id": "qa",
   "trust_level": "untrusted",
   "tasks_completed": 1,
-  "tasks_failed": 0,
+  "tasks_failed": 1,
   "security_violations": 0,
-  "consecutive_successes": 1,
-  "tasks_total": 1,
-  "success_rate": 1.0,
+  "consecutive_successes": 0,
+  "tasks_total": 2,
+  "success_rate": 0.5,
   "created_at": 1786296176.395048,
-  "last_updated": 1786296176.3966105,
+  "last_updated": 1786297246.034723,
   "promotion_log": []
 }

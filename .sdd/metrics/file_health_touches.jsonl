@@ -10,3 +10,16 @@
 {"timestamp": 1786296176.3297694, "task_id": "e4c8f38c4f5d", "path": "tests/unit/test_monitoring_helpers.py", "outcome": "success", "previous_total": 0, "new_total": 78, "flagged": false}
 {"timestamp": 1786296176.3636863, "task_id": "e4c8f38c4f5d", "path": "requirements-dev.txt", "outcome": "success", "previous_total": 0, "new_total": 87, "flagged": false}
 {"timestamp": 1786296176.3942144, "task_id": "e4c8f38c4f5d", "path": "pytest.ini", "outcome": "success", "previous_total": 0, "new_total": 87, "flagged": false}
+{"timestamp": 1786297245.854946, "task_id": "e4c8f38c4f5d", "path": "tests/__init__.py", "outcome": "failure", "previous_total": 78, "new_total": 63, "flagged": true}
+{"timestamp": 1786297245.8818977, "task_id": "e4c8f38c4f5d", "path": "tests/conftest.py", "outcome": "failure", "previous_total": 78, "new_total": 63, "flagged": true}
+{"timestamp": 1786297245.9083493, "task_id": "e4c8f38c4f5d", "path": "tests/unit/__init__.py", "outcome": "failure", "previous_total": 78, "new_total": 63, "flagged": true}
+{"timestamp": 1786297245.9376059, "task_id": "e4c8f38c4f5d", "path": "tests/unit/test_url_validation.py", "outcome": "failure", "previous_total": 78, "new_total": 63, "flagged": true}
+{"timestamp": 1786297245.9654577, "task_id": "e4c8f38c4f5d", "path": "tests/unit/test_monitoring_helpers.py", "outcome": "failure", "previous_total": 78, "new_total": 63, "flagged": true}
+{"timestamp": 1786297245.9950693, "task_id": "e4c8f38c4f5d", "path": "requirements-dev.txt", "outcome": "failure", "previous_total": 87, "new_total": 72, "flagged": true}
+{"timestamp": 1786297246.0252728, "task_id": "e4c8f38c4f5d", "path": "pytest.ini", "outcome": "failure", "previous_total": 87, "new_total": 72, "flagged": true}
+{"timestamp": 1786297249.752482, "task_id": "34196aa87c4d", "path": "app/repositories/__init__.py", "outcome": "failure", "previous_total": 0, "new_total": 48, "flagged": true}
+{"timestamp": 1786297249.78219, "task_id": "34196aa87c4d", "path": "app/repositories/endpoints.py", "outcome": "failure", "previous_total": 0, "new_total": 48, "flagged": true}
+{"timestamp": 1786297249.8131182, "task_id": "34196aa87c4d", "path": "app/repositories/subscriptions.py", "outcome": "failure", "previous_total": 0, "new_total": 48, "flagged": true}
+{"timestamp": 1786297249.843937, "task_id": "34196aa87c4d", "path": "app/repositories/notification_logs.py", "outcome": "failure", "previous_total": 0, "new_total": 48, "flagged": true}
+{"timestamp": 1786297249.8737712, "task_id": "34196aa87c4d", "path": "app/repositories/settings.py", "outcome": "failure", "previous_total": 0, "new_total": 48, "flagged": true}
+{"timestamp": 1786297249.9048152, "task_id": "34196aa87c4d", "path": "app/repositories/discovery.py", "outcome": "failure", "previous_total": 0, "new_total": 48, "flagged": true}
