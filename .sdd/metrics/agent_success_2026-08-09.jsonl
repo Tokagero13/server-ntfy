@@ -5,3 +5,4 @@
 {"timestamp": 1786297444.728691, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "backend-ca254562", "role": "backend", "model": "sonnet", "tenant_id": "default"}}
 {"timestamp": 1786297454.6088486, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "backend-ca254562", "role": "backend", "model": "sonnet", "tenant_id": "default"}}
 {"timestamp": 1786297583.6141326, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "architect-97e44802", "role": "architect", "model": "opus", "tenant_id": "default"}}
+{"timestamp": 1786297698.7940671, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "qa-d2d4cc19", "role": "qa", "model": "sonnet", "tenant_id": "default"}}
