@@ -298,3 +298,5 @@
 {"timestamp": 1786297398.1470668, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
 {"timestamp": 1786297403.7609546, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
 {"timestamp": 1786297406.9111073, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786297430.8957732, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786297433.9550447, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
