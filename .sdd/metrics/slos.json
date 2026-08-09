@@ -4,7 +4,7 @@
       "name": "task_success",
       "description": "Task success rate >= 90%",
       "target": 0.9,
-      "current": 0.1875,
+      "current": 0.2222,
       "status": "red",
       "met": false
     },
@@ -12,7 +12,7 @@
       "name": "merge_success",
       "description": "Merge success rate >= 95%",
       "target": 0.95,
-      "current": 0.1875,
+      "current": 0.2222,
       "status": "red",
       "met": false
     },
@@ -26,12 +26,12 @@
     }
   ],
   "error_budget": {
-    "total_tasks": 16,
-    "failed_tasks": 13,
+    "total_tasks": 18,
+    "failed_tasks": 14,
     "budget_total": 3,
     "budget_remaining": 0,
     "budget_fraction": 0.0,
-    "burn_rate": 8.125,
+    "burn_rate": 7.7778,
     "time_to_exhaustion_tasks": 0,
     "is_depleted": true,
     "status": "red"

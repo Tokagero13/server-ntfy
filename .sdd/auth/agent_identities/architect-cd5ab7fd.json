@@ -1,0 +1,39 @@
+{
+  "id": "architect-cd5ab7fd",
+  "role": "architect",
+  "session_id": "architect-cd5ab7fd",
+  "permissions": [
+    "files:read",
+    "files:write",
+    "status:read",
+    "tasks:claim",
+    "tasks:read"
+  ],
+  "status": "active",
+  "created_at": 1786297925.5609438,
+  "last_authenticated_at": 0.0,
+  "revoked_at": 0.0,
+  "revocation_reason": "",
+  "credential": {
+    "token_hash": "7799f21cd866aa26c292a871d1f8cfd6539f285b5317ff6eaecdb332ba9e6a6d",
+    "created_at": 1786297925.5609438,
+    "expires_at": 1786312325.0,
+    "revoked": false,
+    "token_type": "jwt",
+    "algorithm": "HS256",
+    "jti": "9456cf89de8244caa778c073210e7544",
+    "tenant_id": "default",
+    "task_ids": [
+      "679ecee93d5c"
+    ],
+    "allowed_files": []
+  },
+  "parent_identity_id": null,
+  "metadata": {
+    "source": "spawner"
+  },
+  "task_ids": [
+    "679ecee93d5c"
+  ],
+  "allowed_files": []
+}

@@ -22,4 +22,6 @@
 **group_notifications.py**: Модуль для отправки групповых уведомлений через python-telegram-bot==20.7
 **monitoring.py**: (no docstring)
 **notifications.py**: (no docstring)
+**startup.py**: (no docstring)
 **telegram_bot.py**: (no docstring)
+**validators.py**: Domain-level URL normalization and validation helpers.
