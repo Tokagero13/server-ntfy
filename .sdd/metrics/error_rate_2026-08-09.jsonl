@@ -1,3 +1,4 @@
 {"timestamp": 1786295509.1440346, "metric_type": "error_rate", "value": 1.0, "labels": {"error_type": "agent_spawn_failed:unknown", "provider": "default", "model": "", "role": "manager", "tenant_id": "default"}}
 {"timestamp": 1786297884.0288303, "metric_type": "error_rate", "value": 1.0, "labels": {"error_type": "agent_spawn_failed:unknown", "provider": "default", "model": "", "role": "architect", "tenant_id": "default"}}
 {"timestamp": 1786297918.4505079, "metric_type": "error_rate", "value": 1.0, "labels": {"error_type": "agent_spawn_failed:unknown", "provider": "default", "model": "", "role": "architect", "tenant_id": "default"}}
+{"timestamp": 1786298152.6365197, "metric_type": "error_rate", "value": 1.0, "labels": {"error_type": "git_error", "provider": "retry", "model": "", "role": "qa", "tenant_id": "default"}}

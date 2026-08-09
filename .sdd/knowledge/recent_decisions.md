@@ -26,8 +26,12 @@ Spawn failed (transient, attempt 1): manager: Task 24a66f41cbe1 has effort='max'
 
 
 
+
+
 ## [2026-08-09 22:16] Completed: Fix wrong type annotation in monitoring.py and unify dashboard message formatting (1985f979581b)
 Completed: Fix wrong type annotation in monitoring.py and unify dashboard message formatting
+
+
 
 
 
@@ -72,8 +76,12 @@ Decomposed 'start refactoring' into 7 file-disjoint tasks: (1) qa/e4c8f38c4f5d p
 
 
 
+
+
 ## [2026-08-09 22:17] Wrote docs/refactoring.md with Motivation, Round 1 (six items), Round 2 (seven follow-ups), Non-goals, and How to verify sections. (75706745b15c)
 Wrote docs/refactoring.md with Motivation, Round 1 (six items), Round 2 (seven follow-ups), Non-goals, and How to verify sections.
+
+
 
 
 
@@ -110,8 +118,12 @@ Completed: Set up pytest infrastructure with initial unit tests. 18 tests pass c
 
 
 
+
+
 ## [2026-08-09 22:44] Extracted _upsert_subscription (3 occurrences: def + 2 call sites), _build_endpoint_keyboard (3 occurrences), _ENDPOINT_LIST_TEXT constant. subscribe_command and refresh_endpoints_callback now share the helper. Line count: 697 -> 614 (-83 lines). Added NOTE comment on /unsubscribe handler. All imports verified OK. (36c094ca5b33)
 Extracted _upsert_subscription (3 occurrences: def + 2 call sites), _build_endpoint_keyboard (3 occurrences), _ENDPOINT_LIST_TEXT constant. subscribe_command and refresh_endpoints_callback now share the helper. Line count: 697 -> 614 (-83 lines). Added NOTE comment on /unsubscribe handler. All imports verified OK.
+
+
 
 
 
@@ -140,8 +152,12 @@ Created app/core/startup.py with send_startup_notification and send_startup_noti
 
 
 
+
+
 ## [2026-08-09 22:46] Split app/models.py::add_models_to_api into build_models (per-namespace body preserved) + cached get_models(api); kept add_models_to_api as thin alias for backward compat. Extracted normalize_url and validate_url (with inner _is_valid_ipv4) from app/api/endpoints.py into new app/core/validators.py — identical bodies, no behavior change. endpoints.py now imports them from ..core.validators. All acceptance checks pass (validators file exists, no def normalize_url/validate_url left in endpoints.py, def get_models present in models.py, one-liner import test prints https://example.com). (c3849e1033a8)
 Split app/models.py::add_models_to_api into build_models (per-namespace body preserved) + cached get_models(api); kept add_models_to_api as thin alias for backward compat. Extracted normalize_url and validate_url (with inner _is_valid_ipv4) from app/api/endpoints.py into new app/core/validators.py — identical bodies, no behavior change. endpoints.py now imports them from ..core.validators. All acceptance checks pass (validators file exists, no def normalize_url/validate_url left in endpoints.py, def get_models present in models.py, one-liner import test prints https://example.com).
+
+
 
 
 
@@ -162,8 +178,12 @@ Completed: Set up pytest infrastructure with initial unit tests. 15 tests pass c
 
 
 
+
+
 ## [2026-08-09 22:49] Auto-completed: agent backend-faeecdef made git commits on branch (no signals to verify) (254f4cb4a292)
 Auto-completed: agent backend-faeecdef made git commits on branch (no signals to verify)
+
+
 
 
 
@@ -176,9 +196,17 @@ Completed: Deduplicate Telegram bot subscribe/keyboard logic in telegram_bot.py 
 
 
 
+
+
 ## [2026-08-09 22:53] Completed: Extract startup notification logic out of app/__init__.py into app/core/startup.py - moved send_startup_notification and send_startup_notifications verbatim, fixed imports, __init__.py now 100 lines (down from 228) (494a42ae6a55)
 Completed: Extract startup notification logic out of app/__init__.py into app/core/startup.py - moved send_startup_notification and send_startup_notifications verbatim, fixed imports, __init__.py now 100 lines (down from 228)
 
 
+
+
 ## [2026-08-09 22:53] Consolidated flask-restx model registration (build_models + cached get_models + add_models_to_api alias) and extracted normalize_url/validate_url to app/core/validators.py. All acceptance checks pass: validators module exports both functions, endpoints.py no longer defines them, get_models exists in models.py, and python -c smoke test prints https://example.com. Work was already committed in 56f499b; owned files are clean. (679ecee93d5c)
 Consolidated flask-restx model registration (build_models + cached get_models + add_models_to_api alias) and extracted normalize_url/validate_url to app/core/validators.py. All acceptance checks pass: validators module exports both functions, endpoints.py no longer defines them, get_models exists in models.py, and python -c smoke test prints https://example.com. Work was already committed in 56f499b; owned files are clean.
+
+
+## [2026-08-09 22:55] Completed: Set up pytest infrastructure with initial unit tests - 13 tests passing (pytest.ini, requirements-dev.txt, tests/conftest.py, tests/unit/test_url_validation.py, tests/unit/test_monitoring_helpers.py) (3bb9834b5dc9)
+Completed: Set up pytest infrastructure with initial unit tests - 13 tests passing (pytest.ini, requirements-dev.txt, tests/conftest.py, tests/unit/test_url_validation.py, tests/unit/test_monitoring_helpers.py)
