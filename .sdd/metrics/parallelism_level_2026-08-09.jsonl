@@ -58,3 +58,16 @@
 {"timestamp": 1786295859.5221162, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
 {"timestamp": 1786295862.5621488, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
 {"timestamp": 1786295865.8200693, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295884.1643653, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295887.2033987, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295890.249055, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295893.286767, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295896.3374243, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295899.4658356, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295902.583076, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295905.6274974, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295908.6913128, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295911.7304296, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295914.7705038, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295917.8986845, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}
+{"timestamp": 1786295921.0128243, "metric_type": "parallelism_level", "value": 6.0, "labels": {"configured_max": "6", "error_rate": "0.000", "cpu_percent": "0.0", "reason": "initial"}}

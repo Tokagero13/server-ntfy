@@ -1,2 +1,5 @@
 {"timestamp": 1786295709.3468912, "task_id": "9c424e1782a9", "path": "app/core/monitoring.py", "outcome": "failure", "previous_total": 0, "new_total": 52, "flagged": true}
 {"timestamp": 1786295789.4368508, "task_id": "0df11926e25d", "path": "docs/refactoring.md", "outcome": "failure", "previous_total": 0, "new_total": 57, "flagged": true}
+{"timestamp": 1786295924.6166568, "task_id": "243fc900fa9b", "path": "app/core/telegram_bot.py", "outcome": "failure", "previous_total": 0, "new_total": 36, "flagged": true}
+{"timestamp": 1786295925.0120993, "task_id": "ef92d5f815ea", "path": "app/__init__.py", "outcome": "failure", "previous_total": 0, "new_total": 48, "flagged": true}
+{"timestamp": 1786295925.0452826, "task_id": "ef92d5f815ea", "path": "app/core/startup.py", "outcome": "failure", "previous_total": 0, "new_total": 48, "flagged": true}
