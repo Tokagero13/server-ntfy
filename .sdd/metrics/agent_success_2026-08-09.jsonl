@@ -3,3 +3,4 @@
 {"timestamp": 1786295873.360833, "metric_type": "agent_success", "value": 1.0, "labels": {"agent_id": "docs-647e651c", "role": "docs", "model": "opus", "tenant_id": "default"}}
 {"timestamp": 1786296185.8487427, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "qa-48d03c71", "role": "qa", "model": "sonnet", "tenant_id": "default"}}
 {"timestamp": 1786297444.728691, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "backend-ca254562", "role": "backend", "model": "sonnet", "tenant_id": "default"}}
+{"timestamp": 1786297454.6088486, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "backend-ca254562", "role": "backend", "model": "sonnet", "tenant_id": "default"}}
