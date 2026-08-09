@@ -10,8 +10,24 @@ Spawn failed (transient, attempt 1): manager: Task 24a66f41cbe1 has effort='max'
 
 
 
+
+
+
+
+
+
+
+
 ## [2026-08-09 22:16] Completed: Fix wrong type annotation in monitoring.py and unify dashboard message formatting (1985f979581b)
 Completed: Fix wrong type annotation in monitoring.py and unify dashboard message formatting
+
+
+
+
+
+
+
+
 
 
 
@@ -24,9 +40,53 @@ Decomposed 'start refactoring' into 7 file-disjoint tasks: (1) qa/e4c8f38c4f5d p
 
 
 
+
+
+
+
+
+
+
+
 ## [2026-08-09 22:17] Wrote docs/refactoring.md with Motivation, Round 1 (six items), Round 2 (seven follow-ups), Non-goals, and How to verify sections. (75706745b15c)
 Wrote docs/refactoring.md with Motivation, Round 1 (six items), Round 2 (seven follow-ups), Non-goals, and How to verify sections.
 
 
+
+
+
+
+
+
+
+
 ## [2026-08-09 22:23] Completed: Set up pytest infrastructure with initial unit tests. 18 tests pass covering validate_url, normalize_url, and should_send_down_notification scenarios. (e4c8f38c4f5d)
 Completed: Set up pytest infrastructure with initial unit tests. 18 tests pass covering validate_url, normalize_url, and should_send_down_notification scenarios.
+
+
+
+
+
+
+
+
+## [2026-08-09 22:41] Done (243fc900fa9b)
+Done
+
+
+
+
+
+
+## [2026-08-09 22:42] Done (ef92d5f815ea)
+Done
+
+
+
+
+## [2026-08-09 22:43] Completed: Deduplicate Telegram bot subscribe/keyboard logic in telegram_bot.py (243fc900fa9b)
+Completed: Deduplicate Telegram bot subscribe/keyboard logic in telegram_bot.py
+
+
+## [2026-08-09 22:43] Completed: Extract startup notification logic out of app/__init__.py into app/core/startup.py (ef92d5f815ea)
+Completed: Extract startup notification logic out of app/__init__.py into app/core/startup.py

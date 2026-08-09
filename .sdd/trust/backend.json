@@ -1,13 +1,24 @@
 {
   "agent_id": "backend",
-  "trust_level": "untrusted",
-  "tasks_completed": 1,
-  "tasks_failed": 6,
+  "trust_level": "restricted",
+  "tasks_completed": 5,
+  "tasks_failed": 8,
   "security_violations": 0,
   "consecutive_successes": 0,
-  "tasks_total": 7,
-  "success_rate": 0.1429,
+  "tasks_total": 13,
+  "success_rate": 0.3846,
   "created_at": 1786295709.3476562,
-  "last_updated": 1786297284.5061631,
-  "promotion_log": []
+  "last_updated": 1786297409.4786363,
+  "promotion_log": [
+    {
+      "from_level": "untrusted",
+      "to_level": "restricted",
+      "timestamp": 1786297397.4214664,
+      "reason": "auto",
+      "promoted_by": "system",
+      "tasks_completed": 4,
+      "success_rate": 0.4,
+      "security_violations": 0
+    }
+  ]
 }

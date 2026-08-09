@@ -1,0 +1,15 @@
+{
+  "schema": "bernstein-local-attestation/v1",
+  "payload_digest": "11d7272868d2f9487b57bfea735ab076225f2ed1060fcaaaae1c55f6cd955dd5",
+  "payload": {
+    "agent_id": "backend",
+    "diff_sha256": "40a283fc83ffda26305a016abe02d36814cbcfa31b220e16458af68954518c89",
+    "event_hmac": "",
+    "task_id": "243fc900fa9b",
+    "timestamp": "2026-08-09T17:43:17Z"
+  },
+  "signature_hex": "fa07ec680201e1a53c0cd1cb3f99ec22895e283cf903ce28f72aaaf428bfc19dcfaf5f610da13787a7904077c50e3709b32466179a963c406820d69e6d976c0d",
+  "public_key_file": "ed25519-public-key.pem",
+  "signed_at": "2026-08-09T17:43:17Z",
+  "note": "Local Ed25519 fallback - sigstore package unavailable or network unreachable. Install sigstore for Rekor attestation."
+}

@@ -2,3 +2,7 @@
 {"timestamp": 1786295831.854189, "metric_type": "agent_success", "value": 1.0, "labels": {"agent_id": "manager-e16110a3", "role": "manager", "model": "opus", "tenant_id": "default"}}
 {"timestamp": 1786295873.360833, "metric_type": "agent_success", "value": 1.0, "labels": {"agent_id": "docs-647e651c", "role": "docs", "model": "opus", "tenant_id": "default"}}
 {"timestamp": 1786296185.8487427, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "qa-48d03c71", "role": "qa", "model": "sonnet", "tenant_id": "default"}}
+{"timestamp": 1786297318.5026677, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "backend-resume-daebd327", "role": "backend", "model": "sonnet", "tenant_id": "default"}}
+{"timestamp": 1786297324.0456057, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "backend-resume-daebd327", "role": "backend", "model": "sonnet", "tenant_id": "default"}}
+{"timestamp": 1786297400.6342015, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "backend-resume-daebd327", "role": "backend", "model": "sonnet", "tenant_id": "default"}}
+{"timestamp": 1786297409.3906846, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "backend-resume-daebd327", "role": "backend", "model": "sonnet", "tenant_id": "default"}}

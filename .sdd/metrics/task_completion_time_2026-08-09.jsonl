@@ -9,3 +9,7 @@
 {"timestamp": 1786295925.0592694, "metric_type": "task_completion_time", "value": 123.68579816818237, "labels": {"task_id": "ef92d5f815ea", "role": "backend", "model": "sonnet", "success": "False", "tenant_id": "default"}}
 {"timestamp": 1786296185.8484986, "metric_type": "task_completion_time", "value": 509.52560234069824, "labels": {"task_id": "e4c8f38c4f5d", "role": "qa", "model": "sonnet", "success": "False", "tenant_id": "default"}}
 {"timestamp": 1786297249.9108694, "metric_type": "task_completion_time", "value": 1543.7751848697662, "labels": {"task_id": "34196aa87c4d", "role": "architect", "model": "opus", "success": "False", "tenant_id": "default"}}
+{"timestamp": 1786297318.502406, "metric_type": "task_completion_time", "value": 25.011061668395996, "labels": {"task_id": "243fc900fa9b", "role": "backend", "model": "sonnet", "success": "False", "tenant_id": "default"}}
+{"timestamp": 1786297324.0451014, "metric_type": "task_completion_time", "value": 30.553736448287964, "labels": {"task_id": "ef92d5f815ea", "role": "backend", "model": "sonnet", "success": "False", "tenant_id": "default"}}
+{"timestamp": 1786297400.6337616, "metric_type": "task_completion_time", "value": 107.14240860939026, "labels": {"task_id": "243fc900fa9b", "role": "backend", "model": "sonnet", "success": "False", "tenant_id": "default"}}
+{"timestamp": 1786297409.3904414, "metric_type": "task_completion_time", "value": 115.8990957736969, "labels": {"task_id": "ef92d5f815ea", "role": "backend", "model": "sonnet", "success": "False", "tenant_id": "default"}}
