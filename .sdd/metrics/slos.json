@@ -4,7 +4,7 @@
       "name": "task_success",
       "description": "Task success rate >= 90%",
       "target": 0.9,
-      "current": 0.2632,
+      "current": 0.5,
       "status": "red",
       "met": false
     },
@@ -12,7 +12,7 @@
       "name": "merge_success",
       "description": "Merge success rate >= 95%",
       "target": 0.95,
-      "current": 0.2632,
+      "current": 0.5,
       "status": "red",
       "met": false
     },
@@ -20,18 +20,18 @@
       "name": "p95_duration",
       "description": "P95 task duration < 30 minutes",
       "target": 0.9,
-      "current": 1.0,
-      "status": "green",
-      "met": true
+      "current": 0.5876,
+      "status": "red",
+      "met": false
     }
   ],
   "error_budget": {
-    "total_tasks": 19,
-    "failed_tasks": 14,
+    "total_tasks": 22,
+    "failed_tasks": 11,
     "budget_total": 3,
     "budget_remaining": 0,
     "budget_fraction": 0.0,
-    "burn_rate": 7.3684,
+    "burn_rate": 5.0,
     "time_to_exhaustion_tasks": 0,
     "is_depleted": true,
     "status": "red"

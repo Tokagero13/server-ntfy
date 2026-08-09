@@ -10,3 +10,6 @@
 {"timestamp": 1786297996.269936, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "backend-6e15a72d", "role": "backend", "model": "sonnet", "tenant_id": "default"}}
 {"timestamp": 1786298017.9126487, "metric_type": "agent_success", "value": 1.0, "labels": {"agent_id": "architect-cd5ab7fd", "role": "architect", "model": "opus", "tenant_id": "default"}}
 {"timestamp": 1786298149.3776195, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "qa-2e102c2d", "role": "qa", "model": "sonnet", "tenant_id": "default"}}
+{"timestamp": 1786298765.7282915, "metric_type": "agent_success", "value": 1.0, "labels": {"agent_id": "qa-0f76e5b9", "role": "qa", "model": "opus", "tenant_id": "default"}}
+{"timestamp": 1786298771.6452901, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "architect-97e44802", "role": "architect", "model": "opus", "tenant_id": "default"}}
+{"timestamp": 1786298875.324206, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "architect-42a4326e", "role": "architect", "model": "opus", "tenant_id": "default"}}

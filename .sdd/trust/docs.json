@@ -2,12 +2,12 @@
   "agent_id": "docs",
   "trust_level": "untrusted",
   "tasks_completed": 1,
-  "tasks_failed": 2,
+  "tasks_failed": 3,
   "security_violations": 0,
-  "consecutive_successes": 1,
-  "tasks_total": 3,
-  "success_rate": 0.3333,
+  "consecutive_successes": 0,
+  "tasks_total": 4,
+  "success_rate": 0.25,
   "created_at": 1786295789.4373899,
-  "last_updated": 1786295864.0718834,
+  "last_updated": 1786298792.2403812,
   "promotion_log": []
 }

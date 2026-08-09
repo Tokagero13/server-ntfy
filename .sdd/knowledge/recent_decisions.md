@@ -1,242 +1,242 @@
 # Recent Decisions
 
-## [2026-08-09 22:17] Decomposed 'start refactoring' into 7 file-disjoint tasks: (1) qa/e4c8f38c4f5d pytest infra + validation/monitoring unit tests, (2) architect/34196aa87c4d repository DAL layer in app/repositories (new files), (3) backend/9c424e1782a9 fix wrong sqlite cursor type annotation + extract dashboard message helper in monitoring.py, (4) backend/243fc900fa9b dedupe subscribe/keyboard logic in telegram_bot.py (~180 duplicate lines), (5) backend/ef92d5f815ea move send_startup_notification(s) out of oversized app/__init__.py into app/core/startup.py, (6) architect/c3849e1033a8 extract url validators + fix triple model registration, (7) docs/0df11926e25d refactoring roadmap. File ownership is fully disjoint (verified) so tasks can run concurrently without merge conflicts. Round 2 follow-ups (migrate callers to repositories, wire REQUEST_TIMEOUT, split monitoring state machine, migrations, CORS) captured in docs/refactoring.md. (db8a08129be6)
-Decomposed 'start refactoring' into 7 file-disjoint tasks: (1) qa/e4c8f38c4f5d pytest infra + validation/monitoring unit tests, (2) architect/34196aa87c4d repository DAL layer in app/repositories (new files), (3) backend/9c424e1782a9 fix wrong sqlite cursor type annotation + extract dashboard message helper in monitoring.py, (4) backend/243fc900fa9b dedupe subscribe/keyboard logic in telegram_bot.py (~180 duplicate lines), (5) backend/ef92d5f815ea move send_startup_notification(s) out of oversized app/__init__.py into app/core/startup.py, (6) architect/c3849e1033a8 extract url validators + fix triple model registration, (7) docs/0df11926e25d refactoring roadmap. File ownership is fully disjoint (verified) so tasks can run concurrently without merge conflicts. Round 2 follow-ups (migrate callers to repositories, wire REQUEST_TIMEOUT, split monitoring state machine, migrations, CORS) captured in docs/refactoring.md.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## [2026-08-09 22:17] Wrote docs/refactoring.md with Motivation, Round 1 (six items), Round 2 (seven follow-ups), Non-goals, and How to verify sections. (75706745b15c)
-Wrote docs/refactoring.md with Motivation, Round 1 (six items), Round 2 (seven follow-ups), Non-goals, and How to verify sections.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## [2026-08-09 22:23] Completed: Set up pytest infrastructure with initial unit tests. 18 tests pass covering validate_url, normalize_url, and should_send_down_notification scenarios. (e4c8f38c4f5d)
-Completed: Set up pytest infrastructure with initial unit tests. 18 tests pass covering validate_url, normalize_url, and should_send_down_notification scenarios.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## [2026-08-09 22:44] Extracted _upsert_subscription (3 occurrences: def + 2 call sites), _build_endpoint_keyboard (3 occurrences), _ENDPOINT_LIST_TEXT constant. subscribe_command and refresh_endpoints_callback now share the helper. Line count: 697 -> 614 (-83 lines). Added NOTE comment on /unsubscribe handler. All imports verified OK. (36c094ca5b33)
-Extracted _upsert_subscription (3 occurrences: def + 2 call sites), _build_endpoint_keyboard (3 occurrences), _ENDPOINT_LIST_TEXT constant. subscribe_command and refresh_endpoints_callback now share the helper. Line count: 697 -> 614 (-83 lines). Added NOTE comment on /unsubscribe handler. All imports verified OK.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## [2026-08-09 22:44] Created app/core/startup.py with send_startup_notification and send_startup_notifications moved verbatim from __init__.py. Fixed imports. __init__.py reduced from 228 to 100 lines, now imports from .core.startup. All acceptance checks pass: imports work, no function defs in __init__.py. (494a42ae6a55)
-Created app/core/startup.py with send_startup_notification and send_startup_notifications moved verbatim from __init__.py. Fixed imports. __init__.py reduced from 228 to 100 lines, now imports from .core.startup. All acceptance checks pass: imports work, no function defs in __init__.py.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## [2026-08-09 22:46] Split app/models.py::add_models_to_api into build_models (per-namespace body preserved) + cached get_models(api); kept add_models_to_api as thin alias for backward compat. Extracted normalize_url and validate_url (with inner _is_valid_ipv4) from app/api/endpoints.py into new app/core/validators.py — identical bodies, no behavior change. endpoints.py now imports them from ..core.validators. All acceptance checks pass (validators file exists, no def normalize_url/validate_url left in endpoints.py, def get_models present in models.py, one-liner import test prints https://example.com). (c3849e1033a8)
-Split app/models.py::add_models_to_api into build_models (per-namespace body preserved) + cached get_models(api); kept add_models_to_api as thin alias for backward compat. Extracted normalize_url and validate_url (with inner _is_valid_ipv4) from app/api/endpoints.py into new app/core/validators.py — identical bodies, no behavior change. endpoints.py now imports them from ..core.validators. All acceptance checks pass (validators file exists, no def normalize_url/validate_url left in endpoints.py, def get_models present in models.py, one-liner import test prints https://example.com).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## [2026-08-09 22:48] Completed: Set up pytest infrastructure with initial unit tests. 15 tests pass covering validate_url, normalize_url, and should_send_down_notification. (3bb9834b5dc9)
-Completed: Set up pytest infrastructure with initial unit tests. 15 tests pass covering validate_url, normalize_url, and should_send_down_notification.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## [2026-08-09 22:49] Auto-completed: agent backend-faeecdef made git commits on branch (no signals to verify) (254f4cb4a292)
-Auto-completed: agent backend-faeecdef made git commits on branch (no signals to verify)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## [2026-08-09 22:53] Completed: Deduplicate Telegram bot subscribe/keyboard logic in telegram_bot.py - extracted _upsert_subscription helper (3 occurrences), extracted _build_endpoint_keyboard and _ENDPOINT_LIST_TEXT constants (3 occurrences), added NOTE comment for /unsubscribe handler wiring (36c094ca5b33)
-Completed: Deduplicate Telegram bot subscribe/keyboard logic in telegram_bot.py - extracted _upsert_subscription helper (3 occurrences), extracted _build_endpoint_keyboard and _ENDPOINT_LIST_TEXT constants (3 occurrences), added NOTE comment for /unsubscribe handler wiring
-
-
-
-
-
-
-
-
-
-
-
-
-## [2026-08-09 22:53] Completed: Extract startup notification logic out of app/__init__.py into app/core/startup.py - moved send_startup_notification and send_startup_notifications verbatim, fixed imports, __init__.py now 100 lines (down from 228) (494a42ae6a55)
-Completed: Extract startup notification logic out of app/__init__.py into app/core/startup.py - moved send_startup_notification and send_startup_notifications verbatim, fixed imports, __init__.py now 100 lines (down from 228)
-
-
-
-
-
-
-
-
-
-
-## [2026-08-09 22:53] Consolidated flask-restx model registration (build_models + cached get_models + add_models_to_api alias) and extracted normalize_url/validate_url to app/core/validators.py. All acceptance checks pass: validators module exports both functions, endpoints.py no longer defines them, get_models exists in models.py, and python -c smoke test prints https://example.com. Work was already committed in 56f499b; owned files are clean. (679ecee93d5c)
-Consolidated flask-restx model registration (build_models + cached get_models + add_models_to_api alias) and extracted normalize_url/validate_url to app/core/validators.py. All acceptance checks pass: validators module exports both functions, endpoints.py no longer defines them, get_models exists in models.py, and python -c smoke test prints https://example.com. Work was already committed in 56f499b; owned files are clean.
-
-
-
-
-
-
-
-
-## [2026-08-09 22:55] Completed: Set up pytest infrastructure with initial unit tests - 13 tests passing (pytest.ini, requirements-dev.txt, tests/conftest.py, tests/unit/test_url_validation.py, tests/unit/test_monitoring_helpers.py) (3bb9834b5dc9)
-Completed: Set up pytest infrastructure with initial unit tests - 13 tests passing (pytest.ini, requirements-dev.txt, tests/conftest.py, tests/unit/test_url_validation.py, tests/unit/test_monitoring_helpers.py)
-
-
-
-
-
-
-## [2026-08-09 23:03] Auto-completed: agent backend-d9df3d98 made git commits on branch (no signals to verify) (ffdbcbd7086b)
-Auto-completed: agent backend-d9df3d98 made git commits on branch (no signals to verify)
-
-
-
-
-## [2026-08-09 23:04] Completed: Deduplicate Telegram bot subscribe/keyboard logic in telegram_bot.py (5fcf54a9c33a)
-Completed: Deduplicate Telegram bot subscribe/keyboard logic in telegram_bot.py
-
-
 ## [2026-08-09 23:04] Completed: Extract startup notification logic out of app/__init__.py into app/core/startup.py (34e1ef633c4f)
 Completed: Extract startup notification logic out of app/__init__.py into app/core/startup.py
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## [2026-08-09 23:06] Added pytest infrastructure: requirements-dev.txt, pytest.ini, tests/{__init__.py,conftest.py,unit/__init__.py}, tests/unit/test_url_validation.py (22 tests covering normalize_url/validate_url), tests/unit/test_monitoring_helpers.py (8 tests covering should_send_down_notification). pytest -x -q reports 30 passed. Files committed on branch agent/qa-0f76e5b9 as f71c0b2 (created via git worktree at /c/temp/qa-work because .sdd/worktrees/qa-0f76e5b9 was empty). (12a39d6b2e84)
+Added pytest infrastructure: requirements-dev.txt, pytest.ini, tests/{__init__.py,conftest.py,unit/__init__.py}, tests/unit/test_url_validation.py (22 tests covering normalize_url/validate_url), tests/unit/test_monitoring_helpers.py (8 tests covering should_send_down_notification). pytest -x -q reports 30 passed. Files committed on branch agent/qa-0f76e5b9 as f71c0b2 (created via git worktree at /c/temp/qa-work because .sdd/worktrees/qa-0f76e5b9 was empty).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## [2026-08-09 23:06] Retried: Agent qa-11697a94 reaped (heartbeat timeout) (e4c8f38c4f5d)
+Retried: Agent qa-11697a94 reaped (heartbeat timeout)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## [2026-08-09 23:06] Retried: Agent architect-7a4f1e2f died; janitor failed: ['path_exists: app/repositories/__init__.py (not found)', 'path_exists: app/repositories/endpoints.py (not found)', 'path_exists: app/repositories/subscriptions.py (not found)', 'path_exists: app/repositories/notification_logs.py (not found)', 'path_exists: app/repositories/settings.py (not found)', 'path_exists: app/repositories/discovery.py (not found)', 'test_passes: python -c "from app.repositories import endpoints, subscriptions, notification_logs, settings, discovery" (non-zero exit)'] (34196aa87c4d)
+Retried: Agent architect-7a4f1e2f died; janitor failed: ['path_exists: app/repositories/__init__.py (not found)', 'path_exists: app/repositories/endpoints.py (not found)', 'path_exists: app/repositories/subscriptions.py (not found)', 'path_exists: app/repositories/notification_logs.py (not found)', 'path_exists: app/repositories/settings.py (not found)', 'path_exists: app/repositories/discovery.py (not found)', 'test_passes: python -c "from app.repositories import endpoints, subscriptions, notification_logs, settings, discovery" (non-zero exit)']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## [2026-08-09 23:06] [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found  (9c424e1782a9)
+[fast-path] error: Failed to spawn: `ruff`   Caused by: program not found
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## [2026-08-09 23:06] [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found  (c9e785e58544)
+[fast-path] error: Failed to spawn: `ruff`   Caused by: program not found
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## [2026-08-09 23:06] Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architect) is high-stakes but no default_model is configured. Refusing to guess a model. (c3849e1033a8)
+Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architect) is high-stakes but no default_model is configured. Refusing to guess a model.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## [2026-08-09 23:06] [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found  (0df11926e25d)
+[fast-path] error: Failed to spawn: `ruff`   Caused by: program not found
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## [2026-08-09 23:06] [fast-path] error: Failed to spawn: `ruff`   Caused by: program not found  (e5b26deb39fa)
+[fast-path] error: Failed to spawn: `ruff`   Caused by: program not found
+
+
+
+
+
+
+
+
+
+
+
+
+## [2026-08-09 23:06] Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architect) is high-stakes but no default_model is configured. Refusing to guess a model. (0efca7a58b44)
+Spawn failed (transient, attempt 1): architect: Task c3849e1033a8 (role=architect) is high-stakes but no default_model is configured. Refusing to guess a model.
+
+
+
+
+
+
+
+
+
+
+## [2026-08-09 23:06] Spawn failed (transient, attempt 2): architect: All spawn attempts failed for session architect-140f2caa: Claude Code: (no error pattern found, showing last 10 lines): <log empty or unavailable> (6408bbb74419)
+Spawn failed (transient, attempt 2): architect: All spawn attempts failed for session architect-140f2caa: Claude Code: (no error pattern found, showing last 10 lines): <log empty or unavailable>
+
+
+
+
+
+
+
+
+## [2026-08-09 23:06] Spawn failed (transient, attempt 2): architect: All spawn attempts failed for session architect-140f2caa: Claude Code: (no error pattern found, showing last 10 lines): <log empty or unavailable> (c5e3d06b26e9)
+Spawn failed (transient, attempt 2): architect: All spawn attempts failed for session architect-140f2caa: Claude Code: (no error pattern found, showing last 10 lines): <log empty or unavailable>
+
+
+
+
+
+
+## [2026-08-09 23:06] [fast-path] ruff format: 0 file(s) reformatted in 0.1s (9c424e1782a9)
+[fast-path] ruff format: 0 file(s) reformatted in 0.1s
+
+
+
+
+## [2026-08-09 23:06] [fast-path] ruff format: 0 file(s) reformatted in 0.1s (9c424e1782a9)
+[fast-path] ruff format: 0 file(s) reformatted in 0.1s
+
+
+## [2026-08-09 23:07] Completed: Consolidate flask-restx model registration and extract URL validators — build_models + cached get_models in app/models.py; normalize_url/validate_url moved to app/core/validators.py; endpoints.py imports from validators; settings.py unchanged. All acceptance checks pass. Code already committed at 56f499b. (c3849e1033a8)
+Completed: Consolidate flask-restx model registration and extract URL validators — build_models + cached get_models in app/models.py; normalize_url/validate_url moved to app/core/validators.py; endpoints.py imports from validators; settings.py unchanged. All acceptance checks pass. Code already committed at 56f499b.

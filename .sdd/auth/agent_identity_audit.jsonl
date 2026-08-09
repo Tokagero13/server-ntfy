@@ -33,3 +33,11 @@
 {"timestamp": 1786298662.0771217, "identity_id": "backend-502e6fab", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
 {"timestamp": 1786298727.3862083, "identity_id": "qa-0f76e5b9", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
 {"timestamp": 1786298739.1284318, "identity_id": "qa-0f76e5b9", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786298780.1392815, "identity_id": "qa-d19f7e59", "action": "created", "actor": "spawner", "details": {"role": "qa", "permissions": ["files:read", "status:read", "tasks:claim", "tasks:read", "tests:run"], "parent_identity_id": null, "token_type": "jwt", "task_ids": ["e4c8f38c4f5d"], "has_file_scope": false}}
+{"timestamp": 1786298792.8053398, "identity_id": "architect-42a4326e", "action": "created", "actor": "spawner", "details": {"role": "architect", "permissions": ["files:read", "files:write", "status:read", "tasks:claim", "tasks:read"], "parent_identity_id": null, "token_type": "jwt", "task_ids": ["c3849e1033a8"], "has_file_scope": false}}
+{"timestamp": 1786298839.6075943, "identity_id": "backend-db7bc87c", "action": "created", "actor": "spawner", "details": {"role": "backend", "permissions": ["files:read", "files:write", "status:read", "tasks:claim", "tasks:read", "tests:run"], "parent_identity_id": null, "token_type": "jwt", "task_ids": ["d852092a7068"], "has_file_scope": false}}
+{"timestamp": 1786298863.8450375, "identity_id": "architect-42a4326e", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786298870.0648434, "identity_id": "architect-42a4326e", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786299015.6469402, "identity_id": "qa-d19f7e59", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786299025.1446364, "identity_id": "qa-d19f7e59", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786299030.0315876, "identity_id": "qa-d19f7e59", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}

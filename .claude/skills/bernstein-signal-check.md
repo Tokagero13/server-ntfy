@@ -7,8 +7,8 @@ whenToUse: Periodically while working, approximately every 60 seconds, or before
 Check for orchestrator signals:
 
 ```bash
-cat .sdd/runtime/signals/backend-6e15a72d/WAKEUP 2>/dev/null
-cat .sdd/runtime/signals/backend-6e15a72d/SHUTDOWN 2>/dev/null
+cat .sdd/runtime/signals/architect-42a4326e/WAKEUP 2>/dev/null
+cat .sdd/runtime/signals/architect-42a4326e/SHUTDOWN 2>/dev/null
 ```
 
 If **SHUTDOWN** exists: commit any in-progress work and exit immediately:
