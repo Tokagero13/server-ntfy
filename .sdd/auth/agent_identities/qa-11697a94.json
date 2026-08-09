@@ -1,0 +1,39 @@
+{
+  "id": "qa-11697a94",
+  "role": "qa",
+  "session_id": "qa-11697a94",
+  "permissions": [
+    "files:read",
+    "status:read",
+    "tasks:claim",
+    "tasks:read",
+    "tests:run"
+  ],
+  "status": "active",
+  "created_at": 1786296487.0135732,
+  "last_authenticated_at": 0.0,
+  "revoked_at": 0.0,
+  "revocation_reason": "",
+  "credential": {
+    "token_hash": "835486ebeec393be5a4d12c01dea62554a13c058b436cebc1139005b6ce61817",
+    "created_at": 1786296487.0135732,
+    "expires_at": 1786310887.0,
+    "revoked": false,
+    "token_type": "jwt",
+    "algorithm": "HS256",
+    "jti": "2be02f1ee5ac4dd8b963dac895de24ed",
+    "tenant_id": "default",
+    "task_ids": [
+      "e4c8f38c4f5d"
+    ],
+    "allowed_files": []
+  },
+  "parent_identity_id": null,
+  "metadata": {
+    "source": "spawner"
+  },
+  "task_ids": [
+    "e4c8f38c4f5d"
+  ],
+  "allowed_files": []
+}
