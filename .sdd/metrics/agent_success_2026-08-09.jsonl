@@ -8,3 +8,4 @@
 {"timestamp": 1786297698.7940671, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "qa-d2d4cc19", "role": "qa", "model": "sonnet", "tenant_id": "default"}}
 {"timestamp": 1786297987.4502273, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "backend-6e15a72d", "role": "backend", "model": "sonnet", "tenant_id": "default"}}
 {"timestamp": 1786297996.269936, "metric_type": "agent_success", "value": 0.0, "labels": {"agent_id": "backend-6e15a72d", "role": "backend", "model": "sonnet", "tenant_id": "default"}}
+{"timestamp": 1786298017.9126487, "metric_type": "agent_success", "value": 1.0, "labels": {"agent_id": "architect-cd5ab7fd", "role": "architect", "model": "opus", "tenant_id": "default"}}

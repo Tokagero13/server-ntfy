@@ -16,3 +16,4 @@
 {"timestamp": 1786297793.3499782, "metric_type": "task_completion_time", "value": 1288.8008337020874, "labels": {"task_id": "254f4cb4a292", "role": "backend", "model": "sonnet", "success": "True", "tenant_id": "default"}}
 {"timestamp": 1786297987.4496448, "metric_type": "task_completion_time", "value": 94.41253972053528, "labels": {"task_id": "36c094ca5b33", "role": "backend", "model": "sonnet", "success": "False", "tenant_id": "default"}}
 {"timestamp": 1786297996.2696517, "metric_type": "task_completion_time", "value": 103.23257899284363, "labels": {"task_id": "494a42ae6a55", "role": "backend", "model": "sonnet", "success": "False", "tenant_id": "default"}}
+{"timestamp": 1786298017.912276, "metric_type": "task_completion_time", "value": 83.84144067764282, "labels": {"task_id": "679ecee93d5c", "role": "architect", "model": "opus", "success": "True", "tenant_id": "default"}}
