@@ -2,12 +2,12 @@
 import logging
 import math
 import sqlite3
-from urllib.parse import urlparse
 
 from flask import request
 from flask_restx import Namespace, Resource
 
 from .. import config
+from ..core.validators import normalize_url, validate_url
 from ..db import get_db_connection
 from ..models import add_models_to_api
 
@@ -17,85 +17,6 @@ ns = Namespace(
     "endpoints", description="Операции с эндпоинтами, уведомлениями и подписками"
 )
 models = add_models_to_api(ns)
-
-
-def normalize_url(url: str) -> str:
-    """Преобразование домена в полный URL с поддержкой портов.
-    Возвращает HTTPS версию по умолчанию, HTTP fallback будет обработан в check_endpoint_status_with_fallback."""
-    url = url.strip()
-
-    # Если это уже полный URL, вернуть как есть
-    if url.startswith(("http://", "https://")):
-        return url
-
-    # Для любого адреса без протокола добавляем HTTPS по умолчанию
-    # Функция check_endpoint_status_with_fallback будет пробовать HTTP если HTTPS не работает
-    return f"https://{url}"
-
-
-def validate_url(url: str) -> bool:
-    """Валидация URL или домена с поддержкой портов"""
-    try:
-        # Сначала нормализуем URL
-        normalized = normalize_url(url)
-        result = urlparse(normalized)
-
-        # Проверяем, что есть схема и домен
-        if not all([result.scheme, result.netloc]):
-            return False
-
-        # Проверяем корректность схемы
-        if result.scheme not in ["http", "https"]:
-            return False
-
-        # Разбираем netloc для проверки порта
-        netloc = result.netloc
-        if ":" in netloc:
-            hostname, port_str = netloc.rsplit(":", 1)
-            try:
-                port = int(port_str)
-                # Проверяем корректность порта
-                if not (1 <= port <= 65535):
-                    return False
-            except ValueError:
-                return False
-        else:
-            hostname = netloc
-
-        # Улучшенная проверка IPv4 адресов и доменов
-        def is_valid_ipv4(ip):
-            """Проверка валидности IPv4 адреса"""
-            parts = ip.split(".")
-            if len(parts) != 4:
-                return False
-            try:
-                for part in parts:
-                    num = int(part)
-                    if not (0 <= num <= 255):
-                        return False
-                return True
-            except ValueError:
-                return False
-
-        # Проверяем hostname
-        if is_valid_ipv4(hostname):
-            return True  # Валидный IPv4
-        elif hostname == "localhost":
-            return True  # localhost всегда валиден
-        elif "." in hostname:
-            # Проверяем доменное имя
-            parts = hostname.split(".")
-            for part in parts:
-                if not part or not all(c.isalnum() or c == "-" for c in part):
-                    return False
-                if part.startswith("-") or part.endswith("-"):
-                    return False
-            return True
-        else:
-            return False  # Неподдерживаемый формат
-
-    except Exception:
-        return False
 
 
 @ns.route("/")

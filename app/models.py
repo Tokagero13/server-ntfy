@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from flask_restx import fields
 
-def add_models_to_api(api):
+_MODELS: dict | None = None
+
+
+def build_models(api):
     """Добавляет все модели данных в экземпляр API."""
 
     endpoint_model = api.model(
@@ -134,3 +137,21 @@ def add_models_to_api(api):
         "discovery_status": discovery_status_model,
         "settings": settings_model,
     }
+
+
+def get_models(api) -> dict:
+    """Возвращает единственный кэшированный набор моделей.
+
+    При первом вызове строит модели через build_models(api) и кэширует
+    результат в модульной переменной. Повторные вызовы возвращают тот же
+    объект, что позволяет избежать дублирующей регистрации моделей.
+    """
+    global _MODELS
+    if _MODELS is None:
+        _MODELS = build_models(api)
+    return _MODELS
+
+
+# Тонкий alias для обратной совместимости — namespace-модули по-прежнему
+# вызывают add_models_to_api(ns) для регистрации моделей для swagger.
+add_models_to_api = build_models
