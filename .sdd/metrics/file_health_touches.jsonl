@@ -23,3 +23,6 @@
 {"timestamp": 1786297249.843937, "task_id": "34196aa87c4d", "path": "app/repositories/notification_logs.py", "outcome": "failure", "previous_total": 0, "new_total": 48, "flagged": true}
 {"timestamp": 1786297249.8737712, "task_id": "34196aa87c4d", "path": "app/repositories/settings.py", "outcome": "failure", "previous_total": 0, "new_total": 48, "flagged": true}
 {"timestamp": 1786297249.9048152, "task_id": "34196aa87c4d", "path": "app/repositories/discovery.py", "outcome": "failure", "previous_total": 0, "new_total": 48, "flagged": true}
+{"timestamp": 1786297284.397107, "task_id": "36c094ca5b33", "path": "app/core/telegram_bot.py", "outcome": "failure", "previous_total": 36, "new_total": 35, "flagged": true}
+{"timestamp": 1786297284.4695137, "task_id": "494a42ae6a55", "path": "app/__init__.py", "outcome": "failure", "previous_total": 48, "new_total": 58, "flagged": true}
+{"timestamp": 1786297284.5005143, "task_id": "494a42ae6a55", "path": "app/core/startup.py", "outcome": "failure", "previous_total": 48, "new_total": 53, "flagged": true}

@@ -26,3 +26,8 @@
 {"timestamp": 1786296603.546322, "identity_id": "backend-c1a0df4d", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
 {"timestamp": 1786297236.8754232, "identity_id": "architect-97e44802", "action": "created", "actor": "spawner", "details": {"role": "architect", "permissions": ["files:read", "files:write", "status:read", "tasks:claim", "tasks:read"], "parent_identity_id": null, "token_type": "jwt", "task_ids": ["c3849e1033a8"], "has_file_scope": false}}
 {"timestamp": 1786297244.0859478, "identity_id": "backend-c1a0df4d", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786297253.7259007, "identity_id": "backend-c1a0df4d", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786297262.1629639, "identity_id": "backend-c1a0df4d", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786297262.310578, "identity_id": "qa-d2d4cc19", "action": "created", "actor": "spawner", "details": {"role": "qa", "permissions": ["files:read", "status:read", "tasks:claim", "tasks:read", "tests:run"], "parent_identity_id": null, "token_type": "jwt", "task_ids": ["3bb9834b5dc9"], "has_file_scope": false}}
+{"timestamp": 1786297268.6872265, "identity_id": "backend-c1a0df4d", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
+{"timestamp": 1786297275.698548, "identity_id": "backend-c1a0df4d", "action": "authenticated", "actor": "auth", "details": {"token_type": "jwt"}}
