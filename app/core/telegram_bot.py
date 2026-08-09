@@ -17,6 +17,75 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+_ENDPOINT_LIST_TEXT = (
+    "📋 <b>Выберите эндпоинты для подписки:</b>\n\n"
+    "🟢 - Онлайн\n"
+    "🔴 - Офлайн\n\n"
+    "Нажмите на эндпоинт, чтобы подписаться на уведомления."
+)
+
+
+def _build_endpoint_keyboard(endpoints: list[dict]) -> InlineKeyboardMarkup:
+    keyboard = []
+    for endpoint in endpoints:
+        name = endpoint.get("name") or endpoint["url"]
+        status_emoji = "🟢" if not endpoint.get("is_down") else "🔴"
+        button_text = f"{status_emoji} {name}"
+        keyboard.append(
+            [
+                InlineKeyboardButton(
+                    button_text, callback_data=f"subscribe_{endpoint['id']}"
+                )
+            ]
+        )
+    keyboard.append(
+        [InlineKeyboardButton("🔄 Обновить список", callback_data="refresh_endpoints")]
+    )
+    return InlineKeyboardMarkup(keyboard)
+
+
+def _upsert_subscription(cur, endpoint_id: int, chat_id: str) -> tuple[str, str]:
+    """Look up or create/reactivate a subscription.
+
+    Returns (status, endpoint_name) where status is one of:
+    "not_found", "already", "reactivated", "created".
+    Does NOT commit — callers are responsible for conn.commit().
+    """
+    cur.execute("SELECT name, url FROM endpoints WHERE id = ?", (endpoint_id,))
+    endpoint = cur.fetchone()
+    if not endpoint:
+        return ("not_found", "")
+
+    endpoint_name = endpoint["name"] or endpoint["url"]
+
+    cur.execute(
+        """
+        SELECT id, enabled FROM endpoint_subscriptions
+        WHERE endpoint_id = ? AND chat_id = ?
+    """,
+        (endpoint_id, chat_id),
+    )
+    existing = cur.fetchone()
+
+    if existing:
+        if existing["enabled"]:
+            return ("already", endpoint_name)
+        cur.execute(
+            "UPDATE endpoint_subscriptions SET enabled = 1 WHERE id = ?",
+            (existing["id"],),
+        )
+        return ("reactivated", endpoint_name)
+
+    now_iso = datetime.now(timezone.utc).isoformat()
+    cur.execute(
+        """
+        INSERT INTO endpoint_subscriptions (endpoint_id, chat_id, enabled, created_at)
+        VALUES (?, ?, 1, ?)
+    """,
+        (endpoint_id, chat_id, now_iso),
+    )
+    return ("created", endpoint_name)
+
 
 class TelegramBotHandler:
     def __init__(self, token: str):
@@ -91,8 +160,8 @@ class TelegramBotHandler:
                 # Ищем активный код обнаружения
                 cur.execute(
                     """
-                    SELECT id FROM telegram_discovery 
-                    WHERE discovery_code = ? AND status = 'pending' 
+                    SELECT id FROM telegram_discovery
+                    WHERE discovery_code = ? AND status = 'pending'
                     AND datetime(expires_at) > datetime('now')
                 """,
                     (discovery_code,),
@@ -109,8 +178,8 @@ class TelegramBotHandler:
                 # Обновляем запись с информацией о чате
                 cur.execute(
                     """
-                    UPDATE telegram_discovery 
-                    SET chat_id = ?, username = ?, first_name = ?, 
+                    UPDATE telegram_discovery
+                    SET chat_id = ?, username = ?, first_name = ?,
                         last_name = ?, status = 'completed'
                     WHERE id = ?
                 """,
@@ -160,39 +229,9 @@ class TelegramBotHandler:
             )
             return
 
-        keyboard = []
-        for endpoint in endpoints:
-            name = endpoint.get("name") or endpoint["url"]
-            status_emoji = "🟢" if not endpoint.get("is_down") else "🔴"
-            button_text = f"{status_emoji} {name}"
-
-            keyboard.append(
-                [
-                    InlineKeyboardButton(
-                        button_text, callback_data=f"subscribe_{endpoint['id']}"
-                    )
-                ]
-            )
-
-        keyboard.append(
-            [
-                InlineKeyboardButton(
-                    "🔄 Обновить список", callback_data="refresh_endpoints"
-                )
-            ]
-        )
-
-        reply_markup = InlineKeyboardMarkup(keyboard)
-
-        message_text = (
-            "📋 <b>Выберите эндпоинты для подписки:</b>\n\n"
-            "🟢 - Онлайн\n"
-            "🔴 - Офлайн\n\n"
-            "Нажмите на эндпоинт, чтобы подписаться на уведомления."
-        )
-
+        reply_markup = _build_endpoint_keyboard(endpoints)
         await update.message.reply_text(
-            message_text, reply_markup=reply_markup, parse_mode=ParseMode.HTML
+            _ENDPOINT_LIST_TEXT, reply_markup=reply_markup, parse_mode=ParseMode.HTML
         )
 
     async def list_subscriptions_command(
@@ -327,82 +366,33 @@ class TelegramBotHandler:
     ) -> None:
         """Подписка на эндпоинт через callback"""
         try:
-            # Проверяем, есть ли уже подписка
             with get_db_connection() as conn:
                 cur = conn.cursor()
+                status, endpoint_name = _upsert_subscription(cur, endpoint_id, chat_id)
 
-                # Получаем информацию об эндпоинте
-                cur.execute(
-                    "SELECT name, url FROM endpoints WHERE id = ?", (endpoint_id,)
-                )
-                endpoint = cur.fetchone()
-                if not endpoint:
+                if status == "not_found":
                     await query.edit_message_text("❌ Эндпоинт не найден")
                     return
 
-                endpoint_name = endpoint["name"] or endpoint["url"]
+                if status != "already":
+                    conn.commit()
 
-                # Проверяем существующую подписку
-                cur.execute(
-                    """
-                    SELECT id, enabled FROM endpoint_subscriptions 
-                    WHERE endpoint_id = ? AND chat_id = ?
-                """,
-                    (endpoint_id, chat_id),
-                )
+                if status == "already":
+                    text = f"ℹ️ Вы уже подписаны на <b>{endpoint_name}</b>"
+                elif status == "reactivated":
+                    text = f"✅ Подписка на <b>{endpoint_name}</b> активирована!"
+                else:
+                    text = (
+                        f"✅ <b>Подписка создана!</b>\n\n"
+                        f"📍 Эндпоинт: <b>{endpoint_name}</b>\n"
+                        f"🔔 Вы будете получать уведомления о статусе этого эндпоинта.\n\n"
+                        f"Используйте /list для просмотра всех подписок."
+                    )
+                    logger.info(
+                        f"Subscription created for chat {chat_id} to endpoint {endpoint_id}"
+                    )
 
-                existing = cur.fetchone()
-
-                if existing:
-                    if existing["enabled"]:
-                        await query.edit_message_text(
-                            f"ℹ️ Вы уже подписаны на <b>{endpoint_name}</b>",
-                            parse_mode=ParseMode.HTML,
-                        )
-                        return
-                    else:
-                        # Активируем существующую подписку
-                        cur.execute(
-                            """
-                            UPDATE endpoint_subscriptions 
-                            SET enabled = 1 
-                            WHERE id = ?
-                        """,
-                            (existing["id"],),
-                        )
-                        conn.commit()
-
-                        await query.edit_message_text(
-                            f"✅ Подписка на <b>{endpoint_name}</b> активирована!",
-                            parse_mode=ParseMode.HTML,
-                        )
-                        return
-
-                # Создаем новую подписку
-                now_iso = datetime.now(timezone.utc).isoformat()
-                cur.execute(
-                    """
-                    INSERT INTO endpoint_subscriptions (endpoint_id, chat_id, enabled, created_at)
-                    VALUES (?, ?, 1, ?)
-                """,
-                    (endpoint_id, chat_id, now_iso),
-                )
-
-                conn.commit()
-
-                success_message = (
-                    f"✅ <b>Подписка создана!</b>\n\n"
-                    f"📍 Эндпоинт: <b>{endpoint_name}</b>\n"
-                    f"🔔 Вы будете получать уведомления о статусе этого эндпоинта.\n\n"
-                    f"Используйте /list для просмотра всех подписок."
-                )
-
-                await query.edit_message_text(
-                    success_message, parse_mode=ParseMode.HTML
-                )
-                logger.info(
-                    f"Subscription created for chat {chat_id} to endpoint {endpoint_id}"
-                )
+                await query.edit_message_text(text, parse_mode=ParseMode.HTML)
 
         except Exception as e:
             logger.error(f"Error subscribing to endpoint: {e}")
@@ -415,68 +405,25 @@ class TelegramBotHandler:
         try:
             with get_db_connection() as conn:
                 cur = conn.cursor()
+                status, endpoint_name = _upsert_subscription(cur, endpoint_id, chat_id)
 
-                # Получаем информацию об эндпоинте
-                cur.execute(
-                    "SELECT name, url FROM endpoints WHERE id = ?", (endpoint_id,)
-                )
-                endpoint = cur.fetchone()
-                if not endpoint:
+                if status == "not_found":
                     await update.message.reply_text("❌ Эндпоинт не найден")
                     return
 
-                endpoint_name = endpoint["name"] or endpoint["url"]
+                if status != "already":
+                    conn.commit()
 
-                # Проверяем существующую подписку
-                cur.execute(
-                    """
-                    SELECT id, enabled FROM endpoint_subscriptions 
-                    WHERE endpoint_id = ? AND chat_id = ?
-                """,
-                    (endpoint_id, chat_id),
-                )
-
-                existing = cur.fetchone()
-
-                if existing and existing["enabled"]:
-                    await update.message.reply_text(
-                        f"ℹ️ Вы уже подписаны на <b>{endpoint_name}</b>",
-                        parse_mode=ParseMode.HTML,
-                    )
-                    return
-
-                # Создаем или активируем подписку
-                now_iso = datetime.now(timezone.utc).isoformat()
-
-                if existing:
-                    cur.execute(
-                        """
-                        UPDATE endpoint_subscriptions 
-                        SET enabled = 1 
-                        WHERE id = ?
-                    """,
-                        (existing["id"],),
-                    )
+                if status == "already":
+                    text = f"ℹ️ Вы уже подписаны на <b>{endpoint_name}</b>"
                 else:
-                    cur.execute(
-                        """
-                        INSERT INTO endpoint_subscriptions (endpoint_id, chat_id, enabled, created_at)
-                        VALUES (?, ?, 1, ?)
-                    """,
-                        (endpoint_id, chat_id, now_iso),
+                    text = (
+                        f"✅ <b>Подписка создана!</b>\n\n"
+                        f"📍 Эндпоинт: <b>{endpoint_name}</b>\n"
+                        f"🔔 Вы будете получать уведомления о статусе этого эндпоинта."
                     )
 
-                conn.commit()
-
-                success_message = (
-                    f"✅ <b>Подписка создана!</b>\n\n"
-                    f"📍 Эндпоинт: <b>{endpoint_name}</b>\n"
-                    f"🔔 Вы будете получать уведомления о статусе этого эндпоинта."
-                )
-
-                await update.message.reply_text(
-                    success_message, parse_mode=ParseMode.HTML
-                )
+                await update.message.reply_text(text, parse_mode=ParseMode.HTML)
 
         except Exception as e:
             logger.error(f"Error subscribing to endpoint: {e}")
@@ -491,7 +438,7 @@ class TelegramBotHandler:
                 # Получаем информацию о подписке
                 cur.execute(
                     """
-                    SELECT es.id, e.name, e.url 
+                    SELECT es.id, e.name, e.url
                     FROM endpoint_subscriptions es
                     JOIN endpoints e ON es.endpoint_id = e.id
                     WHERE es.id = ?
@@ -530,39 +477,9 @@ class TelegramBotHandler:
             await query.edit_message_text("❌ Эндпоинты не найдены")
             return
 
-        keyboard = []
-        for endpoint in endpoints:
-            name = endpoint.get("name") or endpoint["url"]
-            status_emoji = "🟢" if not endpoint.get("is_down") else "🔴"
-            button_text = f"{status_emoji} {name}"
-
-            keyboard.append(
-                [
-                    InlineKeyboardButton(
-                        button_text, callback_data=f"subscribe_{endpoint['id']}"
-                    )
-                ]
-            )
-
-        keyboard.append(
-            [
-                InlineKeyboardButton(
-                    "🔄 Обновить список", callback_data="refresh_endpoints"
-                )
-            ]
-        )
-
-        reply_markup = InlineKeyboardMarkup(keyboard)
-
-        message_text = (
-            "📋 <b>Выберите эндпоинты для подписки:</b>\n\n"
-            "🟢 - Онлайн\n"
-            "🔴 - Офлайн\n\n"
-            "Нажмите на эндпоинт, чтобы подписаться на уведомления."
-        )
-
+        reply_markup = _build_endpoint_keyboard(endpoints)
         await query.edit_message_text(
-            message_text, reply_markup=reply_markup, parse_mode=ParseMode.HTML
+            _ENDPOINT_LIST_TEXT, reply_markup=reply_markup, parse_mode=ParseMode.HTML
         )
 
     async def get_endpoints(self) -> List[Dict]:
@@ -571,8 +488,8 @@ class TelegramBotHandler:
             with get_db_connection() as conn:
                 cur = conn.cursor()
                 cur.execute("""
-                    SELECT id, name, url, last_status, last_checked, is_down 
-                    FROM endpoints 
+                    SELECT id, name, url, last_status, last_checked, is_down
+                    FROM endpoints
                     ORDER BY name, url
                 """)
 
@@ -639,7 +556,7 @@ class TelegramBotHandler:
             CommandHandler("list", self.list_subscriptions_command)
         )
         self.application.add_handler(
-            CommandHandler("unsubscribe", self.list_subscriptions_command)
+            CommandHandler("unsubscribe", self.list_subscriptions_command)  # NOTE: /unsubscribe intentionally reuses /list to show the unsubscribe buttons inline.
         )
         self.application.add_handler(CommandHandler("status", self.status_command))
         self.application.add_handler(CommandHandler("help", self.help_command))
