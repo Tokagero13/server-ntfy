@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+import sqlite3
 import time
 from datetime import datetime, timedelta, timezone
 
@@ -54,13 +55,26 @@ def should_send_down_notification(
 
 
 def update_notification_time(
-    cur: requests.structures.CaseInsensitiveDict, endpoint_id: int, now_iso: str
+    cur: sqlite3.Cursor, endpoint_id: int, now_iso: str
 ) -> None:
     """Обновляет время последнего уведомления"""
     cur.execute(
         "UPDATE endpoints SET last_notified = ? WHERE id = ?",
         (now_iso, endpoint_id),
     )
+
+
+def _format_alert(kind: str, url: str, status: int) -> str:
+    """Собирает текст уведомления с общим футером Dashboard."""
+    if kind == "RECOVERED":
+        body = f"[OK] RECOVERED: {url} is back online (status: {status})"
+    elif kind == "DOWN":
+        body = f"[ALERT] {url} is DOWN (status: {status})"
+    elif kind == "STILL_DOWN":
+        body = f"[WARNING] STILL DOWN: {url} remains unavailable (status: {status})"
+    else:
+        raise ValueError(f"Unknown alert kind: {kind}")
+    return f"{body}\n\nDashboard: {config.DASHBOARD_URL}"
 
 
 def check_endpoints_loop():
@@ -104,7 +118,7 @@ def check_endpoints_loop():
                     # Сценарий 1: Эндпоинт восстановился
                     if not is_currently_down and was_down:
                         logger.info(f"Endpoint {url} has recovered.")
-                        message = f"[OK] RECOVERED: {url} is back online (status: {current_status})\n\nDashboard: {config.DASHBOARD_URL}"
+                        message = _format_alert("RECOVERED", url, current_status)
                         if send_notifications(message, url, endpoint_id):
                             # Обновляем статус и время уведомления только после успешной отправки
                             cur.execute(
@@ -133,7 +147,7 @@ def check_endpoints_loop():
                             if should_send_down_notification(
                                 last_notified, now_utc, current_settings
                             ):
-                                message = f"[ALERT] {url} is DOWN (status: {status_after_delay})\n\nDashboard: {config.DASHBOARD_URL}"
+                                message = _format_alert("DOWN", url, status_after_delay)
                                 if send_notifications(message, url, endpoint_id):
                                     # Обновляем статус is_down и время уведомления только после успешной отправки
                                     cur.execute(
@@ -153,7 +167,7 @@ def check_endpoints_loop():
                             last_notified, now_utc, current_settings
                         ):
                             logger.warning(f"Endpoint {url} is STILL DOWN.")
-                            message = f"[WARNING] STILL DOWN: {url} remains unavailable (status: {current_status})\n\nDashboard: {config.DASHBOARD_URL}"
+                            message = _format_alert("STILL_DOWN", url, current_status)
                             if send_notifications(message, url, endpoint_id):
                                 # Обновляем время уведомления только после успешной отправки
                                 update_notification_time(cur, endpoint_id, now_iso)
