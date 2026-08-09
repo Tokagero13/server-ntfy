@@ -1,0 +1,334 @@
+{
+  "app/__init__.py": {
+    "path": "app/__init__.py",
+    "last_modified": "2026-08-09T21:10:58.114529",
+    "docstring": "",
+    "classes": [],
+    "functions": [
+      "create_app",
+      "run_background_tasks",
+      "send_startup_notification",
+      "send_startup_notifications"
+    ],
+    "imports": [
+      "api",
+      "asyncio",
+      "core",
+      "db",
+      "flask",
+      "flask_restx",
+      "logging",
+      "models",
+      "threading"
+    ]
+  },
+  "app/api/__init__.py": {
+    "path": "app/api/__init__.py",
+    "last_modified": "2026-08-09T21:10:58.114529",
+    "docstring": "",
+    "classes": [],
+    "functions": [
+      "init_api"
+    ],
+    "imports": [
+      "endpoints",
+      "flask_restx",
+      "settings"
+    ]
+  },
+  "app/api/endpoints.py": {
+    "path": "app/api/endpoints.py",
+    "last_modified": "2026-08-09T21:10:58.114529",
+    "docstring": "",
+    "classes": [
+      [
+        "EndpointList",
+        [
+          "get",
+          "post"
+        ]
+      ],
+      [
+        "Endpoint",
+        [
+          "get",
+          "put",
+          "delete"
+        ]
+      ],
+      [
+        "NotificationList",
+        [
+          "get"
+        ]
+      ],
+      [
+        "TelegramDeepLink",
+        [
+          "get"
+        ]
+      ],
+      [
+        "SubscriptionList",
+        [
+          "get",
+          "post"
+        ]
+      ],
+      [
+        "Subscription",
+        [
+          "patch",
+          "delete"
+        ]
+      ]
+    ],
+    "functions": [
+      "normalize_url",
+      "validate_url"
+    ],
+    "imports": [
+      "db",
+      "flask",
+      "flask_restx",
+      "logging",
+      "math",
+      "models",
+      "sqlite3",
+      "urllib"
+    ]
+  },
+  "app/api/settings.py": {
+    "path": "app/api/settings.py",
+    "last_modified": "2026-08-09T21:10:58.115532",
+    "docstring": "",
+    "classes": [
+      [
+        "Settings",
+        [
+          "get",
+          "put"
+        ]
+      ]
+    ],
+    "functions": [],
+    "imports": [
+      "db",
+      "flask",
+      "flask_restx",
+      "logging",
+      "models"
+    ]
+  },
+  "app/config.py": {
+    "path": "app/config.py",
+    "last_modified": "2026-08-09T21:10:58.115532",
+    "docstring": "",
+    "classes": [],
+    "functions": [],
+    "imports": [
+      "dotenv",
+      "os"
+    ]
+  },
+  "app/core/__init__.py": {
+    "path": "app/core/__init__.py",
+    "last_modified": "2026-08-09T21:10:58.115532",
+    "docstring": "",
+    "classes": [],
+    "functions": [],
+    "imports": []
+  },
+  "app/core/group_notifications.py": {
+    "path": "app/core/group_notifications.py",
+    "last_modified": "2026-08-09T21:10:58.115532",
+    "docstring": "\u041c\u043e\u0434\u0443\u043b\u044c \u0434\u043b\u044f \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0438 \u0433\u0440\u0443\u043f\u043f\u043e\u0432\u044b\u0445 \u0443\u0432\u0435\u0434\u043e\u043c\u043b\u0435\u043d\u0438\u0439 \u0447\u0435\u0440\u0435\u0437 python-telegram-bot==20.7",
+    "classes": [
+      [
+        "TelegramGroupNotifier",
+        [
+          "bot",
+          "send_message",
+          "format_notification",
+          "test_connection"
+        ]
+      ]
+    ],
+    "functions": [
+      "send_group_notification"
+    ],
+    "imports": [
+      "logging",
+      "telegram",
+      "typing"
+    ]
+  },
+  "app/core/monitoring.py": {
+    "path": "app/core/monitoring.py",
+    "last_modified": "2026-08-09T21:10:58.116532",
+    "docstring": "",
+    "classes": [],
+    "functions": [
+      "check_endpoint_status_with_fallback",
+      "should_send_down_notification",
+      "update_notification_time",
+      "check_endpoints_loop"
+    ],
+    "imports": [
+      "datetime",
+      "db",
+      "logging",
+      "notifications",
+      "requests",
+      "time"
+    ]
+  },
+  "app/core/notifications.py": {
+    "path": "app/core/notifications.py",
+    "last_modified": "2026-08-09T21:10:58.116532",
+    "docstring": "",
+    "classes": [],
+    "functions": [
+      "get_endpoint_subscriptions",
+      "send_telegram_notification",
+      "send_ntfy_notification",
+      "send_group_telegram_notification",
+      "send_notifications"
+    ],
+    "imports": [
+      "datetime",
+      "db",
+      "group_notifications",
+      "logging",
+      "requests"
+    ]
+  },
+  "app/core/telegram_bot.py": {
+    "path": "app/core/telegram_bot.py",
+    "last_modified": "2026-08-09T21:10:58.116532",
+    "docstring": "",
+    "classes": [
+      [
+        "TelegramBotHandler",
+        [
+          "start_command",
+          "handle_deep_link",
+          "process_discovery_code",
+          "subscribe_command",
+          "list_subscriptions_command",
+          "status_command",
+          "help_command",
+          "button_callback",
+          "subscribe_to_endpoint_callback",
+          "subscribe_to_endpoint",
+          "unsubscribe_callback",
+          "refresh_endpoints_callback",
+          "get_endpoints",
+          "get_user_subscriptions",
+          "run"
+        ]
+      ]
+    ],
+    "functions": [
+      "start_telegram_bot_async"
+    ],
+    "imports": [
+      "asyncio",
+      "datetime",
+      "db",
+      "logging",
+      "telegram",
+      "typing"
+    ]
+  },
+  "app/db.py": {
+    "path": "app/db.py",
+    "last_modified": "2026-08-09T21:10:58.117532",
+    "docstring": "",
+    "classes": [],
+    "functions": [
+      "get_db_connection",
+      "init_db",
+      "get_settings"
+    ],
+    "imports": [
+      "contextlib",
+      "logging",
+      "sqlite3",
+      "threading"
+    ]
+  },
+  "app/models.py": {
+    "path": "app/models.py",
+    "last_modified": "2026-08-09T21:10:58.117532",
+    "docstring": "",
+    "classes": [],
+    "functions": [
+      "add_models_to_api"
+    ],
+    "imports": [
+      "flask_restx"
+    ]
+  },
+  "gunicorn.conf.py": {
+    "path": "gunicorn.conf.py",
+    "last_modified": "2026-08-09T21:10:58.117532",
+    "docstring": "",
+    "classes": [],
+    "functions": [],
+    "imports": [
+      "dotenv",
+      "os"
+    ]
+  },
+  "run.py": {
+    "path": "run.py",
+    "last_modified": "2026-08-09T21:10:58.119532",
+    "docstring": "",
+    "classes": [],
+    "functions": [],
+    "imports": [
+      "app",
+      "asyncio",
+      "threading"
+    ]
+  },
+  "test_group_notifications.py": {
+    "path": "test_group_notifications.py",
+    "last_modified": "2026-08-09T21:10:58.121532",
+    "docstring": "\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u0441\u043a\u0440\u0438\u043f\u0442 \u0434\u043b\u044f \u043f\u0440\u043e\u0432\u0435\u0440\u043a\u0438 \u0433\u0440\u0443\u043f\u043f\u043e\u0432\u044b\u0445 \u0443\u0432\u0435\u0434\u043e\u043c\u043b\u0435\u043d\u0438\u0439 Telegram",
+    "classes": [],
+    "functions": [
+      "test_basic_group_notification",
+      "test_notifier_class",
+      "test_integration",
+      "print_configuration",
+      "main"
+    ],
+    "imports": [
+      "app",
+      "datetime",
+      "logging",
+      "os",
+      "sys"
+    ]
+  },
+  "wsgi.py": {
+    "path": "wsgi.py",
+    "last_modified": "2026-08-09T21:10:58.121532",
+    "docstring": "",
+    "classes": [],
+    "functions": [
+      "start_background_tasks_sync",
+      "cleanup_background_tasks"
+    ],
+    "imports": [
+      "app",
+      "asyncio",
+      "atexit",
+      "concurrent",
+      "threading",
+      "uvicorn"
+    ]
+  }
+}
