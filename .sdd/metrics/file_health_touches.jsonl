@@ -10,3 +10,5 @@
 {"timestamp": 1786296176.3297694, "task_id": "e4c8f38c4f5d", "path": "tests/unit/test_monitoring_helpers.py", "outcome": "success", "previous_total": 0, "new_total": 78, "flagged": false}
 {"timestamp": 1786296176.3636863, "task_id": "e4c8f38c4f5d", "path": "requirements-dev.txt", "outcome": "success", "previous_total": 0, "new_total": 87, "flagged": false}
 {"timestamp": 1786296176.3942144, "task_id": "e4c8f38c4f5d", "path": "pytest.ini", "outcome": "success", "previous_total": 0, "new_total": 87, "flagged": false}
+{"timestamp": 1786297443.1740725, "task_id": "494a42ae6a55", "path": "app/__init__.py", "outcome": "success", "previous_total": 48, "new_total": 73, "flagged": false}
+{"timestamp": 1786297443.206348, "task_id": "494a42ae6a55", "path": "app/core/startup.py", "outcome": "success", "previous_total": 48, "new_total": 68, "flagged": false}

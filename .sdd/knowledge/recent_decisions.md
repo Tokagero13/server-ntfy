@@ -10,8 +10,12 @@ Spawn failed (transient, attempt 1): manager: Task 24a66f41cbe1 has effort='max'
 
 
 
+
+
 ## [2026-08-09 22:16] Completed: Fix wrong type annotation in monitoring.py and unify dashboard message formatting (1985f979581b)
 Completed: Fix wrong type annotation in monitoring.py and unify dashboard message formatting
+
+
 
 
 
@@ -24,9 +28,17 @@ Decomposed 'start refactoring' into 7 file-disjoint tasks: (1) qa/e4c8f38c4f5d p
 
 
 
+
+
 ## [2026-08-09 22:17] Wrote docs/refactoring.md with Motivation, Round 1 (six items), Round 2 (seven follow-ups), Non-goals, and How to verify sections. (75706745b15c)
 Wrote docs/refactoring.md with Motivation, Round 1 (six items), Round 2 (seven follow-ups), Non-goals, and How to verify sections.
 
 
+
+
 ## [2026-08-09 22:23] Completed: Set up pytest infrastructure with initial unit tests. 18 tests pass covering validate_url, normalize_url, and should_send_down_notification scenarios. (e4c8f38c4f5d)
 Completed: Set up pytest infrastructure with initial unit tests. 18 tests pass covering validate_url, normalize_url, and should_send_down_notification scenarios.
+
+
+## [2026-08-09 22:44] Extracted _upsert_subscription (3 occurrences: def + 2 call sites), _build_endpoint_keyboard (3 occurrences), _ENDPOINT_LIST_TEXT constant. subscribe_command and refresh_endpoints_callback now share the helper. Line count: 697 -> 614 (-83 lines). Added NOTE comment on /unsubscribe handler. All imports verified OK. (36c094ca5b33)
+Extracted _upsert_subscription (3 occurrences: def + 2 call sites), _build_endpoint_keyboard (3 occurrences), _ENDPOINT_LIST_TEXT constant. subscribe_command and refresh_endpoints_callback now share the helper. Line count: 697 -> 614 (-83 lines). Added NOTE comment on /unsubscribe handler. All imports verified OK.
